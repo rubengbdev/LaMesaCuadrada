@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^api/usuario/?$ api/controller/UsuarioController.php
+RewriteRule ^api/usuario/([0-9]+)?$ api/controller/UsuarioController.php?id=$1
+RewriteRule ^login$ php/login.php [L]
