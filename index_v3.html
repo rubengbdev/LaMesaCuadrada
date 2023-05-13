@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>La Mesa Cuadrada</title>
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+    integrity="sha384-TtkrQz2Jvcz2meZbuQoxaOm6E34zBtfsFRG7nT8BvGwwJxOw1V0rZW1Dbw0Oz3uN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ovD4qWv4f0tZ6gjJ8eKqW5pKQE+1NJ1nriRjll9/0A+pDyG/Bo5jFfZ+rmOu6HRn"
+    crossorigin="anonymous"></script>   
+ -->
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .form-control {
+            box-shadow: none;
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .navbar {
+            background: #fff;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-bottom: 1px solid #dfe3e8;
+            border-radius: 0;
+        }
+
+        .nav-link img {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            margin: -8px 0;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .navbar .navbar-brand {
+            padding-left: 0;
+            font-size: 20px;
+            padding-right: 50px;
+        }
+
+        .navbar .navbar-brand b {
+            color: #33cabb;
+        }
+
+        .navbar .form-inline {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #888;
+            font-size: 15px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding-right: 35px;
+            border-color: #dfe3e8;
+            border-radius: 4px !important;
+            box-shadow: none
+        }
+
+        .search-box .input-group-text {
+            min-width: 35px;
+            border: none;
+            background: transparent;
+            position: absolute;
+            right: 0;
+            z-index: 9;
+            padding: 7px;
+            height: 100%;
+        }
+
+        .search-box i {
+            color: #a0a5b1;
+            font-size: 19px;
+        }
+
+        .navbar .sign-up-btn {
+            min-width: 110px;
+            max-height: 36px;
+        }
+
+        .navbar .dropdown-menu {
+            color: #999;
+            font-weight: normal;
+            border-radius: 1px;
+            border-color: #e5e5e5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+        }
+
+        .navbar a,
+        .navbar a:active {
+            color: #888;
+            padding: 8px 20px;
+            background: transparent;
+            line-height: normal;
+        }
+
+        .navbar .navbar-form {
+            border: none;
+        }
+
+        .navbar .action-form {
+            width: 280px;
+            padding: 20px;
+            left: auto;
+            right: 0;
+            font-size: 14px;
+        }
+
+        .navbar .action-form a {
+            color: #33cabb;
+            padding: 0 !important;
+            font-size: 14px;
+        }
+
+        .navbar .action-form .hint-text {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .navbar .btn-primary,
+        .navbar .btn-primary:active {
+            color: #fff;
+            background: #33cabb !important;
+            border: none;
+        }
+
+        .dropdown-menu .form-group {
+            margin-bottom: 10px;
+        }
+
+        .navbar .btn-success,
+        .navbar .btn-success:active {
+            color: #fff;
+            background: #108a00 !important;
+            border: none;
+        }
+
+        .navbar .btn-primary:hover,
+        .navbar .btn-primary:focus {
+            color: #fff;
+            background: #31bfb1 !important;
+        }
+
+        .navbar .action-buttons .dropdown-toggle::after {
+            display: none;
+        }
+
+        .form-check-label input {
+            position: relative;
+            top: 1px;
+        }
+
+        @media (min-width: 1200px) {
+            .form-inline .input-group {
+                width: 300px;
+                margin-left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .dropdown-menu.action-form {
+                width: 100%;
+                padding: 10px 15px;
+                background: transparent;
+                border: none;
+            }
+
+            .navbar .form-inline {
+                display: block;
+            }
+
+            .navbar .input-group {
+                width: 100%;
+            }
+        }
+
+        .movida {
+
+            margin-right: 20px;
+        }
+    </style>
+    <script>
+
+
+        $(document).on("click", ".action-buttons .dropdown-menu .dropdown-menu-end", function (e) {
+            e.stopPropagation();
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+        
+        <a href="#" class="navbar-brand"><img src="img/logo.png" alt="logo" width="50em" height="50em">
+            <b>La Mesa Cuadrada</b></a>
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler"></span>
+        </button>
+
+        <div id="navbarCollapse" class="navbar-collapse justify-content-start">
+            <div class="navbar-nav text-light">
+                <a href="#" class="nav-item nav-link ">Actualidad</a>
+                <a href="#" class="nav-item nav-link text-white">Foro</a>
+                <a href="#" class="nav-item nav-link active text-white">Tienda</a>
+                <a href="#" class="nav-item nav-link text-white">Registro de Partidas</a>
+            </div>
+
+            <div class="navbar-nav ms-auto ml-auto action-buttons">
+                <div class="nav-item dropdown pr-2">
+                    <a href="#" role="button" data-bs-toggle="dropdown"
+                        class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
+                    <div class="dropdown-menu action-form">
+                        <form action="/examples/actions/confirmation.php" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Usuario" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Contraseña"
+                                    required="required">
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block" value="Login">
+                            <div class="text-center mt-2">
+                                <a href="#">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <button class="btn btn-primary dropdown-toggle sign-up-btn" type="button" id="signUpDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Sign up
+                    </button>
+                    <ul class="dropdown-menu action-form dropdown-menu-end" aria-labelledby="signUpDropdown">
+                        <li>
+                            <form action="/examples/actions/confirmation.php" method="post">
+                                <p class="hint-text">Fill in this form to create your account!</p>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Contraseña" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Confirma Contraseña"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" required> Acepto las <a href="#">Terminos &amp;
+                                            Condiciones</a>
+                                    </label>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-block" value="Sign up">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-dark ">
+        <a href="#" class="navbar-brand"><img src="img/logo.png" alt="logo" width="50em" height="50em">
+            <b>La Mesa Cuadrada</b></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="navbar-nav text-light">
+                <a href="#" class="nav-item nav-link ">Actualidad</a>
+                <a href="#" class="nav-item nav-link text-white">Foro</a>
+                 <div class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Services</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Actualidad</a>
+                        <a href="#" class="dropdown-item">Foro</a>
+                        <a href="#" class="dropdown-item">Tienda</a>
+                        <a href="#" class="dropdown-item">Registro de Partidas</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-item nav-link active text-white">Tienda</a>
+                <a href="#" class="nav-item nav-link text-white">Registro de Partidas</a>
+            </div>
+
+            <div class="navbar-nav ml-auto action-buttons">
+                <div class="nav-item dropdown pr-1">
+                    <a href="#" role="button" data-bs-toggle="dropdown"
+                        class="btn btn-success dropdown-toggle sign-up-btn">Login</a>
+                    <div class="dropdown-menu action-form">
+                        <form action="/examples/actions/confirmation.php" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Usuario" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Contraseña"
+                                    required="required">
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block" value="Login">
+                            <div class="text-center mt-2">
+                                <a href="#">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <button class="btn btn-primary dropdown-toggle sign-up-btn" type="button" id="signUpDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Sign up
+                    </button>
+                    <ul class="dropdown-menu action-form dropdown-menu-end" aria-labelledby="signUpDropdown">
+                        <li>
+                            <form action="/examples/actions/confirmation.php" method="post">
+                                <p class="hint-text">Fill in this form to create your account!</p>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Contraseña" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Confirma Contraseña"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" required> Acepto las <a href="#">Terminos &amp;
+                                            Condiciones</a>
+                                    </label>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-block" value="Sign up">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+                <div class="nav-item dropdown pr-1">
+                    <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn">Login</a>
+                    <div class="dropdown-menu action-form">
+                        <form action="/examples/actions/confirmation.php" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Usuario" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Contraseña"
+                                    required="required">
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block" value="Login">
+
+                            <div class="text-center mt-2">
+                                <a href="#">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
+                    <div class="dropdown-menu action-form">
+                        <form action="/examples/actions/confirmation.php" method="post">
+                            <p class="hint-text">Fill in this form to create your account!</p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Nombre" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Email" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Contraseña"
+                                    required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirma Contraseña"
+                                    required="required">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label"><input type="checkbox" required="required"> Acepto las
+                                    <a href="#">Terminos &amp; Condiciones</a></label>
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-block" value="Sign up">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav> -->
+    <main>
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12">
+                    <h2 class="text-center mb-4">Título del main</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, mauris ut faucibus
+                        rhoncus, arcu mi tempor lectus, at ultricies metus mauris sit amet ex. Sed vel urna in sapien
+                        mollis consequat. Aliquam fringilla orci id luctus blandit. Donec vel turpis eu erat bibendum
+                        dictum at id velit. Sed gravida ex ac sagittis imperdiet. Sed sollicitudin sem at nisl
+                        imperdiet, eget interdum dolor imperdiet. Fusce blandit libero ac blandit consectetur. Morbi ac
+                        mauris ac ante sagittis malesuada.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-dark text-light py-3 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>La Mesa Cuadrada &copy; 2023. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#">Contacto</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="js/jquery-3.6.4.min.js"></script>
+</body>
+
+</html>
