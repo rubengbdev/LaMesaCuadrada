@@ -1,0 +1,299 @@
+body {
+    font-family: 'Varela Round', sans-serif;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 10em;
+    background-image: linear-gradient(109.6deg, rgba(156, 252, 248, 1) 11.2%, rgba(110, 123, 251, 1) 91.1%);
+
+}
+
+.form-control {
+    box-shadow: none;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.navbar {
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid #dfe3e8;
+    border-radius: 0;
+}
+
+.nav-link img {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: -8px 0;
+    float: left;
+    margin-right: 10px;
+}
+
+.navbar .navbar-brand {
+    padding-left: 0;
+    font-size: 20px;
+    padding-right: 50px;
+}
+
+.navbar .navbar-brand b {
+    color: #33cabb;
+}
+
+.navbar .form-inline {
+    display: inline-block;
+}
+
+.navbar a {
+    color: #888;
+    font-size: 15px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding-right: 35px;
+    border-color: #dfe3e8;
+    border-radius: 4px !important;
+    box-shadow: none
+}
+
+.search-box .input-group-text {
+    min-width: 35px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 7px;
+    height: 100%;
+}
+
+.search-box i {
+    color: #a0a5b1;
+    font-size: 19px;
+}
+
+.navbar .sign-up-btn {
+    min-width: 110px;
+    max-height: 36px;
+}
+
+.navbar .dropdown-menu {
+    color: #999;
+    font-weight: normal;
+    border-radius: 1px;
+    border-color: #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.navbar a {
+    color: #ffffff;
+    padding: 8px 20px;
+    background: transparent;
+    line-height: normal;
+}
+
+.active {
+    color: blue;
+    text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
+}
+
+
+.navbar .navbar-form {
+    border: none;
+}
+
+.navbar .action-form {
+    width: 280px;
+    padding: 20px;
+    left: auto;
+    right: 0;
+    font-size: 14px;
+}
+
+.navbar .action-form a {
+    color: #33cabb;
+    padding: 0 !important;
+    font-size: 14px;
+}
+
+.navbar .action-form .hint-text {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.navbar .btn-primary,
+.navbar .btn-primary:active {
+    color: #fff;
+    background: #33cabb !important;
+    border: none;
+}
+
+.dropdown-menu .form-group {
+    margin-bottom: 10px;
+}
+
+.navbar .btn-success,
+.navbar .btn-success:active {
+    color: #fff;
+    background: #108a00 !important;
+    border: none;
+}
+
+.navbar .btn-primary:hover,
+.navbar .btn-primary:focus {
+    color: #fff;
+    background: #31bfb1 !important;
+}
+
+.navbar .action-buttons .dropdown-toggle::after {
+    display: none;
+}
+
+.form-check-label input {
+    position: relative;
+    top: 1px;
+}
+
+@media (min-width: 1200px) {
+    .form-inline .input-group {
+        width: 300px;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .dropdown-menu.action-form {
+        width: 100%;
+        padding: 10px 15px;
+        background: transparent;
+        border: none;
+    }
+
+    .navbar .form-inline {
+        display: block;
+    }
+
+    .navbar .input-group {
+        width: 100%;
+    }
+}
+
+.movida {
+
+    margin-right: 20px;
+}
+
+@media (min-width: 992px) {}
+
+.card-header button {
+    color: #007bff;
+}
+
+.card-header button:hover {
+    text-decoration: none;
+    color: #0069d9;
+}
+
+.list-group-item:hover {
+    background-color: #f2f2f2;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.list-group,
+.card {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* TIENDA */
+.product-grid {
+    margin-bottom: 2rem;
+  }
+
+  .product-grid .product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .product-grid .product-image img {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .product-grid .product-content {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .product-grid .product-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-grid .product-description {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-grid .product-stock {
+    margin-bottom: 0.5rem;
+  }
+
+  .product-grid .product-stock span {
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  .product-grid .product-price {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-grid .product-rating {
+    margin-bottom: 0.5rem;
+  }
+
+  .product-grid .product-rating i {
+    color: orange;
+  }
+
+  .product-grid .product-rating i.checked {
+    color: orange;
+  }
+
+  .product-grid .product-add-to-cart {
+    margin-top: 1rem;
+  }
+
+  .filter-price {
+    margin-bottom: 1rem;
+  }
+
+  .pagination {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .product-grid {
+      width: 70%;
+      margin: 0 auto 2rem;
+    }
+  }
