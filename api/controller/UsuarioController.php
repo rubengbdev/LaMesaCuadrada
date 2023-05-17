@@ -28,16 +28,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "POST":
 
-        if (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["login"]) && isset($_POST["tipo"])) {
+        if (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["login"])) {
              
-            // $servicio = new UsuarioServiceImpl();
-            // if ($servicio.)
-            //     if (UserService::getUsuario($_POST['correo'], $_POST['contrasena'])) {
-            //         $datos[] = ["acceso" => true];
-            //     } else {
-            //         $datos[] = ["acceso" => false];
-            //     }
-            //     exit(json_encode($datos));
+            $servicio = new UsuarioServiceImpl();
+            $datos = $servicio->login($_POST['correo'], $_POST['contrasena']);
+            
+            if ($datos != null) {
+
+                exit(json_encode($datos));
+                $_SESSION['usuario'] = "hola-mundo";
+                header("Location: $_SERVER[PHP_SELF]");
+            } else {
+
+                exit(json_encode(null));
+            }
 
         } elseif (isset($_GET["crear"])) {
 

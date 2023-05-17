@@ -2,6 +2,8 @@
 require_once(__DIR__.'../../../model/Usuario.php');
 require_once (__DIR__.'/../UsuarioService.php');
 require_once(__DIR__.'/../../model/DAO/UsuarioDAO.php');
+require_once("../../../../php/funciones.php");
+
 
 class UsuarioServiceImpl implements UsuarioService {
  
@@ -52,7 +54,20 @@ class UsuarioServiceImpl implements UsuarioService {
 
     /********************POST********************/
 
-    public function login(){}
+    public function login($usuario, $contrasena){
+
+        $usuarioVerificado = seguridadFormularios($usuario);
+        $contrasenaVerificado = seguridadFormularios($contrasena);
+
+        //Añadir tema seguridad, es decir el verify
+
+        if ($this->dao->existsByUsuarioContrasena($usuarioVerificado,$contrasenaVerificado)) {
+            
+            return $this->dao->login($usuario,$contrasena);
+        }
+
+        return null;
+    }
 
     public function crearUsuario($nombre, $email, $contrasena, $tipo) {
         // validar los datos del usuario

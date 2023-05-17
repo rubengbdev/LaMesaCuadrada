@@ -1,3 +1,77 @@
+<!-- <?php
+/**
+ * login.php
+ *
+ * Crea la sesión del usuario mediante el uso de un formulario y la matriz $_SESSION,
+ * se incluye la utilización del token para verificar la validez de lo que el servidor
+ * recibe del usuario en el formulario.
+ *
+ * @author Rubén Gutiérrez Blanco
+ * @version 0.1
+ */
+session_start();
+
+require_once "BaseDatos.php";
+require_once "Usuario.php";
+include "funciones.php";
+
+//Generación del token
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $_SESSION['token'] = rand(1,999999999);
+}
+
+//Si está iniciada la sesion nos vamos al fichero principal y sino procedemos a iniciar la sesion
+if (isset($_SESSION['usuario'])) {
+
+    header('Location: principal.php');
+
+//Comprobacion si el usuario a introducido algo 
+}   if ((isset($_POST['usuario'])) && (isset($_POST['contrasena']))) {
+        //Comprobacion de validez con el token
+        if ($_POST['token'] == $_SESSION['token']) {
+        
+        //Obtención de usuario y clave del formulario
+        $usuarioWeb = seguridadFormularios($_POST["usuario"]);
+        $contrasenaWeb = seguridadFormularios($_POST["contrasena"]);
+    
+        /*Patrones por definir*/
+        $patronUsuario = "/[a-zA-Z0-9\.@]{4,}/";
+        $patronClave = "/[A-Z]+[0-9]+[a-zA-Z0-9]{6,}/";
+    
+        if ((preg_match($patronUsuario,$usuarioWeb))) {
+            
+            //Apertura de conexión con la base de Datos
+            $bd = new BaseDatos();
+            $bd->conectar();
+
+            //Comprobación de que el usuario está en la base de datos;
+            $usuario = new Usuario();
+            $resultado = $usuario->getUsuario($_POST['usuario'], $_POST['contrasena']);
+
+            if ($resultado) {
+                //Redirección y obtención del tipo de usuario que ha iniciado sesión.
+                header  ("Location:principal.php");
+                $tipoUsuario = $usuario->getPerfil();
+                
+                //Asignación del tipo de sesión y creación de la sesión
+                if ($tipoUsuario == '1') {
+                    $_SESSION["usuario"] = "profesor";
+                    $_SESSION["contrasena"] = $_POST["contrasena"];
+
+                } elseif ($tipoUsuario == '2') {
+                    $_SESSION["usuario"] = "alumno";
+                    $_SESSION["contrasena"] = $_POST["contrasena"];
+
+                }
+            }
+
+            //Cierre de conexión con la base de datos
+            $bd = null;
+        }
+    }
+}
+?> -->
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,7 +94,7 @@
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
+            <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo" width="50em" height="50em">
                 <b>La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -30,7 +104,7 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="indexFinal.html" class="nav-item nav-link active">Actualidad</a>
+                    <a href="index.html" class="nav-item nav-link active">Actualidad</a>
                     <a href="pages/foro.html" class="nav-item nav-link ">Foro</a>
                     <a href="pages/tienda.html" class="nav-item nav-link ">Tienda</a>
                     <a href="pages/registro_partidas.html" class="nav-item nav-link ">Registro de Partidas</a>
@@ -43,12 +117,15 @@
                         <a href="#" role="button" data-bs-toggle="dropdown"
                             class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
                         <div class="dropdown-menu action-form">
-                            <form action="/examples/actions/confirmation.php" method="post">
+                            <form action="api/controller" method="post">
+                                <!-- value=\"{$_SESSION['token']}\" -->
+                                <input type="hidden" name="token" >
+                                <input type="hidden" name="login" >
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Usuario" required="required">
+                                    <input type="text" name="usuario" class="form-control" placeholder="Usuario" required="required">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Contraseña"
+                                    <input type="password" name="password" class="form-control" placeholder="Contraseña"
                                         required="required">
                                 </div>
                                 <input type="submit" class="btn btn-primary btn-block" value="Login">

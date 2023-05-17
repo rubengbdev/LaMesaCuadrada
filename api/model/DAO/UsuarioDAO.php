@@ -69,7 +69,6 @@ class UsuarioDAO {
 
     }
 
-
     // public function update(Usuario $usuario) {
     //     $stmt = $this->pdo->prepare('UPDATE usuario SET nombre = ?, email = ?, password = ? WHERE id = ?');
     //     $stmt->execute([$usuario->getNombre(), $usuario->getEmail(), $usuario->getPassword(), $usuario->getId()]);
@@ -80,6 +79,33 @@ class UsuarioDAO {
         $stmt = $this->pdo->prepare('DELETE FROM usuario WHERE id = ?');
         $stmt->execute([$id]);
         return $stmt->rowCount();
+    }
+
+                                            /*LOGIN*/
+
+    public function existsByUsuarioContrasena($usuario, $contrasena) {
+        
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) as total FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
+        $stmt->execute([$usuario, $contrasena]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total = $row['total'];
+    
+        return $total > 0 ? true : false;
+    }
+
+
+    public function login($usuario, $contrasena) {
+        
+        $stmt = $this->pdo->prepare('SELECT usuario_nombre,usuario_email FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
+        $stmt->execute([$usuario, $contrasena]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$row) {
+            
+            return null;
+        }
+
+        return $row;
     }
 
 }
