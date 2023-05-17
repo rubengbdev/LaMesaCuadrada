@@ -1,4 +1,5 @@
 <?php
+
 /**
  * login.php
  *
@@ -36,9 +37,7 @@ session_start();
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo" width="50em" height="50em">
                 <b>La Mesa Cuadrada</b></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -52,91 +51,103 @@ session_start();
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
 
-<?php
+                    <?php
 
-if (!isset($_SESSION))
-    $_SESSION['token_login'] = $token = bin2hex(random_bytes(16));
-    
-?>
-                    <div class="nav-item dropdown pr-2">
-                        <a href="#" role="button" data-bs-toggle="dropdown"
-                            class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
-                        <div class="dropdown-menu action-form">
-                            <form id ="login-form" action="api/controller" method="post">
-                                <!-- value=\"{$_SESSION['token']}\" -->
-                                <input type="hidden" name="token_login" value="<?php echo $_SESSION['token']; ?>">
-                                <input type="hidden" name="login" >
-                                <div class="form-group">
-                                    <input type="text" name="usuario" class="form-control" placeholder="Usuario" required="required">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="contrasena" class="form-control" placeholder="Contraseña"
-                                        required="required">
-                                </div>
-                                <input type="submit" class="btn btn-primary btn-block" value="Login">
-                                <div class="text-center mt-2">
-                                    <a href="#">¿Olvidaste tu contraseña?</a>
-                                </div>
-                            </form>
+                    if (!isset($_SESSION))
+                        $_SESSION['token_login'] = $token = bin2hex(random_bytes(16));
+
+                    ?>
+
+                    <?php if (!isset($_SESSION['usuario'])) : ?>
+                        <div class="nav-item dropdown pr-2">
+                            <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
+                            <div class="dropdown-menu action-form">
+                                <form id="login-form" action="api/controller" method="post">
+                                    <!-- value=\"{$_SESSION['token']}\" -->
+                                    <input type="hidden" name="token_login" value="<?php echo $_SESSION['token']; ?>">
+                                    <input type="hidden" name="login">
+                                    <div class="form-group">
+                                        <input type="text" name="usuario" class="form-control" placeholder="Usuario" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">
+                                    </div>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Login">
+                                    <div class="text-center mt-2">
+                                        <a href="#">¿Olvidaste tu contraseña?</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-    <script>
-    $(document).ready(function() {
-    $('#login-form').submit(function(event) {
-        event.preventDefault(); // Evitar envío predeterminado del formulario
+                        <script>
+                            $(document).ready(function() {
+                                $('#login-form').submit(function(event) {
+                                    event.preventDefault(); // Evitar envío predeterminado del formulario
 
-        // Obtener los datos del formulario
-        var formData = $(this).serialize();
+                                    // Obtener los datos del formulario
+                                    var formData = $(this).serialize();
 
-        // Realizar la solicitud AJAX
-        $.ajax({
-        type: 'POST',
-        url: 'http://localhost:8001/login',
-        data: formData,
-        success: function(response) {
-            // Procesar la respuesta del controlador
-            console.log(response);
-            // ...
-        },
-        error: function(xhr, status, error) {
-            // Manejar errores de la solicitud
-            console.log(error);
-            // ...
-        }
-        });
-    });
-    });
-    </script>
-                    <div class="nav-item dropdown" id="movida">
-                        <a href="#" role="button" data-bs-toggle="dropdown"
-                            class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
-                        <div class="dropdown-menu action-form">
-                            <form action="/examples/actions/registro.php" method="post">
-                                <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Contraseña" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Confirma Contraseña"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label id="propagacion" class="form-check-label">
-                                        <input type="checkbox" required> Acepto las <a href="#">Terminos &amp;
-                                            Condiciones</a>
-                                    </label>
-                                </div>
-                                <input type="submit" class="btn btn-primary btn-block" value="Registrarse">
-                            </form>
+                                    // Realizar la solicitud AJAX
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'http://localhost:8001/login',
+                                        data: formData,
+                                        success: function(response) {
+                                            // Procesar la respuesta del controlador
+                                            console.log(response);
+                                            // ...
+                                        },
+                                        error: function(xhr, status, error) {
+                                            // Manejar errores de la solicitud
+                                            console.log(error);
+                                            // ...
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                        <div class="nav-item dropdown" id="movida">
+                            <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
+                            <div class="dropdown-menu action-form">
+                                <form action="/examples/actions/registro.php" method="post">
+                                    <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Nombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Contraseña" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Confirma Contraseña" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label id="propagacion" class="form-check-label">
+                                            <input type="checkbox" required> Acepto las <a href="#">Terminos &amp;
+                                                Condiciones</a>
+                                        </label>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Registrarse">
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    <?php else : ?>
 
+                        <div class="nav-item dropdown pr-2">
+                            <button class="btn btn-success dropdown-toggle sign-up-btn movida" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 1 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Mi cuenta</a>
+                                <button class="btn btn-danger" type="button">Cerrar Sesión</button>
+                            </div>
+                        </div>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -175,12 +186,14 @@ if (!isset($_SESSION))
         </div>
         <!-- BOTON SCROLL V2-->
 
-        <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i
-                class="bi bi-arrow-up"></i></button>
+        <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i class="bi bi-arrow-up"></i></button>
 
         <script>
             // Muestra el botón cuando el usuario ha desplazado 20 píxeles desde la parte superior de la página
-            window.onscroll = function () { scrollFunction() };
+            window.onscroll = function() {
+                scrollFunction()
+            };
+
             function scrollFunction() {
                 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                     document.getElementById("scrollBtn").style.display = "block";
@@ -218,8 +231,14 @@ if (!isset($_SESSION))
                     image: true,
                     toolbar: [
                         ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
-                        [{ 'size': ['small', false, 'large', 'huge'] }], // Tamaño del texto
-                        [{ 'color': [] }, { 'background': [] }],
+                        [{
+                            'size': ['small', false, 'large', 'huge']
+                        }], // Tamaño del texto
+                        [{
+                            'color': []
+                        }, {
+                            'background': []
+                        }],
                         ['image'] // Color del texto y del fondo
                     ]
                 },
@@ -227,7 +246,7 @@ if (!isset($_SESSION))
             });
             // Escuchar el evento submit del formulario
             var form = document.querySelector('form');
-            form.addEventListener('submit', function (e) {
+            form.addEventListener('submit', function(e) {
                 // Actualizar el valor del textarea oculto con el contenido del editor
                 var newsTextInput = document.querySelector('#newsTextInput');
                 newsTextInput.value = quill.root.innerHTML;
@@ -315,8 +334,7 @@ if (!isset($_SESSION))
                                 <div class="col-12">
                                     <h6>Comentarios</h6>
                                     <div class="media border p-3">
-                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe"
-                                            class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
                                         <div class="media-body">
                                             <h6>John Doe <small><i>Publicado el 01/01/2022</i></small></h6>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ex
@@ -354,8 +372,7 @@ if (!isset($_SESSION))
                                 <div class="col-12">
                                     <h6>Comentarios</h6>
                                     <div class="media border p-3">
-                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe"
-                                            class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
                                         <div class="media-body">
                                             <h6>John Doe <small><i>Publicado el 01/01/2022</i></small></h6>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ex
@@ -403,7 +420,7 @@ if (!isset($_SESSION))
         </div>
     </footer>
     <script>
-        $("#propagacion").on("click", function (event) {
+        $("#propagacion").on("click", function(event) {
             event.stopPropagation();
         });
 
