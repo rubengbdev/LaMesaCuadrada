@@ -96,7 +96,7 @@ class UsuarioDAO {
 
     public function login($usuario, $contrasena) {
         
-        $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
+        $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email, usuario_tipo FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
         $stmt->execute([$usuario, $contrasena]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) {

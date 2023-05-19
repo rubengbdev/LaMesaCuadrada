@@ -28,7 +28,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "POST":
 
-        if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
+        if (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["login"])) {
              
             $servicio = new UsuarioServiceImpl();
             $datos = $servicio->login($_POST['correo'], $_POST['contrasena']);
@@ -40,8 +40,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 exit(json_encode(null));
             }
 
-        } elseif (isset($_GET["crear"])) {
-
+        } elseif (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["registro"])) {
 
             $datos = json_decode(file_get_contents('php://input'));
             $servicio = new UsuarioServiceImpl();

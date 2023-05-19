@@ -3,13 +3,16 @@ session_start();
 
 if (!isset($_SESSION['usuario'])) {
     $_SESSION['token_login'] = bin2hex(random_bytes(16));
+    $_SESSION['token_registro'] = bin2hex(random_bytes(16));
 }
 
 if (isset($_COOKIE['correo'])) {
-    $correo = $_COOKIE['correo'];
 
-    // Asignar el valor de la cookie a una variable de sesión
-    $_SESSION['usuario'] = $correo;
+    $_SESSION['usuario'] = $_COOKIE['correo'];
+}
+
+if (isset($_COOKIE['tipo'])) {
+    $_SESSION['usuario_tipo'] = $_COOKIE['tipo'];
 }
 
 if (isset($_SESSION['destruir'])) {
@@ -103,8 +106,11 @@ if (isset($_SESSION['destruir'])) {
 
                                                 let nombre = userData.usuario_nombre;
                                                 let email = userData.usuario_email;
+                                                let tipo = userData.usuario_tipo;
+
                                                 document.cookie = "nombre=" + nombre;
                                                 document.cookie = "correo=" + email;
+                                                document.cookie = "tipo=" + tipo;
 
                                                 window.location.href = 'index.php';
                                             }
@@ -120,16 +126,18 @@ if (isset($_SESSION['destruir'])) {
                         <div class="nav-item dropdown" id="movida">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
                             <div class="dropdown-menu action-form">
-                                <form action="api/controller" method="post">
+                                <form id="registro" action="api/controller" method="post">
                                     <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
+                                    <input type="hidden" name="token_registro" value="<?= $_SESSION['token_registro'] ?>">
+                                    <input type="hidden" name="registro">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Nombre" required>
+                                        <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email" required>
+                                        <input type="text" name="correo" class="form-control" placeholder="Email" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Contraseña" required>
+                                        <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" placeholder="Confirma Contraseña" required>
@@ -145,6 +153,37 @@ if (isset($_SESSION['destruir'])) {
                             </div>
                         </div>
 
+                        <script>
+                            $(document).ready(function() {
+                                $('#registro').submit(function(event) {
+                                    event.preventDefault(); // Evitar envío predeterminado del formulario
+
+                                    // Obtener los datos del formulario
+                                    var formData = {
+                                        nombre: $('input[name=nombre]').val(),
+                                        correo: $('input[name=correo]').val(),
+                                        contrasena: $('input[name=contrasena]').val(),
+                                        crear : $('input[name=registro]').val()
+                                    };
+
+                                    // Realizar la solicitud AJAX
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'http://localhost:8001/registro',
+                                        data: JSON.stringify(formData),
+                                        contentType: 'application/json',
+                                        success: function(response) {
+                                            // Manejar la respuesta del servidor
+                                            console.log(response);
+                                        },
+                                        error: function(xhr, status, error) {
+                                            // Manejar errores de la solicitud
+                                            console.log(error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
                     <?php else : ?>
 
                         <div class="nav-item dropdown pr-2">
@@ -193,37 +232,39 @@ if (isset($_SESSION['destruir'])) {
         </div>
     </nav>
     <main>
-        <div class="container-fluid my-4">
-            <div class="row">
-                <div class="col-12 text-center mx-auto"">
-                    <button class=" btn btn-lg btn-primary" id="createNewsBtn">Crear Noticia</button>
+        <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "A")) : ?>
+            <div class="container-fluid my-4">
+                <div class="row">
+                    <div class="col-12 text-center mx-auto">
+                        <button class=" btn btn-lg btn-primary" id="createNewsBtn">Crear Noticia</button>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row d-none no-gutters" id="createNewsForm">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="newsImageInput" class="form-label">Imagen</label>
-                                    <input type="file" class="form-control" id="newsImageInput">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="newsTextInput" class="form-label">Texto</label>
-                                    <div id="editor"></div>
-                                    <textarea class="d-none" id="newsTextInput" name="newsTextInput"></textarea>
-                                </div>
-                                <div class="text-end">
-                                    <button type="button" class="btn btn-secondary" id="cancelNewsBtn">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form>
+                <hr>
+                <div class="row d-none no-gutters" id="createNewsForm">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="newsImageInput" class="form-label">Imagen</label>
+                                        <input type="file" class="form-control" id="newsImageInput">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newsTextInput" class="form-label">Texto</label>
+                                        <div id="editor"></div>
+                                        <textarea class="d-none" id="newsTextInput" name="newsTextInput"></textarea>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" class="btn btn-secondary" id="cancelNewsBtn">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <!-- BOTON SCROLL V2-->
 
         <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i class="bi bi-arrow-up"></i></button>
