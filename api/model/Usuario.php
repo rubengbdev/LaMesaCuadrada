@@ -11,7 +11,8 @@ class Usuario {
     //private $hilos; // relación uno a muchos con la tabla hilo
 
 
-    public function __construct( $nombre, $email, $tipo, $contrasena, $fechaCreacion) {
+    public function __construct($id, $nombre, $email, $tipo, $contrasena, $fechaCreacion) {
+        $this->id = $id;
         $this->nombre = $nombre;
         $this->email = $email;
         $this->contrasena = $contrasena;

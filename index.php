@@ -1,16 +1,19 @@
 <?php
-
-/**
- * login.php
- *
- * Crea la sesión del usuario mediante el uso de un formulario y la matriz $_SESSION,
- * se incluye la utilización del token para verificar la validez de lo que el servidor
- * recibe del usuario en el formulario.
- *
- * @author Rubén Gutiérrez Blanco
- * @version 0.1
- */
 session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    $_SESSION['token_login'] = bin2hex(random_bytes(16));
+}
+
+if (isset($_COOKIE['correo'])) {
+    $correo = $_COOKIE['correo'];
+
+    // Asignar el valor de la cookie a una variable de sesión
+    $_SESSION['usuario'] = $correo;
+}
+
+if (isset($_SESSION['destruir'])) {
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +46,7 @@ session_start();
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="index.html" class="nav-item nav-link active">Actualidad</a>
+                    <a href="index.php" class="nav-item nav-link active">Actualidad</a>
                     <a href="pages/foro.html" class="nav-item nav-link ">Foro</a>
                     <a href="pages/tienda.html" class="nav-item nav-link ">Tienda</a>
                     <a href="pages/registro_partidas.html" class="nav-item nav-link ">Registro de Partidas</a>
@@ -51,23 +54,16 @@ session_start();
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
 
-                    <?php
-
-                    if (!isset($_SESSION))
-                        $_SESSION['token_login'] = $token = bin2hex(random_bytes(16));
-
-                    ?>
-
                     <?php if (!isset($_SESSION['usuario'])) : ?>
                         <div class="nav-item dropdown pr-2">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
                             <div class="dropdown-menu action-form">
                                 <form id="login-form" action="api/controller" method="post">
                                     <!-- value=\"{$_SESSION['token']}\" -->
-                                    <input type="hidden" name="token_login" value="<?php echo $_SESSION['token']; ?>">
+                                    <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
                                     <input type="hidden" name="login">
-                                    <div class="form-group">
-                                        <input type="text" name="usuario" class="form-control" placeholder="Usuario" required="required">
+                                    <div class="form-group errorLogin">
+                                        <input type="text" name="correo" class="form-control" placeholder="Usuario" required="required">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">
@@ -93,23 +89,38 @@ session_start();
                                         url: 'http://localhost:8001/login',
                                         data: formData,
                                         success: function(response) {
-                                            // Procesar la respuesta del controlador
-                                            console.log(response);
-                                            // ...
+
+                                            if (response == "null") {
+
+                                                $(document).ready(function() {
+                                                    $('.errorLogin').before('<p id="error-msg">Datos erroneos</p>');
+                                                    $('#error-msg').css('color', 'red');
+                                                });
+
+                                            } else {
+                                                console.log(response);
+                                                let userData = JSON.parse(response); // Analizar la respuesta JSON
+
+                                                let nombre = userData.usuario_nombre;
+                                                let email = userData.usuario_email;
+                                                document.cookie = "nombre=" + nombre;
+                                                document.cookie = "correo=" + email;
+
+                                                window.location.href = 'index.php';
+                                            }
                                         },
                                         error: function(xhr, status, error) {
-                                            // Manejar errores de la solicitud
                                             console.log(error);
-                                            // ...
                                         }
                                     });
                                 });
                             });
                         </script>
+
                         <div class="nav-item dropdown" id="movida">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
                             <div class="dropdown-menu action-form">
-                                <form action="/examples/actions/registro.php" method="post">
+                                <form action="api/controller" method="post">
                                     <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Nombre" required>
@@ -133,6 +144,7 @@ session_start();
                                 </form>
                             </div>
                         </div>
+
                     <?php else : ?>
 
                         <div class="nav-item dropdown pr-2">
@@ -141,12 +153,40 @@ session_start();
                                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 1 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                                 </svg>
                             </button>
-                            <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Mi cuenta</a>
-                                <button class="btn btn-danger" type="button">Cerrar Sesión</button>
-                            </div>
+                            <form id="logout-form" action="api/controller" method="post">
+                                <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Mi cuenta</a>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Cerrar Sesión">
+                                </div>
+                            </form>
                         </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#logout-form').submit(function(event) {
+                                    event.preventDefault(); // Evitar envío predeterminado del formulario
 
+                                    // Obtener los datos del formulario
+                                    var formData = $(this).serialize();
+
+                                    // Realizar la solicitud AJAX
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'http://localhost:8001/logout',
+                                        data: formData,
+                                        success: function(response) {
+                                            console.log("Adios colega");
+                                            document.cookie = "correo" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                                            document.cookie = "nombre" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+                                            window.location.href = 'index.php';
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.log(error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
                     <?php endif; ?>
                 </div>
             </div>
@@ -228,7 +268,6 @@ session_start();
             // Inicializar el editor de texto
             var quill = new Quill('#editor', {
                 modules: {
-                    image: true,
                     toolbar: [
                         ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
                         [{
@@ -238,8 +277,7 @@ session_start();
                             'color': []
                         }, {
                             'background': []
-                        }],
-                        ['image'] // Color del texto y del fondo
+                        }] // Color del texto y del fondo
                     ]
                 },
                 theme: 'snow'

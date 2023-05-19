@@ -89,17 +89,16 @@ class UsuarioDAO {
         $stmt->execute([$usuario, $contrasena]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $row['total'];
-    
+
         return $total > 0 ? true : false;
     }
 
 
     public function login($usuario, $contrasena) {
         
-        $stmt = $this->pdo->prepare('SELECT usuario_nombre,usuario_email FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
+        $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
         $stmt->execute([$usuario, $contrasena]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
         if (!$row) {
             
             return null;

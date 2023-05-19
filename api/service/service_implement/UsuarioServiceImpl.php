@@ -2,7 +2,7 @@
 require_once(__DIR__.'../../../model/Usuario.php');
 require_once (__DIR__.'/../UsuarioService.php');
 require_once(__DIR__.'/../../model/DAO/UsuarioDAO.php');
-require_once("../../../../php/funciones.php");
+require_once("../../php/funciones.php");
 
 
 class UsuarioServiceImpl implements UsuarioService {
@@ -45,7 +45,6 @@ class UsuarioServiceImpl implements UsuarioService {
         if (count($usuarios) < 1) {
             throw new Exception("No hay usuarios");
         }
-
 
         return $usuarios;
     }
@@ -95,7 +94,8 @@ class UsuarioServiceImpl implements UsuarioService {
 
     
         try {
-            return $this->dao->createUsuario(new Usuario($nombre,$email,$tipo,$contraseñaCifrada,$fechaCreacion));
+            //CHAPADO POR EL TEMA DE QUE EL CONSTRUCTOR SOLO PUEDE HABER UNO...
+            // return $this->dao->createUsuario(new Usuario($nombre,$email,$tipo,$contraseñaCifrada,$fechaCreacion));
         } catch (PDOException $e) {
             // Manejar cualquier excepción que pueda ocurrir al ejecutar la consulta
             echo "Error al crear el usuario: " . $e->getMessage();

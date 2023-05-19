@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             exit(json_encode($datos));
 
-        } else {
+        } elseif (isset($_GET['all'])) {
 
             $servicio = new UsuarioServiceImpl();
             $datos = $servicio->obtenerUsuarios();
@@ -28,16 +28,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "POST":
 
-        if (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["login"])) {
+        if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
              
             $servicio = new UsuarioServiceImpl();
             $datos = $servicio->login($_POST['correo'], $_POST['contrasena']);
-            
             if ($datos != null) {
-
+                $_SESSION['usuario'] = $_POST['correo'];
                 exit(json_encode($datos));
-                $_SESSION['usuario'] = "hola-mundo";
-                header("Location: $_SERVER[PHP_SELF]");
             } else {
 
                 exit(json_encode(null));
@@ -47,11 +44,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
             $datos = json_decode(file_get_contents('php://input'));
-
             $servicio = new UsuarioServiceImpl();
-
             $id = $servicio->crearUsuario($datos->nombre, $datos->correo, $datos->contrasena, $datos->tipo);
-
             exit(json_encode($id));
         }
 
