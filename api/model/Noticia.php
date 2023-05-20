@@ -5,11 +5,13 @@ class Noticia {
     private $fecha;
     private $texto;
     private $imagen;
+	private $titulo;
 
-    public function __construct($fecha, $texto, $imagen) {
+    public function __construct($fecha, $texto, $imagen, $titulo) {
         $this->fecha = $fecha;
         $this->texto = $texto;
         $this->imagen = $imagen;
+		$this->titulo = $titulo;
     }
 
     public function getId() {
@@ -44,13 +46,21 @@ class Noticia {
         $this->imagen = $imagen;
     }
 
+    public function getTitulo() {
+        return $this->titulo;
+    }
+
+    public function setTitulo($titulo) {
+        $this->imagen = $titulo;
+    }
 
 	public function toArray() {
         return [
             "id" => $this->id,
             "fecha" => $this->fecha,
             "texto" => $this->texto,
-            "imagen" => $this->imagen
+            "imagen" => $this->imagen,
+			"titulo" => $this->titulo
         ];
     }
 }

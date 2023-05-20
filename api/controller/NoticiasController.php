@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             exit(json_encode($datos));
 
-        } elseif (isset($_GET['all'])) {
+        } else {
 
             $servicio = new NoticiaServiceImpl();
             $datos = $servicio->obtenerNoticias();
@@ -28,13 +28,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "POST":
 
-        if (isset($_POST["texto"]) && isset($_POST["imagen"]) && isset($_POST["publicar"])) {
+        if (isset($_POST["texto"]) && isset($_POST["imagen"]) && isset($_POST["titulo"]) && isset($_POST["publicar"])) {
             
             $texto = seguridadFormularios($_POST["texto"]);
             $imagen = seguridadFormularios($_POST["imagen"]);
+            $titulo = seguridadFormularios($_POST["titulo"]);
 
             $servicio = new NoticiaServiceImpl();
-            $id = $servicio->crearNoticia($texto,$imagen);
+            $id = $servicio->crearNoticia($texto,$imagen,$titulo);
 
             exit(json_encode($id));
         }

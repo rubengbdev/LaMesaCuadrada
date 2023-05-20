@@ -32,7 +32,7 @@ if (isset($_SESSION['destruir'])) {
     <!-- EDITOR TEXTAREA -->
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
     <!-- <link rel="stylesheet" href="css/foro.css"> -->
 </head>
 
@@ -248,7 +248,7 @@ if (isset($_SESSION['destruir'])) {
                                     }
                                 </script>
                                 <span class="tres-puntos">
-                                <i class="bi bi-three-dots-vertical"></i>
+                                    <i class="bi bi-three-dots-vertical"></i>
                                 </span>
                             </button>
                             <form id="logout-form" action="api/controller" method="post">
@@ -298,29 +298,103 @@ if (isset($_SESSION['destruir'])) {
             <div class="container-fluid my-4">
                 <div class="row">
                     <div class="col-12 text-center mx-auto">
-                        <button class=" btn btn-lg btn-primary" id="createNewsBtn">Crear Noticia</button>
+                        <button class=" btn btn-lg btn-primary" id="crearNoticias">Crear Noticia</button>
                     </div>
                 </div>
                 <hr>
-                <div class="row d-none no-gutters" id="createNewsForm">
+                <div class="row d-none no-gutters" id="crearNoticiasForm">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form id="publicar-noticias">
                                     <div class="mb-3">
-                                        <label for="newsImageInput" class="form-label">Imagen</label>
-                                        <input type="file" class="form-control" id="newsImageInput">
+                                        <label for="newsImageInput" class="form-label">Enlace de la imagen</label>
+                                        <input type="text" name="imagen" class="form-control" id="newsImageInput" name="newsImageInput">
                                     </div>
                                     <div class="mb-3">
                                         <label for="newsTextInput" class="form-label">Texto</label>
                                         <div id="editor"></div>
-                                        <textarea class="d-none" id="newsTextInput" name="newsTextInput"></textarea>
+                                        <textarea class="d-none" name="texto" id="newsTextInput" name="newsTextInput"></textarea>
                                     </div>
                                     <div class="text-end">
-                                        <button type="button" class="btn btn-secondary" id="cancelNewsBtn">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Publicar</button>
+                                        <button type="button" class="btn btn-secondary" id="cancelarNoticia">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary" id="publicarNoticia">Publicar</button>
                                     </div>
                                 </form>
+                                <!-- CREAR NOTICIAS -->
+                                <script>
+                                    const crearNoticias = document.querySelector('#crearNoticias');
+                                    const crearNoticiasForm = document.querySelector('#crearNoticiasForm');
+                                    const cancelarNoticia = document.querySelector('#cancelarNoticia');
+
+                                    crearNoticias.addEventListener('click', () => {
+                                        crearNoticias.classList.add('d-none');
+                                        crearNoticiasForm.classList.remove('d-none');
+                                    });
+
+                                    cancelarNoticia.addEventListener('click', () => {
+                                        crearNoticias.classList.add('d-none');
+                                        crearNoticiasForm.classList.remove('d-none');
+                                    });
+                                </script>
+                                <script>
+                                    // Inicializar el editor de texto
+                                    var quill = new Quill('#editor', {
+                                        modules: {
+                                            toolbar: [
+                                                ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
+                                                [{
+                                                    'size': ['small', false, 'large', 'huge']
+                                                }], // Tamaño del texto
+                                                [{
+                                                    'color': []
+                                                }, {
+                                                    'background': []
+                                                }] // Color del texto y del fondo
+                                            ]
+                                        },
+                                        theme: 'snow'
+                                    });
+                                    // Escuchar el evento submit del formulario
+                                    //PUBLICAR NOTICIAS:
+                                    $(document).ready(function() {
+                                        $('#publicarNoticia').click(function(event) {
+                                            event.preventDefault(); // Evitar el envío del formulario por defecto
+
+                                            var formData = {
+                                                imagen: $('#newsImageInput').val(),
+                                                texto: $('#newsTextInput').val()
+                                            };
+
+                                            // Convertir formData a JSON
+                                            var jsonData = JSON.stringify(formData);
+
+                                            // Realizar la solicitud Ajax
+                                            $.ajax({
+                                                url: 'http://localhost:8001/noticias',
+                                                type: 'POST',
+                                                data: jsonData,
+                                                contentType: 'application/json',
+                                                success: function(response) {
+                                                    // Manejar la respuesta del servidor
+                                                    console.log(response);
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    // Manejar errores de la solicitud
+                                                    console.log(xhr.responseText);
+                                                }
+                                            });
+                                        });
+                                    });
+
+
+                                    // var form = document.querySelector('form');
+                                    // form.addEventListener('submit', function(e) {
+                                    //     // Actualizar el valor del textarea oculto con el contenido del editor
+                                    //     var newsTextInput = document.querySelector('#newsTextInput');
+                                    //     newsTextInput.value = quill.root.innerHTML;
+                                    // });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -351,202 +425,65 @@ if (isset($_SESSION['destruir'])) {
                 document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
             }
         </script>
-        <!-- CREAR NOTICIAS -->
-        <script>
-            const createNewsBtn = document.querySelector('#createNewsBtn');
-            const createNewsForm = document.querySelector('#createNewsForm');
-            const cancelNewsBtn = document.querySelector('#cancelNewsBtn');
+        <div class="container-fluid noticias-finales">
 
-            createNewsBtn.addEventListener('click', () => {
-                createNewsBtn.classList.add('d-none');
-                createNewsForm.classList.remove('d-none');
-            });
-
-            cancelNewsBtn.addEventListener('click', () => {
-                createNewsForm.classList.add('d-none');
-                createNewsBtn.classList.remove('d-none');
-            });
-        </script>
-        <script>
-            // Inicializar el editor de texto
-            var quill = new Quill('#editor', {
-                modules: {
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
-                        [{
-                            'size': ['small', false, 'large', 'huge']
-                        }], // Tamaño del texto
-                        [{
-                            'color': []
-                        }, {
-                            'background': []
-                        }] // Color del texto y del fondo
-                    ]
-                },
-                theme: 'snow'
-            });
-            // Escuchar el evento submit del formulario
-            var form = document.querySelector('form');
-            form.addEventListener('submit', function(e) {
-                // Actualizar el valor del textarea oculto con el contenido del editor
-                var newsTextInput = document.querySelector('#newsTextInput');
-                newsTextInput.value = quill.root.innerHTML;
-            });
-        </script>
-        <div class="container-fluid my-4">
-            <div class="row">
-                <div class="col-12 col-md-8 offset-md-2 mx-auto">
-                    <div class="card mb-3">
-                        <img src="https://via.placeholder.com/500x500.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Noticia 1</h5>
-                            <article class="card-text clamp-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                    lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend
-                                    eu.
-                                    Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium
-                                    elementum.
-                                    Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                    vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi
-                                    ac
-                                    dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                    lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend
-                                    eu.
-                                    Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium
-                                    elementum.
-                                    Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                    vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi
-                                    ac
-                                    dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                    lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend
-                                    eu.
-                                    Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium
-                                    elementum.
-                                    Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                    vehicula. Nulla rutrum
-                                <h3>wadawd</h3>ulla quis orci consequat auctor. Sed fringilla bibendum nisi ac
-                                dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend eu.
-                                Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium elementum.
-                                Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi ac
-                                dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend eu.
-                                Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium elementum.
-                                Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi ac
-                                dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend eu.
-                                Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium elementum.
-                                Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi ac
-                                dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                    lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend
-                                    eu.
-                                    Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium
-                                    elementum.
-                                    Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                    vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi
-                                    ac
-                                    dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                                </p>
-                            </article>
-
-                            <button class="btn btn-sm btn-outline-primary mt-2 read-more-btn">Ver más</button>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Publicado hace 1 hora</small>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6>Comentarios</h6>
-                                    <div class="media border p-3">
-                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-                                        <div class="media-body">
-                                            <h6>John Doe <small><i>Publicado el 01/01/2022</i></small></h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ex
-                                                sit amet est rutrum tempus. Pellentesque semper arcu in mauris bibendum
-                                                interdum. Nunc rutrum mi ac ex pharetra, vel dapibus neque sagittis.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-8 offset-md-2 mx-auto text-center">
-                    <div class="card mb-3">
-                        <img src="https://via.placeholder.com/100x100.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Noticia 1</h5>
-                            <p class="card-text clamp-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas auctor elit vitae
-                                lorem ultricies tincidunt. Sed tincidunt fermentum nisi, quis commodo neque eleifend eu.
-                                Duis vel tellus ac arcu euismod luctus. Donec vel magna eget felis pretium elementum.
-                                Sed vitae tristique nulla. Maecenas euismod felis a purus aliquam, a suscipit massa
-                                vehicula. Nulla rutrum nulla quis orci consequat auctor. Sed fringilla bibendum nisi ac
-                                dapibus. Vivamus ut dolor suscipit, placerat magna a, lobortis odio.
-                            </p>
-                            <button class="btn btn-sm btn-outline-primary mt-2 read-more-btn">Ver más</button>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Publicado hace 1 hora</small>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6>Comentarios</h6>
-                                    <div class="media border p-3">
-                                        <img src="https://via.placeholder.com/50x50.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-                                        <div class="media-body">
-                                            <h6>John Doe <small><i>Publicado el 01/01/2022</i></small></h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam ex
-                                                sit amet est rutrum tempus. Pellentesque semper arcu in mauris bibendum
-                                                interdum. Nunc rutrum mi ac ex pharetra, vel dapibus neque sagittis.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center mx-auto text-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="/noticias?page=2">1</a></li>
-                            <li class="page-item"><a class="page-link" href="/noticias?page=2">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Siguiente</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
         </div>
+        <!-- CARGA DE NOTICIAS -->
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: 'http://localhost:8001/noticias',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $.each(response, function(index, obj) {
+                            var $card = $('<div>').addClass('card mb-3');
+                            var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
+                            var $cardBody = $('<div>').addClass('card-body');
+                            var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
+                            var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
+                            var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
+                            var $cardFooter = $('<div>').addClass('card-footer');
+                            var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
 
+                            $card.append($img);
+                            $cardBody.append($title);
+                            $cardBody.append($text);
+
+
+                            $cardBody.append($leerMas);
+                            $card.append($cardBody);
+                            $cardFooter.append($fecha);
+                            $card.append($cardFooter);
+
+                            var $container = $('<div>').addClass('container-fluid my-4');
+                            var $row = $('<div>').addClass('row');
+                            var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
+
+                            $col.append($card);
+                            $row.append($col);
+                            $container.append($row);
+
+                            $('main').append($container);
+                        });
+                        $(document).on('click', '.leerMas', function() {
+  var text = $(this).prev('.texto');
+  text.toggleClass('expanded');
+  if (text.hasClass('expanded')) {
+    $(this).text('Ver menos');
+  } else {
+    $(this).text('Ver más');
+  }
+});
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error); // Manejar el error de acuerdo a tus necesidades
+                    }
+                });
+            });
+        </script>
     </main>
+
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
             <div class="row">
@@ -560,13 +497,23 @@ if (isset($_SESSION['destruir'])) {
             </div>
         </div>
     </footer>
+
     <script>
+        $('.read-more-btn').click(function() {
+            var text = $(this).prev();
+            text.toggleClass('expanded');
+            if (text.hasClass('expanded')) {
+                $(this).text('Ver menos');
+            } else {
+                $(this).text('Ver más');
+            }
+        });
         $("#propagacion").on("click", function(event) {
             event.stopPropagation();
         });
 
         //Tema de ver mas del body de las noticias
-        const readMoreButtons = document.querySelectorAll('.read-more-btn');
+        const readMoreButtons = document.querySelectorAll('.leerMas');
         readMoreButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const text = btn.previousElementSibling;

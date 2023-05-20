@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             exit(json_encode($datos));
 
-        } elseif (isset($_GET['all'])) {
+        } else {
 
             $servicio = new UsuarioServiceImpl();
             $datos = $servicio->obtenerUsuarios();

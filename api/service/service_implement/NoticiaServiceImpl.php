@@ -33,7 +33,7 @@ class NoticiaServiceImpl implements NoticiaService {
 
         $noticias = $this->dao->obtenerNoticias();
 
-        if (count($noticias) < 1) {
+        if (count($noticias) < 1 || $noticias == null || $noticias == false) {
             throw new Exception("No hay noticias");
         }
 
@@ -42,7 +42,7 @@ class NoticiaServiceImpl implements NoticiaService {
 
     /********************POST********************/
 
-    public function crearNoticia($texto,$imagen) {
+    public function crearNoticia($texto,$imagen,$titulo) {
         
         
         if (!$texto || !$imagen) {
@@ -54,7 +54,7 @@ class NoticiaServiceImpl implements NoticiaService {
     
         try {
 
-            return $this->dao->createNoticia(new Noticia($id,$fechaCreacion,$texto,$imagen));
+            return $this->dao->createNoticia(new Noticia($fechaCreacion,$texto,$imagen,$titulo));
         } catch (PDOException $e) {
 
             echo "Error al crear noticia: " . $e->getMessage();

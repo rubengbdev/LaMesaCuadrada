@@ -15,8 +15,8 @@ class NoticiaDao {
 
     public function createNoticia(Noticia $noticia) {
 
-        $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.noticia (noticia_fecha,noticia_texto,noticia_imagen) VALUES (?, ?, ?)');
-        $stmt->execute([$noticia->getFecha(), $noticia->getTexto(), $noticia->getImagen()]);
+        $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.noticia (noticia_fecha,noticia_texto,noticia_imagen,noticia_titulo) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$noticia->getFecha(), $noticia->getTexto(), $noticia->getImagen(), $noticia->getTitulo()]);
         
         return $this->pdo->lastInsertId();
     }
@@ -41,16 +41,19 @@ class NoticiaDao {
 
     public function obtenerNoticias() {
 
-        $stmt = $this->pdo->prepare('SELECT * FROM mesa_cuadrada.noticia');
+        // $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen, noticia_titulo FROM noticia ORDER BY DATE_FORMAT(noticia_fecha, "%Y-%m-%d") DESC');
+        // $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen FROM noticia ORDER BY noticia_fecha DESC');
+        $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen, noticia_titulo FROM noticia ORDER BY DATE_FORMAT(noticia_fecha, "%Y-%m-%d %H:%i:%s") DESC');
+
+
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $noticias = [];
             foreach ($stmt as $elemento) {
-                $noticia = new Noticia($elemento['noticia_id'],$elemento['noticia_fecha'],$elemento['noticia_texto'],$elemento['noticia_imagen']);
+                $noticia = new Noticia($elemento['noticia_fecha'],$elemento['noticia_texto'],$elemento['noticia_imagen'], $elemento['noticia_titulo']);
                 $noticias[] = $noticia->toArray();
             }
-        //Hacer una copia de usuarios con solo los elementos que queremos
 
             return $noticias;
         } else {
