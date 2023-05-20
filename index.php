@@ -8,8 +8,6 @@ if (!isset($_SESSION['usuario'])) {
     $_SESSION['token_login'] = bin2hex(random_bytes(16));
     $_SESSION['token_registro'] = bin2hex(random_bytes(16));
 }
-print_r($_SESSION);
-print_r($_COOKIE);
 if (isset($_COOKIE['correo'])) {
 
     $_SESSION['usuario'] = $_COOKIE['correo'];
@@ -223,7 +221,7 @@ if (isset($_COOKIE['correo'])) {
 
                         <div class="nav-item dropdown pr-2">
                             <button class="btn btn-success btn-outline-dark opciones-btn" style="border: 3px solid black;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="texto-bienvenida"><?="Hola " . $_SESSION['nombre']?></span>
+                                <span class="texto-bienvenida"><?= "Hola " . $_SESSION['nombre'] ?></span>
                                 <script>
                                     $(document).ready(function() {
                                         var nombreCookie = getCookie("nombre");
@@ -295,7 +293,7 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-    <main>
+    <section>
         <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
             <div class="container-fluid my-4">
                 <div class="row">
@@ -403,88 +401,24 @@ if (isset($_COOKIE['correo'])) {
                 </div>
             </div>
         <?php endif; ?>
-        <!-- BOTON SCROLL V2-->
+    </section>
+    
+    
+    <main>
 
-        <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i class="bi bi-arrow-up"></i></button>
+        <div id="noticias-contenido"></div>
 
-        <script>
-            // Muestra el botón cuando el usuario ha desplazado 20 píxeles desde la parte superior de la página
-            window.onscroll = function() {
-                scrollFunction()
-            };
-
-            function scrollFunction() {
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    document.getElementById("scrollBtn").style.display = "block";
-                } else {
-                    document.getElementById("scrollBtn").style.display = "none";
-                }
-            }
-
-            // Cuando el usuario hace clic en el botón, vuelve al inicio de la página
-            function topFunction() {
-                document.body.scrollTop = 0; // Para Safari
-                document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
-            }
-        </script>
-        <div class="container-fluid noticias-finales">
-
+        <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
+            <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                <div id="paginacion-botones" class="d-flex justify-content-center"></div>
+            </div>
         </div>
-        <!-- CARGA DE NOTICIAS -->
-        <script>
-            $(document).ready(function() {
-                $.ajax({
-                    url: 'http://localhost:8001/noticias',
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(response) {
-                        $.each(response, function(index, obj) {
-                            var $card = $('<div>').addClass('card mb-3');
-                            var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
-                            var $cardBody = $('<div>').addClass('card-body');
-                            var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
-                            var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
-                            var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
-                            var $cardFooter = $('<div>').addClass('card-footer');
-                            var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
 
-                            $card.append($img);
-                            $cardBody.append($title);
-                            $cardBody.append($text);
-
-
-                            $cardBody.append($leerMas);
-                            $card.append($cardBody);
-                            $cardFooter.append($fecha);
-                            $card.append($cardFooter);
-
-                            var $container = $('<div>').addClass('container-fluid my-4');
-                            var $row = $('<div>').addClass('row');
-                            var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
-
-                            $col.append($card);
-                            $row.append($col);
-                            $container.append($row);
-
-                            $('main').append($container);
-                        });
-                        $(document).on('click', '.leerMas', function() {
-  var text = $(this).prev('.texto');
-  text.toggleClass('expanded');
-  if (text.hasClass('expanded')) {
-    $(this).text('Ver menos');
-  } else {
-    $(this).text('Ver más');
-  }
-});
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error); // Manejar el error de acuerdo a tus necesidades
-                    }
-                });
-            });
-        </script>
     </main>
+
+    <!-- Carga de noticias y paginacion -->
+    <div class="pagination"></div>
+    <script src="./js/noticias.js"></script>
 
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
@@ -528,6 +462,10 @@ if (isset($_COOKIE['correo'])) {
             });
         });
     </script>
+
+    <!-- BOTON SCROLL -->
+    <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i class="bi bi-arrow-up"></i></button>
+    <script src="./js/botonScroll.js"></script>
 </body>
 
 </html>
