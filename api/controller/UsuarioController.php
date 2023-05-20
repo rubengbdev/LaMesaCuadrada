@@ -41,10 +41,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             }
 
         } elseif (isset($_POST["correo"]) && isset($_POST["contrasena"]) && isset($_POST["registro"])) {
-
-            $datos = json_decode(file_get_contents('php://input'));
+            
             $servicio = new UsuarioServiceImpl();
-            $id = $servicio->crearUsuario($datos->nombre, $datos->correo, $datos->contrasena, $datos->tipo);
+            $id = $servicio->crearUsuario($_POST["nombre"], $_POST["correo"], $_POST["contrasena"], "u");
             exit(json_encode($id));
         }
 

@@ -5,3 +5,4 @@ RewriteRule ^login2$ php/login.php [L]
 RewriteRule ^login/?$ api/controller/UsuarioController.php
 RewriteRule ^logout/?$ api/controller/LogoutController.php
 RewriteRule ^registro/?$ api/controller/UsuarioController.php
+RewriteRule ^noticias/?$ api/controller/NoticiasController.php

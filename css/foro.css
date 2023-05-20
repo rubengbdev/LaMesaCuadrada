@@ -214,3 +214,7 @@ footer {
     max-width: 100%;
     overflow-x: auto;
 }
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.671); /* Ajusta el valor alpha para la opacidad deseada */
+  }

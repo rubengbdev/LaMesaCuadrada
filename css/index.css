@@ -246,3 +246,7 @@ footer {
 #editor {
     height: 30em;
 }
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.671); /* Ajusta el valor alpha para la opacidad deseada */
+  }

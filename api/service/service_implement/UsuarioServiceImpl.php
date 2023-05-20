@@ -60,15 +60,17 @@ class UsuarioServiceImpl implements UsuarioService {
 
         //Añadir tema seguridad, es decir el verify
 
-        if ($this->dao->existsByUsuarioContrasena($usuarioVerificado,$contrasenaVerificado)) {
+        if ($this->dao->existsByUsuarioContrasena($usuarioVerificado)) {
             
-            return $this->dao->login($usuario,$contrasena);
+            return $this->dao->login($usuarioVerificado,$contrasenaVerificado);
         }
 
         return null;
     }
 
     public function crearUsuario($nombre, $email, $contrasena, $tipo) {
+        
+        $id = $this->dao->ultimoId();
         // validar los datos del usuario
         if (!$nombre || !$email || !$contrasena || !$tipo) {
             throw new Exception("Faltan datos del usuario");
@@ -77,7 +79,8 @@ class UsuarioServiceImpl implements UsuarioService {
         // verificar que el email no esté registrado previamente
         $usuarioExistente = $this->dao->obtenerUsuarioPorEmail($email);
         if ($usuarioExistente != null) {
-            throw new Exception("Ya existe un usuario con este correo electrónico");
+            return null;
+            // throw new Exception("Ya existe un usuario con este correo electrónico");
         }
 
         // Obtener la fecha actual del servidor
@@ -85,19 +88,22 @@ class UsuarioServiceImpl implements UsuarioService {
     
         // Generar un salt aleatorio para la contraseña
         $salt = random_bytes(16);
+
+        //conversion a formato leible
+        $saltHex = bin2hex($salt);
     
         // Concatenar el salt con la contraseña
-        $contrasenaConSalt = $contrasena . $salt;
+        $contrasenaConSalt = $contrasena . $saltHex;
     
         // Cifrar la contraseña usando el algoritmo bcrypt y el salt generado
         $contraseñaCifrada = password_hash($contrasenaConSalt, PASSWORD_BCRYPT);
 
     
         try {
-            //CHAPADO POR EL TEMA DE QUE EL CONSTRUCTOR SOLO PUEDE HABER UNO...
-            // return $this->dao->createUsuario(new Usuario($nombre,$email,$tipo,$contraseñaCifrada,$fechaCreacion));
+
+            return $this->dao->createUsuario(new Usuario($id,$nombre,$email,$tipo,$contraseñaCifrada,$fechaCreacion, $saltHex));
         } catch (PDOException $e) {
-            // Manejar cualquier excepción que pueda ocurrir al ejecutar la consulta
+
             echo "Error al crear el usuario: " . $e->getMessage();
         }
     }

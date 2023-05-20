@@ -8,16 +8,18 @@ class Usuario {
     private $tipo;
     private $contrasena;
     private $fechaCreacion;
+    private $salt;
     //private $hilos; // relación uno a muchos con la tabla hilo
 
 
-    public function __construct($id, $nombre, $email, $tipo, $contrasena, $fechaCreacion) {
+    public function __construct($id, $nombre, $email, $tipo, $contrasena, $fechaCreacion, $salt) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->email = $email;
         $this->contrasena = $contrasena;
         $this->tipo = $tipo;
         $this->fechaCreacion = $fechaCreacion;
+        $this->salt = $salt;
     }
 
 
@@ -82,6 +84,14 @@ class Usuario {
     public function setFechaCreacion($fechaCreacion) {
         $this->fechaCreacion = $fechaCreacion;
     }
+
+    public function getSalt() {
+        return $this->salt;
+    }
+    
+    public function setSalt($salt) {
+        $this->salt = $salt;
+    } 
 
     /* OTROS */
 

@@ -15,10 +15,14 @@ class UsuarioDAO {
 
     public function createUsuario(Usuario $usuario) {
 
-        $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.usuario (usuario_nombre, usuario_email, usuario_contrasena, usuario_tipo, usuario_fecha_creacion) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$usuario->getNombre(), $usuario->getEmail(), $usuario->getContrasena(), $usuario->getTipo(), $usuario->getFechaCreacion()]);
+        $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.usuario (usuario_nombre, usuario_email, usuario_contrasena, usuario_tipo, usuario_fecha_creacion, usuario_salt) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$usuario->getNombre(), $usuario->getEmail(), $usuario->getContrasena(), $usuario->getTipo(), $usuario->getFechaCreacion(), $usuario->getSalt()]);
         return $this->pdo->lastInsertId();
 
+    }
+
+    public function ultimoId() {
+        return $this->pdo->lastInsertId() + 1;
     }
 
     public function obtenerUsuarioPorId($id) {
@@ -56,7 +60,7 @@ class UsuarioDAO {
         if ($stmt->rowCount() > 0) {
             $usuarios = [];
             foreach ($stmt as $elemento) {
-                $user = new Usuario($elemento['usuario_id'],$elemento['usuario_nombre'],$elemento['usuario_email'],$elemento['usuario_tipo'],$elemento['usuario_contrasena'],$elemento['usuario_fecha_creacion']);
+                $user = new Usuario($elemento['usuario_id'],$elemento['usuario_nombre'],$elemento['usuario_email'],$elemento['usuario_tipo'],$elemento['usuario_contrasena'],$elemento['usuario_fecha_creacion'],$elemento['usuario_salt']);
                 $usuarios[] = $user->toArray();
             }
             print_r($usuarios);
@@ -83,10 +87,10 @@ class UsuarioDAO {
 
                                             /*LOGIN*/
 
-    public function existsByUsuarioContrasena($usuario, $contrasena) {
+    public function existsByUsuarioContrasena($usuario) {
         
-        $stmt = $this->pdo->prepare('SELECT COUNT(*) as total FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
-        $stmt->execute([$usuario, $contrasena]);
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) as total FROM usuario WHERE usuario_email = ?');
+        $stmt->execute([$usuario]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $total = $row['total'];
 
@@ -94,17 +98,39 @@ class UsuarioDAO {
     }
 
 
-    public function login($usuario, $contrasena) {
+    // public function login($usuario, $contrasena) {
         
-        $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email, usuario_tipo FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
-        $stmt->execute([$usuario, $contrasena]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$row) {
+    //     $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email, usuario_tipo FROM usuario WHERE usuario_email = ? AND usuario_contrasena = ?');
+    //     $stmt->execute([$usuario, $contrasena]);
+    //     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    //     if (!$row) {
             
+    //         return null;
+    //     }
+
+    //     return $row;
+    // }
+
+    public function login($usuario, $contrasena) {
+        $stmt = $this->pdo->prepare('SELECT usuario_nombre, usuario_email, usuario_contrasena, usuario_salt, usuario_tipo FROM usuario WHERE usuario_email = ?');
+        $stmt->execute([$usuario]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$row) {
+            return null; // El usuario no existe en la base de datos
+        }
+        
+        $contrasenaAlmacenada = $row['usuario_contrasena'];
+        $salt = $row['usuario_salt'];
+        
+        $contrasenaConSalt = $contrasena . $salt;
+        
+        if (password_verify($contrasenaConSalt, $contrasenaAlmacenada)) {
+            return $row;
+        } else {
+            // La contraseña es incorrecta
             return null;
         }
-
-        return $row;
     }
 
 }
