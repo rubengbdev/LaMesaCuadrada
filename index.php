@@ -1,11 +1,15 @@
 <?php
 session_start();
 
+
 if (!isset($_SESSION['usuario'])) {
+    header("Location index.php");
+
     $_SESSION['token_login'] = bin2hex(random_bytes(16));
     $_SESSION['token_registro'] = bin2hex(random_bytes(16));
 }
-
+print_r($_SESSION);
+print_r($_COOKIE);
 if (isset($_COOKIE['correo'])) {
 
     $_SESSION['usuario'] = $_COOKIE['correo'];
@@ -13,8 +17,6 @@ if (isset($_COOKIE['correo'])) {
     $_SESSION['nombre'] = $_COOKIE['nombre'];
 }
 
-if (isset($_SESSION['destruir'])) {
-}
 ?>
 
 <!DOCTYPE html>
@@ -221,7 +223,7 @@ if (isset($_SESSION['destruir'])) {
 
                         <div class="nav-item dropdown pr-2">
                             <button class="btn btn-success btn-outline-dark opciones-btn" style="border: 3px solid black;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="texto-bienvenida">Hola Usuario</span>
+                                <span class="texto-bienvenida"><?="Hola " . $_SESSION['nombre']?></span>
                                 <script>
                                     $(document).ready(function() {
                                         var nombreCookie = getCookie("nombre");
@@ -251,7 +253,7 @@ if (isset($_SESSION['destruir'])) {
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </span>
                             </button>
-                            <form id="logout-form" action="api/controller" method="post">
+                            <form id="logout-form" method="post">
                                 <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="#">Mi cuenta</a>
                                     <a class="dropdown-item" href="#">Mis pedidos</a>
