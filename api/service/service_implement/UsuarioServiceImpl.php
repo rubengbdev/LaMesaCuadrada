@@ -70,6 +70,11 @@ class UsuarioServiceImpl implements UsuarioService {
 
     public function crearUsuario($nombre, $email, $contrasena, $tipo) {
         
+        $nombre = seguridadFormularios($nombre);
+        $contrasena = seguridadFormularios($contrasena);
+        $email = seguridadFormularios($email);
+        $tipo = seguridadFormularios($tipo);
+
         $id = $this->dao->ultimoId();
         // validar los datos del usuario
         if (!$nombre || !$email || !$contrasena || !$tipo) {
