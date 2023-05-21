@@ -24,15 +24,15 @@ if (isset($_COOKIE['correo'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>La Mesa Cuadrada</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- EDITOR TEXTAREA -->
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
     <!-- <link rel="stylesheet" href="css/foro.css"> -->
 </head>
 
@@ -48,10 +48,10 @@ if (isset($_COOKIE['correo'])) {
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="index.php" class="nav-item nav-link active">Actualidad</a>
-                    <a href="pages/foro.php" class="nav-item nav-link ">Foro</a>
-                    <a href="pages/tienda.php" class="nav-item nav-link ">Tienda</a>
-                    <a href="pages/registro_partidas.php" class="nav-item nav-link ">Registro de Partidas</a>
+                    <a href="../index.php" class="nav-item nav-link active">Actualidad</a>
+                    <a href="foro.php" class="nav-item nav-link ">Foro</a>
+                    <a href="tienda.html" class="nav-item nav-link ">Tienda</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link ">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
@@ -111,7 +111,7 @@ if (isset($_COOKIE['correo'])) {
                                                 document.cookie = "correo=" + email;
                                                 document.cookie = "tipo=" + tipo;
 
-                                                window.location.href = 'index.php';
+                                                window.location.href = '../index.php';
                                             }
                                         },
                                         error: function(xhr, status, error) {
@@ -253,7 +253,9 @@ if (isset($_COOKIE['correo'])) {
                             </button>
                             <form id="logout-form" method="post">
                                 <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="pages/mi_cuenta.php">Mi cuenta</a>
+                                    <a class="dropdown-item" href="#">Mi cuenta</a>
+                                    <a class="dropdown-item" href="#">Mis pedidos</a>
+                                    <a class="dropdown-item" href="#">Mis pedidos</a>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
                                 </div>
                             </form>
@@ -291,140 +293,47 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-    <section class="container-fluid">
-        <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
-            <div class="container-fluid my-4">
-                <div class="row">
-                    <div class="col-12 text-center mx-auto">
-                        <button class=" btn btn-lg btn-primary" id="crearNoticias">Crear Noticia</button>
-                    </div>
-                </div>
-                <hr>
-                <div class="row d-none no-gutters" id="crearNoticiasForm">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form id="publicar-noticias">
-                                    <input type="hidden" name="publicar">
-                                    <div class="mb-3">
-                                        <label for="titulo" class="form-label">Titulo de la noticia</label>
-                                        <input type="text" class="form-control" id="titulo" name="titulo">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="imagen" class="form-label">Enlace de la imagen de cabecera</label>
-                                        <input type="text" class="form-control" id="texto" name="imagen">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="imagen" class="form-label">Contenido de la noticia</label>
-                                        <textarea class="form-control square-textarea" id="imagen" name="texto"></textarea>
-                                    </div>
-
-                                    <div class="text-end">
-                                        <button type="button" class="btn btn-danger" id="cancelarNoticia">Cancelar</button>
-                                        <input type="submit" class="btn btn-primary btn-block" value="Publicar">
-                                    </div>
-                                </form>
-                                <!-- CREAR NOTICIAS -->
-                                <script>
-                                    const crearNoticias = document.querySelector('#crearNoticias');
-                                    const crearNoticiasForm = document.querySelector('#crearNoticiasForm');
-                                    const cancelarNoticia = document.querySelector('#cancelarNoticia');
-
-                                    crearNoticias.addEventListener('click', () => {
-                                        crearNoticias.classList.add('d-none');
-                                        crearNoticiasForm.classList.remove('d-none');
-                                    });
-
-                                    cancelarNoticia.addEventListener('click', () => {
-                                        crearNoticiasForm.classList.add('d-none');
-                                        crearNoticias.classList.remove('d-none');
-                                    });
-                                </script>
-                                <script src="./js/crearNoticias.js"></script>
-                                <!-- <script>
-                                    // Inicializar el editor de texto
-                                    // var quill = new Quill('#editor', {
-                                    //     modules: {
-                                    //         toolbar: [
-                                    //             ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
-                                    //             [{
-                                    //                 'size': ['small', false, 'large', 'huge']
-                                    //             }], // Tamaño del texto
-                                    //             [{
-                                    //                 'color': []
-                                    //             }, {
-                                    //                 'background': []
-                                    //             }] // Color del texto y del fondo
-                                    //         ]
-                                    //     },
-                                    //     theme: 'snow'
-                                    // });
-                                    // Escuchar el evento submit del formulario
-                                    //PUBLICAR NOTICIAS:
-                                    $(document).ready(function() {
-                                        $('#publicarNoticia').click(function(event) {
-                                            event.preventDefault(); // Evitar el envío del formulario por defecto
-
-                                            var formData = {
-                                                imagen: $('#newsImageInput').val(),
-                                                texto: $('#newsTextInput').val()
-                                            };
-
-                                            // Convertir formData a JSON
-                                            var jsonData = JSON.stringify(formData);
-
-                                            // Realizar la solicitud Ajax
-                                            $.ajax({
-                                                url: 'http://localhost:8001/noticias',
-                                                type: 'POST',
-                                                data: jsonData,
-                                                contentType: 'application/json',
-                                                success: function(response) {
-                                                    // Manejar la respuesta del servidor
-                                                    console.log(response);
-                                                },
-                                                error: function(xhr, status, error) {
-                                                    // Manejar errores de la solicitud
-                                                    console.log(xhr.responseText);
-                                                }
-                                            });
-                                        });
-                                    });
-
-
-                                    // var form = document.querySelector('form');
-                                    // form.addEventListener('submit', function(e) {
-                                    //     // Actualizar el valor del textarea oculto con el contenido del editor
-                                    //     var newsTextInput = document.querySelector('#newsTextInput');
-                                    //     newsTextInput.value = quill.root.innerHTML;
-                                    // });
-                                </script> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-    </section>
-
-
     <main class="container-fluid">
+        <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
+            <h4>Mis datos</h4>
 
-        <div id="noticias-contenido"></div>
-        <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
-            <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
-                <div id="paginacion-botones" class="d-flex justify-content-center">
-                    <button id="anterior" class="botones btn btn-sm btn-outline-primary d-none">Anterior</button>
-                    <button id="siguiente" class="botones btn btn-sm btn-outline-primary">Siguiente</button>
+            <h4>Usuarios</h4>
+            <ul>
+                <li>Usuario</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+            </ul>
+            <div id="noticias-contenido"></div>
+            <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
+                <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                    <div id="paginacion-botones" class="d-flex justify-content-center">
+                        <button id="anterior" class="botones btn btn-sm btn-outline-primary d-none">Anterior</button>
+                        <button id="siguiente" class="botones btn btn-sm btn-outline-primary">Siguiente</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
+            <script src="./js/usuarios.js"></script>
+        <?php else : ?>
+            <h4>Mis datos</h4>
+            <div id="noticias-contenido"></div>
+            <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
+                <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                    <div id="paginacion-botones" class="d-flex justify-content-center">
+                        <button id="anterior" class="botones btn btn-sm btn-outline-primary d-none">Anterior</button>
+                        <button id="siguiente" class="botones btn btn-sm btn-outline-primary">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+            <script src="./js/usuarios.js"></script>
+        <?php endif; ?>
     </main>
-
-    <!-- Carga de noticias y paginacion -->
-    <div class="pagination"></div>
-    <script src="./js/noticias.js"></script>
 
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">

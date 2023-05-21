@@ -58,6 +58,16 @@ function generarNoticiasYBotones(primeraVez) {
                 let noticiasPagina = noticias.slice(inicio, fin);
 
                 muestraNoticias(noticiasPagina);
+
+                $(document).on('click', '.leerMas', function () {
+                    var text = $(this).prev('.texto');
+                    text.toggleClass('expanded');
+                    if (text.hasClass('expanded')) {
+                        $(this).text('Ver menos');
+                    } else {
+                        $(this).text('Ver más');
+                    }
+                });
                 eventoBotonesPaginacion();
             },
             error: function (xhr, status, error) {
@@ -74,8 +84,8 @@ function muestraNoticias(noticias) {
         var $card = $('<div>').addClass('card mb-3');
         var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
         var $cardBody = $('<div>').addClass('card-body');
-        var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
-        var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
+        var $title = $('<h3>').addClass('card-title titulo').text(obj.titulo);
+        var $text = $('<article>').addClass('card-text clamp-text texto').html(obj.texto.replace(/\n/g, "<br>"));
         var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
         var $cardFooter = $('<div>').addClass('card-footer');
         var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
@@ -99,15 +109,6 @@ function muestraNoticias(noticias) {
         $container.append($row);
 
         $('#noticias-contenido').append($container);
-    });
-    $(document).on('click', '.leerMas', function () {
-        var text = $(this).prev('.texto');
-        text.toggleClass('expanded');
-        if (text.hasClass('expanded')) {
-            $(this).text('Ver menos');
-        } else {
-            $(this).text('Ver más');
-        }
     });
 }
 
@@ -152,6 +153,10 @@ function eventoBotonesPaginacion() {
                     if (botonObjetivo > 1) {
                         $("#anterior").removeClass("d-none");
                     }
+
+                    if (botonObjetivo + 3 > numeroPaginas) {
+                        $("#siguiente").addClass("d-none");
+                    }
                 })
             }
         } else if (pagina == "anterior") {
@@ -184,6 +189,10 @@ function eventoBotonesPaginacion() {
                         $("#anterior").removeClass("d-none");
                     } else {
                         $("#anterior").addClass("d-none");
+                    }
+
+                    if (botonObjetivo + 3 < numeroPaginas) {
+                        $("#siguiente").removeClass("d-none");
                     }
                 })
             }

@@ -243,11 +243,19 @@ footer {
 }
 
 .navbar {
-    background-color: rgba(0, 0, 0, 0.671); /* Ajusta el valor alpha para la opacidad deseada */
-  }
+    background-color: rgba(0, 0, 0, 0.671);
+    /* Ajusta el valor alpha para la opacidad deseada */
+}
 
 
-  #paginacion-botones {
+#paginacion-botones {
     overflow: auto;
     white-space: nowrap;
-  }
+}
+
+.square-textarea {
+    width: 100em;
+    /* Ajusta el ancho según tus necesidades */
+    height: 100em;
+    /* Ajusta la altura según tus necesidades */
+}

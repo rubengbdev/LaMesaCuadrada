@@ -33,7 +33,7 @@ class UsuarioServiceImpl implements UsuarioService {
 
         $usuario = $this->dao->obtenerUsuarioPorEmail($email);
         if ($this->dao->obtenerUsuarioPorEmail($email)) {
-            return true;
+            return $this->dao->obtenerUsuarioPorEmail($email);
         } 
         return false;
     }

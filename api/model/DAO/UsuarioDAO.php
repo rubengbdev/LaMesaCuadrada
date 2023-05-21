@@ -40,13 +40,13 @@ class UsuarioDAO {
 
     public function obtenerUsuarioPorEmail($email) {
 
-        $stmt = $this->pdo->prepare('SELECT * FROM usuario WHERE usuario_email = ?');
+        $stmt = $this->pdo->prepare('SELECT usuario_id FROM usuario WHERE usuario_email = ?');
         $stmt->execute([$email]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) {
             return false;
         }
-        return true;
+        return $row;
         
     }
 
