@@ -402,15 +402,18 @@ if (isset($_COOKIE['correo'])) {
             </div>
         <?php endif; ?>
     </section>
-    
-    
+
+
     <main>
 
         <div id="noticias-contenido"></div>
 
         <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
             <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
-                <div id="paginacion-botones" class="d-flex justify-content-center"></div>
+                <div id="paginacion-botones" class="d-flex justify-content-center">
+                    <button id="anterior" class="botones btn btn-sm btn-outline-primary d-none">Anterior</button>
+                    <button id="siguiente" class="botones btn btn-sm btn-outline-primary">Siguiente</button>
+                </div>
             </div>
         </div>
 
