@@ -1,6 +1,6 @@
-let primeraCarga = true;
-
 $(document).ready(function () {
+
+    let noticias = [];
 
     $.ajax({
         url: 'http://localhost:8001/noticias',
@@ -8,10 +8,11 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
 
+            noticias = response;
             //Genera botones la primera vez
-            let noticiasPorPagina = 1;
+            let noticiasPorPagina = 2;
             let numeroPaginas = Math.ceil(response.length / noticiasPorPagina);
-
+            console.log(numeroPaginas);
             let paginacionBotones = $("#paginacion-botones");
 
             let siguiente = $("#siguiente");
@@ -37,10 +38,28 @@ $(document).ready(function () {
                             id: i
                         }).insertBefore(siguiente);
                     }
+                } else {
+                    $("<button>", {
+                        class: "botones btn btn-sm btn-outline-primary",
+                        text: i,
+                        id: i
+                    }).insertBefore(siguiente);
                 }
             }
 
-            $(".botones").click(function () {
+
+            //PRIMERA CARGA
+            let pagina = 1;
+
+            // Obtener la parte correspondiente de las noticias según la página seleccionada
+            let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+            let fin = inicio + 3; // Índice de fin (no inclusivo)
+            let noticiasPagina = noticias.slice(0, 3);
+
+            muestraNoticias(noticiasPagina);
+
+            $(".botones").click(function (event) {
+                event.preventDefault();
                 // Lógica a ejecutar cuando se hace clic en un botón de paginación
                 let pagina = $(this).attr("id");
                 console.log(pagina);
@@ -54,7 +73,18 @@ $(document).ready(function () {
                         $(".botones").each(function () {
                             if ($(this).attr('id') == botonObjetivo) {
                                 $(this).addClass("active");
-                                console.log($(this).attr("id") +"CAMBIAR TODO");
+                                console.log($(this).attr("id") + "CAMBIAR TODO");
+
+                                //MOVIDA
+                                let pagina = parseInt($(this).attr("id"));
+
+                                // Obtener la parte correspondiente de las noticias según la página seleccionada
+                                let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                                let fin = inicio + 3; // Índice de fin (no inclusivo)
+                                let noticiasPagina = noticias.slice(inicio, fin);
+
+                                muestraNoticias(noticiasPagina);
+
                             }
                             if ($(this).attr('id') == botonObjetivo || $(this).attr('id') == botonObjetivo + 1 || $(this).attr('id') == botonObjetivo - 1) {
                                 $(this).removeClass("d-none");
@@ -77,7 +107,17 @@ $(document).ready(function () {
                         $(".botones").each(function () {
                             if ($(this).attr('id') == botonObjetivo) {
                                 $(this).addClass("active");
-                                console.log($(this).attr("id") +"EL BUEN EVENTO");
+                                console.log($(this).attr("id") + "EL BUEN EVENTO");
+
+                                //MOVIDA
+                                let pagina = parseInt($(this).attr("id"));
+
+                                // Obtener la parte correspondiente de las noticias según la página seleccionada
+                                let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                                let fin = inicio + 3; // Índice de fin (no inclusivo)
+                                let noticiasPagina = noticias.slice(inicio, fin);
+
+                                muestraNoticias(noticiasPagina);
                             }
                             if ($(this).attr('id') == botonObjetivo || $(this).attr('id') == botonObjetivo + 1 || $(this).attr('id') == botonObjetivo - 1) {
                                 $(this).removeClass("d-none");
@@ -95,50 +135,103 @@ $(document).ready(function () {
                 } else {
                     $(".botones").removeClass("active"); // Quita la clase "active" de todos los botones
                     $(this).addClass("active");
+
+                    //MOVIDA
+                    let pagina = parseInt($(this).attr("id"));
+
+                    // Obtener la parte correspondiente de las noticias según la página seleccionada
+                    let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                    let fin = inicio + 3; // Índice de fin (no inclusivo)
+                    let noticiasPagina = noticias.slice(inicio, fin);
+
+                    muestraNoticias(noticiasPagina);
                 }
 
             });
 
 
-            $.each(response, function (index, obj) {
-                var $card = $('<div>').addClass('card mb-3');
-                var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
-                var $cardBody = $('<div>').addClass('card-body');
-                var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
-                var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
-                var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
-                var $cardFooter = $('<div>').addClass('card-footer');
-                var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
+            function muestraNoticias(noticias) {
+                $("#noticias-contenido").empty();
+                $.each(noticias, function (index, obj) {
+                    var $card = $('<div>').addClass('card mb-3');
+                    var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
+                    var $cardBody = $('<div>').addClass('card-body');
+                    var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
+                    var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
+                    var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
+                    var $cardFooter = $('<div>').addClass('card-footer');
+                    var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
 
-                $card.append($img);
-                $cardBody.append($title);
-                $cardBody.append($text);
+                    $card.append($img);
+                    $cardBody.append($title);
+                    $cardBody.append($text);
 
 
-                $cardBody.append($leerMas);
-                $card.append($cardBody);
-                $cardFooter.append($fecha);
-                $card.append($cardFooter);
+                    $cardBody.append($leerMas);
+                    $card.append($cardBody);
+                    $cardFooter.append($fecha);
+                    $card.append($cardFooter);
 
-                var $container = $('<div>').addClass('container-fluid my-4');
-                var $row = $('<div>').addClass('row');
-                var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
+                    var $container = $('<div>').addClass('container-fluid my-4');
+                    var $row = $('<div>').addClass('row');
+                    var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
 
-                $col.append($card);
-                $row.append($col);
-                $container.append($row);
+                    $col.append($card);
+                    $row.append($col);
+                    $container.append($row);
 
-                $('#noticias-contenido').append($container);
-            });
-            $(document).on('click', '.leerMas', function () {
-                var text = $(this).prev('.texto');
-                text.toggleClass('expanded');
-                if (text.hasClass('expanded')) {
-                    $(this).text('Ver menos');
-                } else {
-                    $(this).text('Ver más');
-                }
-            });
+                    $('#noticias-contenido').append($container);
+                });
+                $(document).on('click', '.leerMas', function () {
+                    var text = $(this).prev('.texto');
+                    text.toggleClass('expanded');
+                    if (text.hasClass('expanded')) {
+                        $(this).text('Ver menos');
+                    } else {
+                        $(this).text('Ver más');
+                    }
+                });
+            }
+
+            // $.each(response, function (index, obj) {
+            //     var $card = $('<div>').addClass('card mb-3');
+            //     var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
+            //     var $cardBody = $('<div>').addClass('card-body');
+            //     var $title = $('<h5>').addClass('card-title titulo').text(obj.titulo);
+            //     var $text = $('<article>').addClass('card-text clamp-text texto').text(obj.texto);
+            //     var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
+            //     var $cardFooter = $('<div>').addClass('card-footer');
+            //     var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
+
+            //     $card.append($img);
+            //     $cardBody.append($title);
+            //     $cardBody.append($text);
+
+
+            //     $cardBody.append($leerMas);
+            //     $card.append($cardBody);
+            //     $cardFooter.append($fecha);
+            //     $card.append($cardFooter);
+
+            //     var $container = $('<div>').addClass('container-fluid my-4');
+            //     var $row = $('<div>').addClass('row');
+            //     var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
+
+            //     $col.append($card);
+            //     $row.append($col);
+            //     $container.append($row);
+
+            //     $('#noticias-contenido').append($container);
+            // });
+            // $(document).on('click', '.leerMas', function () {
+            //     var text = $(this).prev('.texto');
+            //     text.toggleClass('expanded');
+            //     if (text.hasClass('expanded')) {
+            //         $(this).text('Ver menos');
+            //     } else {
+            //         $(this).text('Ver más');
+            //     }
+            // });
         },
         error: function (xhr, status, error) {
             console.log(error); // Manejar el error de acuerdo a tus necesidades
