@@ -58,6 +58,7 @@ function generarNoticiasYBotones(primeraVez) {
                 let noticiasPagina = noticias.slice(inicio, fin);
 
                 muestraNoticias(noticiasPagina);
+                eventoBotonesPaginacion();
             },
             error: function (xhr, status, error) {
                 console.log(error); // Manejar el error de acuerdo a tus necesidades
@@ -110,12 +111,7 @@ function muestraNoticias(noticias) {
     });
 }
 
-
-
-$(document).ready(function () {
-
-    generarNoticiasYBotones(primeraVez);
-
+function eventoBotonesPaginacion() {
     $(".botones").click(function () {
 
         let pagina = $(this).attr("id");
@@ -123,10 +119,6 @@ $(document).ready(function () {
         console.log($(".botones"));
 
         console.log(pagina);
-
-        if (pagina == 500) {
-            console.log(hola);
-        }
 
         if (pagina == "siguiente") {
             let botonActivo = $(".botones.btn.btn-sm.btn-outline-primary.active").attr("id");
@@ -196,26 +188,31 @@ $(document).ready(function () {
                 })
             }
         } else {
-            console.log("hola");
-            // let botonObjetivo = $(this);
-            // $(".botones.btn.btn-sm.btn-outline-primary.active").removeClass("active");
-            // botonObjetivo.addClass('active');
+            let botonObjetivo = $(this);
+            $(".botones.btn.btn-sm.btn-outline-primary.active").removeClass("active");
+            botonObjetivo.addClass('active');
 
 
-            // $(".botones").removeClass("active"); // Quita la clase "active" de todos los botones
-            // $(this).addClass("active");
+            $(".botones").removeClass("active"); // Quita la clase "active" de todos los botones
+            $(this).addClass("active");
 
-            // //MOVIDA
-            // let pagina = parseInt($(this).attr("id"));
+            //MOVIDA
+            let pagina = parseInt($(this).attr("id"));
 
-            // // Obtener la parte correspondiente de las noticias según la página seleccionada
-            // // Obtener la parte correspondiente de las noticias según la página seleccionada
-            // let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-            // let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+            // Obtener la parte correspondiente de las noticias según la página seleccionada
+            // Obtener la parte correspondiente de las noticias según la página seleccionada
+            let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+            let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
 
-            // let noticiasPagina = noticias.slice(inicio, fin);
+            let noticiasPagina = noticias.slice(inicio, fin);
 
-            // muestraNoticias(noticiasPagina);
+            muestraNoticias(noticiasPagina);
         }
     });
+}
+$(document).ready(function () {
+
+    generarNoticiasYBotones(primeraVez);
+
+    eventoBotonesPaginacion();
 });
