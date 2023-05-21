@@ -245,3 +245,9 @@ footer {
 .navbar {
     background-color: rgba(0, 0, 0, 0.671); /* Ajusta el valor alpha para la opacidad deseada */
   }
+
+
+  #paginacion-botones {
+    overflow: auto;
+    white-space: nowrap;
+  }

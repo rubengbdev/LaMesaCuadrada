@@ -293,7 +293,7 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-    <section>
+    <section class="container-fluid">
         <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
             <div class="container-fluid my-4">
                 <div class="row">
@@ -404,7 +404,7 @@ if (isset($_COOKIE['correo'])) {
     </section>
 
 
-    <main>
+    <main  class="container-fluid">
 
         <div id="noticias-contenido"></div>
 
