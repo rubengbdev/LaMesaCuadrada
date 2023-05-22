@@ -413,9 +413,23 @@ if (isset($_COOKIE['correo'])) {
         <div id="noticias-contenido"></div>
         <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
             <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                <p id="mostrando"></p>
                 <div id="paginacion-botones" class="d-flex justify-content-center">
-                    <button id="anterior" class="botones btn btn-sm btn-outline-primary d-none">Anterior</button>
-                    <button id="siguiente" class="botones btn btn-sm btn-outline-primary">Siguiente</button>
+                    <button id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                        <span class="bi bi-chevron-bar-left"></span>
+                    </button>
+
+                    <button id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                        <span class="bi bi-chevron-left"></span>
+                    </button>
+
+                    <button id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                        <span class="bi bi-chevron-right"></span>
+                    </button>
+
+                    <button id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                        <span class="bi bi-chevron-bar-right"></span>
+                    </button>
                 </div>
             </div>
         </div>

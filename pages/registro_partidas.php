@@ -426,7 +426,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="https://via.placeholder.com/50x50.png?text=Logo2" alt="Logo"></td>
+                                    <td><img src="https://cf.geekdo-images.com/nagl1li6kYt9elV9jbfVQw__imagepage/img/bmtHK2zXBEUD-Wme7CvkPbL0goA=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6228507.jpg" alt="Logo"></td>
                                     <td>Juego 2</td>
                                     <td>4</td>
                                     <td>Jugador 2</td>

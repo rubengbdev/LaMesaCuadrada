@@ -2,6 +2,8 @@ let noticias = [];
 let noticiasPorPagina = 2;
 let numeroPaginas;
 let primeraVez;
+let paginaActual;
+let pagina = -1;
 
 function generarNoticiasYBotones(primeraVez) {
     if (primeraVez == undefined) {
@@ -14,43 +16,8 @@ function generarNoticiasYBotones(primeraVez) {
                 noticias = response;
                 //Genera botones la primera vez
                 numeroPaginas = Math.ceil(response.length / noticiasPorPagina);
-                let paginacionBotones = $("#paginacion-botones");
-
-                let siguiente = $("#siguiente");
-
-                for (let i = 1; i <= numeroPaginas; i++) {
-                    if (i == 1) {
-                        $("<button>", {
-                            class: "botones btn btn-sm btn-outline-primary active",
-                            text: i,
-                            id: i
-                        }).insertBefore(siguiente);
-                    } else if (numeroPaginas > 3) {
-                        if (i <= 3) {
-                            $("<button>", {
-                                class: "botones btn btn-sm btn-outline-primary",
-                                text: i,
-                                id: i
-                            }).insertBefore(siguiente);
-                        } else {
-                            $("<button>", {
-                                class: "botones btn btn-sm btn-outline-primary d-none",
-                                text: i,
-                                id: i
-                            }).insertBefore(siguiente);
-                        }
-                    } else {
-                        $("<button>", {
-                            class: "botones btn btn-sm btn-outline-primary",
-                            text: i,
-                            id: i
-                        }).insertBefore(siguiente);
-                    }
-                }
-
-
                 //PRIMERA CARGA
-                let pagina = 1;
+                pagina = 1;
 
                 // Obtener la parte correspondiente de las noticias según la página seleccionada
                 let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
@@ -109,113 +76,77 @@ function muestraNoticias(noticias) {
         $container.append($row);
 
         $('#noticias-contenido').append($container);
+        $("#mostrando").text("Mostrando la pagina " + pagina + " de " + numeroPaginas);
     });
+
+
+    console.log($("#mostrando"));
 }
 
 function eventoBotonesPaginacion() {
-    $(".botones").click(function () {
+    $(".botones").click(function (event) {
+        event.preventDefault();
+        boton = $(this).attr("id");
 
-        let pagina = $(this).attr("id");
-        console.log($(".botones").length);
-        console.log($(".botones"));
-
-        console.log(pagina);
-
-        if (pagina == "siguiente") {
-            let botonActivo = $(".botones.btn.btn-sm.btn-outline-primary.active").attr("id");
-            let botonObjetivo = parseInt(botonActivo) + 1;
-
-            if (botonObjetivo <= numeroPaginas) {
-
-                $(".botones.btn.btn-sm.btn-outline-primary.active").removeClass("active");
-                $(".botones").each(function () {
-                    if ($(this).attr('id') == botonObjetivo) {
-                        $(this).addClass("active");
-                        //MOVIDA
-                        let pagina = parseInt($(this).attr("id"));
-
-                        // Obtener la parte correspondiente de las noticias según la página seleccionada
-                        let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-
-                        let noticiasPagina = noticias.slice(inicio, fin);
-
+        switch (boton) {
+            case "inicio":
+                        pagina = 1;
+                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                        noticiasPagina = noticias.slice(inicio, fin);
+                        $("#inicio").prop("disabled", true);
+                        $("#anterior").prop("disabled", true);
+                        $("#siguiente").prop("disabled", false);
+                        $("#final").prop("disabled", false);
                         muestraNoticias(noticiasPagina);
-
-                    }
-                    if ($(this).attr('id') == botonObjetivo || $(this).attr('id') == botonObjetivo + 1 || $(this).attr('id') == botonObjetivo - 1) {
-                        $(this).removeClass("d-none");
-                    } else if ($(this).attr('id') !== "siguiente" && $(this).attr('id') !== "anterior") {
-                        if (botonObjetivo != numeroPaginas) {
-                            $(this).addClass("d-none");
+                        break;
+            case "anterior":
+                        pagina--;
+                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                        noticiasPagina = noticias.slice(inicio, fin);
+                        if (pagina == 1) {
+                            $("#inicio").prop("disabled", true);
+                            $("#anterior").prop("disabled", true);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
+                        } else {
+                            $("#inicio").prop("disabled", false);
+                            $("#anterior").prop("disabled", false);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
                         }
-                    }
-                    if (botonObjetivo > 1) {
-                        $("#anterior").removeClass("d-none");
-                    }
-
-                    if (botonObjetivo + 3 > numeroPaginas) {
-                        $("#siguiente").addClass("d-none");
-                    }
-                })
-            }
-        } else if (pagina == "anterior") {
-            let botonActivo = $(".botones.btn.btn-sm.btn-outline-primary.active").attr("id");
-            let botonObjetivo = parseInt(botonActivo) - 1;
-
-            if (botonObjetivo > 0) {
-                $(".botones.btn.btn-sm.btn-outline-primary.active").removeClass("active");
-                $(".botones").each(function () {
-                    if ($(this).attr('id') == botonObjetivo) {
-                        $(this).addClass("active");
-                        let pagina = parseInt($(this).attr("id"));
-
-                        // Obtener la parte correspondiente de las noticias según la página seleccionada
-                        let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-
-                        let noticiasPagina = noticias.slice(inicio, fin);
-
                         muestraNoticias(noticiasPagina);
-                    }
-                    if ($(this).attr('id') == botonObjetivo || $(this).attr('id') == botonObjetivo + 1 || $(this).attr('id') == botonObjetivo - 1) {
-                        $(this).removeClass("d-none");
-                    } else if ($(this).attr('id') !== "siguiente" && $(this).attr('id') !== "anterior") {
-                        if (botonObjetivo != 1) {
-                            $(this).addClass("d-none");
+                break;
+            case "siguiente":
+                        pagina++;
+                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                        noticiasPagina = noticias.slice(inicio, fin);
+                        if (pagina == numeroPaginas) {
+                            $("#siguiente").prop("disabled", true);
+                            $("#final").prop("disabled", true);
+                            $("#anterior").prop("disabled", false);
+                            $("#inicio").prop("disabled", false);
+                        }else {
+                            $("#inicio").prop("disabled", false);
+                            $("#anterior").prop("disabled", false);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
                         }
-                    }
-                    if (botonObjetivo > 1) {
-                        $("#anterior").removeClass("d-none");
-                    } else {
-                        $("#anterior").addClass("d-none");
-                    }
-
-                    if (botonObjetivo + 3 < numeroPaginas) {
-                        $("#siguiente").removeClass("d-none");
-                    }
-                })
-            }
-        } else {
-            let botonObjetivo = $(this);
-            $(".botones.btn.btn-sm.btn-outline-primary.active").removeClass("active");
-            botonObjetivo.addClass('active');
-
-
-            $(".botones").removeClass("active"); // Quita la clase "active" de todos los botones
-            $(this).addClass("active");
-
-            //MOVIDA
-            let pagina = parseInt($(this).attr("id"));
-
-            // Obtener la parte correspondiente de las noticias según la página seleccionada
-            // Obtener la parte correspondiente de las noticias según la página seleccionada
-            let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-            let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-
-            let noticiasPagina = noticias.slice(inicio, fin);
-
-            muestraNoticias(noticiasPagina);
+                        muestraNoticias(noticiasPagina);
+                break;
+            case "final":
+                        pagina = numeroPaginas;
+                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                        noticiasPagina = noticias.slice(inicio, fin);
+                        $("#siguiente").prop("disabled", true);
+                        $("#final").prop("disabled", true);
+                        $("#inicio").prop("disabled", false);
+                        $("#anterior").prop("disabled", false);
+                        muestraNoticias(noticiasPagina);
+                        break;
         }
     });
 }
@@ -223,5 +154,5 @@ $(document).ready(function () {
 
     generarNoticiasYBotones(primeraVez);
 
-    eventoBotonesPaginacion();
+    // eventoBotonesPaginacion();
 });
