@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location index.php");
+
+    $_SESSION['token_login'] = bin2hex(random_bytes(16));
+    $_SESSION['token_registro'] = bin2hex(random_bytes(16));
+}
+if (isset($_COOKIE['correo'])) {
+
+    $_SESSION['usuario'] = $_COOKIE['correo'];
+    $_SESSION['usuario_tipo'] = $_COOKIE['tipo'];
+    $_SESSION['nombre'] = $_COOKIE['nombre'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -253,10 +271,9 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="../indexFinal.html" class="nav-item nav-link ">Actualidad</a>
-                    <a href="./foro.html" class="nav-item nav-link ">Foro</a>
-                    <a href="#" class="nav-item nav-link ">Tienda</a>
-                    <a href="./registro_partidas.html" class="nav-item nav-link active">Registro de Partidas</a>
+                    <a href="../indexFinal.html" class="nav-item nav-link navegacion">Actualidad</a>
+                    <a href="./foro.html" class="nav-item nav-link navegacion">Foro</a>
+                    <a href="./registro_partidas.html" class="nav-item nav-link active navegacion">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">

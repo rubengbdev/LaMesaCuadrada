@@ -8,8 +8,7 @@ if (!isset($_SESSION['usuario'])) {
     $_SESSION['token_login'] = bin2hex(random_bytes(16));
     $_SESSION['token_registro'] = bin2hex(random_bytes(16));
 }
-print_r($_SESSION);
-print_r($_COOKIE);
+
 if (isset($_COOKIE['correo'])) {
 
     $_SESSION['usuario'] = $_COOKIE['correo'];
@@ -37,17 +36,16 @@ if (isset($_COOKIE['correo'])) {
 
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
-                <b>La Mesa Cuadrada</b></a>
+                <b id="titulo">La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="../index.php" class="nav-item nav-link active">Actualidad</a>
-                    <a href="foro.php" class="nav-item nav-link ">Foro</a>
-                    <a href="tienda.html" class="nav-item nav-link ">Tienda</a>
-                    <a href="registro_partidas.html" class="nav-item nav-link ">Registro de Partidas</a>
+                    <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
+                    <a href="foro.php" class="nav-item nav-link active navegacion">Foro</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">

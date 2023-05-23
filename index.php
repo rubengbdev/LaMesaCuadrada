@@ -41,17 +41,16 @@ if (isset($_COOKIE['correo'])) {
 
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php"><img src="img/logo.png" alt="logo" width="50em" height="50em">
-                <b>La Mesa Cuadrada</b></a>
+                <b id="titulo">La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
+            <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start ">
                 <div class="navbar-nav text-light">
-                    <a href="index.php" class="nav-item nav-link active">Actualidad</a>
-                    <a href="pages/foro.php" class="nav-item nav-link ">Foro</a>
-                    <a href="pages/tienda.php" class="nav-item nav-link ">Tienda</a>
-                    <a href="pages/registro_partidas.php" class="nav-item nav-link ">Registro de Partidas</a>
+                    <a href="index.php" class="nav-item nav-link active navegacion">Actualidad</a>
+                    <a href="pages/foro.php" class="nav-item nav-link navegacion">Foro</a>
+                    <a href="pages/registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">

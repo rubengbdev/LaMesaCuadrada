@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Varela Round';
+    src: url('../fonts/VarelaRound-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Righteous Regular';
+    src: url('../fonts/Righteous-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     font-family: 'Varela Round', sans-serif;
     position: relative;
@@ -45,7 +66,9 @@ body {
 
 .navbar a {
     color: #888;
-    font-size: 15px;
+    /* font-size: 15px; */
+    padding-left: 0.1em;
+    padding-right: 0.1em;
 }
 
 .search-box {
@@ -95,10 +118,10 @@ body {
     line-height: normal;
 }
 
-.active {
+/* .active {
     color: blue;
     text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
-}
+} */
 
 .navbar .navbar-form {
     border: none;
@@ -254,8 +277,45 @@ footer {
 }
 
 .square-textarea {
-    width: 100em;
+    width: 50%;
     /* Ajusta el ancho según tus necesidades */
-    height: 100em;
+    height: 50%;
     /* Ajusta la altura según tus necesidades */
+}
+
+.navegacion {
+    font-family: 'Righteous Regular', sans-serif;
+    font-size: 1em;
+    /* Ejemplo de tamaño de fuente inicial */
+    font-weight: bold;
+}
+
+.navegacion:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (max-width: 768px) {
+    .navegacion {
+        font-size: 2em;
+        /* Tamaño de fuente para pantallas más pequeñas */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navegacion {
+        font-size: 1.5em;
+        /* Tamaño de fuente para pantallas aún más pequeñas */
+    }
+}
+
+.navegacion.active {
+    color: #ffffff; /* Cambia el color del texto para el elemento activo */
+    background-color: #d8b6ff2c; /* Cambia el color de fondo para el elemento activo */
+    padding: 0.5em 1em; /* Añade un espacio interno alrededor del texto */
+    border-radius: 5px; /* Añade bordes redondeados */
+  }
+
+#titulo {
+    font-family: 'Righteous Regular', sans-serif;
+    font-size: 1.7em;
 }
