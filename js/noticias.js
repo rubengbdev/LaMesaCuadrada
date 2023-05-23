@@ -46,7 +46,10 @@ function generarNoticiasYBotones(primeraVez) {
 }
 
 function muestraNoticias(noticias) {
+
     $("#noticias-contenido").empty();
+    // document.body.scrollTop = 0;
+    // document.documentElement.scrollTop = 0;
     $.each(noticias, function (index, obj) {
         var $card = $('<div>').addClass('card mb-3');
         var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
@@ -78,75 +81,82 @@ function muestraNoticias(noticias) {
         $('#noticias-contenido').append($container);
         $("#mostrando").text("Mostrando la pagina " + pagina + " de " + numeroPaginas);
     });
+    document.documentElement.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 
-
-    console.log($("#mostrando"));
+    document.body.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function eventoBotonesPaginacion() {
-    $(".botones").click(function (event) {
+    $(document).on("click", ".botones", function (event) {
         event.preventDefault();
+        event.stopPropagation();
         boton = $(this).attr("id");
 
         switch (boton) {
             case "inicio":
-                        pagina = 1;
-                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                        noticiasPagina = noticias.slice(inicio, fin);
-                        $("#inicio").prop("disabled", true);
-                        $("#anterior").prop("disabled", true);
-                        $("#siguiente").prop("disabled", false);
-                        $("#final").prop("disabled", false);
-                        muestraNoticias(noticiasPagina);
-                        break;
+                pagina = 1;
+                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                noticiasPagina = noticias.slice(inicio, fin);
+                $("#inicio").prop("disabled", true);
+                $("#anterior").prop("disabled", true);
+                $("#siguiente").prop("disabled", false);
+                $("#final").prop("disabled", false);
+                muestraNoticias(noticiasPagina);
+                break;
             case "anterior":
-                        pagina--;
-                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                        noticiasPagina = noticias.slice(inicio, fin);
-                        if (pagina == 1) {
-                            $("#inicio").prop("disabled", true);
-                            $("#anterior").prop("disabled", true);
-                            $("#siguiente").prop("disabled", false);
-                            $("#final").prop("disabled", false);
-                        } else {
-                            $("#inicio").prop("disabled", false);
-                            $("#anterior").prop("disabled", false);
-                            $("#siguiente").prop("disabled", false);
-                            $("#final").prop("disabled", false);
-                        }
-                        muestraNoticias(noticiasPagina);
+                pagina--;
+                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                noticiasPagina = noticias.slice(inicio, fin);
+                if (pagina == 1) {
+                    $("#inicio").prop("disabled", true);
+                    $("#anterior").prop("disabled", true);
+                    $("#siguiente").prop("disabled", false);
+                    $("#final").prop("disabled", false);
+                } else {
+                    $("#inicio").prop("disabled", false);
+                    $("#anterior").prop("disabled", false);
+                    $("#siguiente").prop("disabled", false);
+                    $("#final").prop("disabled", false);
+                }
+                muestraNoticias(noticiasPagina);
                 break;
             case "siguiente":
-                        pagina++;
-                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                        noticiasPagina = noticias.slice(inicio, fin);
-                        if (pagina == numeroPaginas) {
-                            $("#siguiente").prop("disabled", true);
-                            $("#final").prop("disabled", true);
-                            $("#anterior").prop("disabled", false);
-                            $("#inicio").prop("disabled", false);
-                        }else {
-                            $("#inicio").prop("disabled", false);
-                            $("#anterior").prop("disabled", false);
-                            $("#siguiente").prop("disabled", false);
-                            $("#final").prop("disabled", false);
-                        }
-                        muestraNoticias(noticiasPagina);
+                pagina++;
+                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                noticiasPagina = noticias.slice(inicio, fin);
+                if (pagina == numeroPaginas) {
+                    $("#siguiente").prop("disabled", true);
+                    $("#final").prop("disabled", true);
+                    $("#anterior").prop("disabled", false);
+                    $("#inicio").prop("disabled", false);
+                } else {
+                    $("#inicio").prop("disabled", false);
+                    $("#anterior").prop("disabled", false);
+                    $("#siguiente").prop("disabled", false);
+                    $("#final").prop("disabled", false);
+                }
+                muestraNoticias(noticiasPagina);
                 break;
             case "final":
-                        pagina = numeroPaginas;
-                        inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                        fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                        noticiasPagina = noticias.slice(inicio, fin);
-                        $("#siguiente").prop("disabled", true);
-                        $("#final").prop("disabled", true);
-                        $("#inicio").prop("disabled", false);
-                        $("#anterior").prop("disabled", false);
-                        muestraNoticias(noticiasPagina);
-                        break;
+                pagina = numeroPaginas;
+                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
+                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
+                noticiasPagina = noticias.slice(inicio, fin);
+                $("#siguiente").prop("disabled", true);
+                $("#final").prop("disabled", true);
+                $("#inicio").prop("disabled", false);
+                $("#anterior").prop("disabled", false);
+                muestraNoticias(noticiasPagina);
+                break;
         }
     });
 }

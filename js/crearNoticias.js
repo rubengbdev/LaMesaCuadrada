@@ -2,7 +2,8 @@ $(document).ready(function() {
 
     $('#publicar-noticias').submit(function(event) {
         event.preventDefault(); // Evitar envío predeterminado del formulario
-
+        // stop propagation
+        event.stopPropagation();
 
         // Obtener los datos del formulario
         var formData = $(this).serialize();
