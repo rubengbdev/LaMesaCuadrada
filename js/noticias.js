@@ -1,5 +1,5 @@
 let noticias = [];
-let noticiasPorPagina = 2;
+let noticiasPorPagina = 3;
 let numeroPaginas;
 let primeraVez;
 let paginaActual;

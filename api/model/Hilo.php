@@ -4,15 +4,15 @@ class Hilo {
 
     private $id;
     private $titulo;
-    private $texto;
+    private $contenido;
     private $tipo;
     private $fecha;
     private $idUsuario;
 
-    public function __construct($titulo, $texto, $tipo, $fecha, $idUsuario) {
-        
+    public function __construct($id, $titulo, $contenido, $tipo, $fecha, $idUsuario) {
+        $this->id = $id;
         $this->titulo = $titulo;
-        $this->texto = $texto;
+        $this->contenido = $contenido;
         $this->tipo = $tipo;
         $this->fecha = $fecha;
         $this->idUsuario = $idUsuario;
@@ -34,12 +34,12 @@ class Hilo {
         $this->titulo = $titulo;
     }
 
-    public function getTexto() {
-        return $this->texto;
+    public function getContenido() {
+        return $this->contenido;
     }
 
-    public function setTexto($texto) {
-        $this->texto = $texto;
+    public function setContenido($contenido) {
+        $this->contenido = $contenido;
     }
 
     public function getTipo() {
@@ -70,7 +70,7 @@ class Hilo {
         return [
             "id" => $this->id,
             "titulo" => $this->titulo,
-            "texto" => $this->texto,
+            "contenido" => $this->contenido,
             "tipo" => $this->tipo,
             "fecha" => $this->fecha,
             "idUsuario" => $this->idUsuario

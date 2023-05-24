@@ -1,8 +1,17 @@
 RewriteEngine On
 RewriteRule ^api/usuario/?$ api/controller/UsuarioController.php
 RewriteRule ^api/usuario/([0-9]+)?$ api/controller/UsuarioController.php?id=$1
+
 RewriteRule ^login2$ php/login.php [L]
 RewriteRule ^login/?$ api/controller/UsuarioController.php
 RewriteRule ^logout/?$ api/controller/LogoutController.php
 RewriteRule ^registro/?$ api/controller/UsuarioController.php
+
 RewriteRule ^noticias/?$ api/controller/NoticiasController.php
+RewriteRule ^noticias/?$ api/controller/NoticiasController.php
+
+RewriteRule ^hilos/?$ api/controller/HiloController.php [L]
+
+RewriteRule ^hilo/?$ api/controller/MensajesController.php [L]
+RewriteRule ^hilo/([0-9]+)?$ api/controller/MensajesController.php?id=$1
+

@@ -1,5 +1,6 @@
 <?php
-require_once("../service/service_implement/ForoServiceImpl.php");
+
+require_once("../service/service_implement/HiloServiceImpl.php");
 require_once("../service/service_implement/UsuarioServiceImpl.php");
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -8,14 +9,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         if (isset($_GET['id'])) {
                 
-            $servicio = new ForoServiceImpl();
+            $servicio = new HiloServiceImpl();
             $datos = $servicio->obtenerHiloPorId($_GET['id']);
 
             exit(json_encode($datos));
 
         } else {
 
-            $servicio = new ForoServiceImpl();
+            $servicio = new HiloServiceImpl();
             $datos = $servicio->obtenerHilosPorTipo($_GET['hilo_tipo']);
 
             if (count($datos) > 0) {
@@ -35,14 +36,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $texto = seguridadFormularios($_POST["texto"]);
             $titulo = seguridadFormularios($_POST["titulo"]);
 
-            //llamar al servicio de usuarios para saber la id del usuario
-            $servicioUsuario = new UsuarioServiceImpl();
-            $usuarioId = $servicioUsuario->obtenerUsuarioPorEmail($_POST['correo']);
-
-
-            $servicio = new ForoServiceImpl();
-            $id = $servicio->crearHilo( $texto,$titulo,$usuarioId);
-
+            $servicio = new HiloServiceImpl();
+            $id = $servicio->crearHilo($_POST["texto"],"GENERAL",$_POST["titulo"]);
             exit(json_encode($id));
         }
 
@@ -50,7 +45,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "PUT":
         
-        // $datos = json_decode(file_get_contents('php://input'));
+        $datos = json_decode(file_get_contents('php://input'));
+        $servicio = new HiloServiceImpl();
+        $actualizado = $servicio->update($datos->id, $datos->titulo, $datos->texto);
+        exit(json_encode($actualizado));
+
 
         // if($datos != null) {
         //     //Los parametros se lo pasamos por el archivo json
@@ -67,17 +66,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         // break;
 
-    // case "DELETE":
+    case "DELETE":
         
-    //     $id = $_GET["id"];
-    //     $servicio = new NoticiaServiceImpl();
-        
-    //     if ($servicio->eliminarNoticiaPorId($_GET['id']) != null) {
-    //         $resultado[] = ["borrado" => true];
-    //     } else {
-    //         $resultado[] = ["borrado" => false];
-    //     }
+        $datos = json_decode(file_get_contents('php://input'));
+        print_r($datos);
+        $servicio = new HiloServiceImpl();
+        $actualizado = $servicio->delete($datos->id);
+        exit(json_encode($actualizado));
 
-    //     break;
-
+        break;
 }
