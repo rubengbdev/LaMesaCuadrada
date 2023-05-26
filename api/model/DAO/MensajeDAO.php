@@ -47,21 +47,20 @@ class MensajeDAO {
 
         $mapperService = new MapperServiceImpl();
 
-        $stmt = $this->pdo->prepare('SELECT * FROM mensaje WHERE id_hilo = ? ORDER BY DATE_FORMAT(mensaje_fecha, "%Y-%m-%d %H:%i:%s") DESC');
+        $stmt = $this->pdo->prepare('SELECT * FROM mensaje WHERE id_hilo = ? ORDER BY DATE_FORMAT(mensaje_fecha, "%Y-%m-%d %H:%i:%s") ASC');
         $stmt->execute([$idHilo]);
 
         if ($stmt->rowCount() > 0) {
             
-            $Mensajes = [];
+            $mensajes = [];
 
             foreach ($stmt as $elemento) {
                 
-                $mensaje = new Mensaje($elemento['mensaje_id'],$elemento['id_hilo'],$elemento['mensaje_contenido'],$elemento['mensaje_hilo'],$elemento['mensaje_fecha'], $elemento['id_usuario']);
+                $mensaje = new Mensaje($elemento['mensaje_id'],$elemento['id_hilo'],$elemento['mensaje_contenido'],$elemento['mensaje_titulo'],$elemento['mensaje_fecha'], $elemento['id_usuario']);
                 $mensajeDto = $mapperService->mensajeToDto($mensaje);
                 $mensajes[] = $mensajeDto->toArray();
             }
-
-            return $Mensajes;
+            return $mensajes;
         } else {
 
             return false;

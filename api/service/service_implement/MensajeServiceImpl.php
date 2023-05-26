@@ -3,6 +3,7 @@ require_once(__DIR__.'../../../model/Mensaje.php');
 require_once (__DIR__.'/../MensajeService.php');
 require_once(__DIR__.'/../../model/DAO/MensajeDAO.php');
 require_once("../../php/funciones.php");
+require_once (__DIR__.'../../service_implement/UsuarioServiceImpl.php');
 
 
 class MensajeServiceImpl implements MensajeService {
@@ -33,7 +34,8 @@ class MensajeServiceImpl implements MensajeService {
 
         $mensajes = $this->dao->getAllByHilo($id_hilo);
 
-        if (count($mensajes) < 1 || $mensajes == null || $mensajes == false) {
+        if (count($mensajes) < 1 || !is_array($mensajes)) {
+
             throw new Exception("No hay Mensajes");
         }
 
@@ -56,7 +58,7 @@ class MensajeServiceImpl implements MensajeService {
         $fecha = date("Y-m-d H:i:s");
         
         try {
-            $usuarioService = new UsuarioService();
+            $usuarioService = new UsuarioServiceImpl();
             $idUsuario =  $usuarioService->obtenerUsuarioPorNombre($nombreUsuario);
             
             return $this->dao->crear(new Mensaje($id,$idHilo,$texto,$titulo,$fecha,$idUsuario));
@@ -75,7 +77,7 @@ class MensajeServiceImpl implements MensajeService {
             throw new Exception("Falta el id de Mensaje");
         }
 
-        $usuario = $this->dao->getByid($id);
+        $usuario = $this->dao->getById($id);
         if (!$usuario) {
             throw new Exception("Mensaje no encontrado");
         }

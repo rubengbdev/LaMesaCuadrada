@@ -4,6 +4,7 @@ require_once(__DIR__.'../../../model/DTO/MensajeDTO.php');
 require_once (__DIR__.'/../MensajeService.php');
 require_once(__DIR__.'/../../model/DAO/MensajeDAO.php');
 require_once("../../php/funciones.php");
+require_once(__DIR__.'../../MapperService.php');
 
 
 class MapperServiceImpl implements MapperService {
@@ -19,7 +20,7 @@ class MapperServiceImpl implements MapperService {
                             $mensaje->getTexto(),
                             $mensaje->getTitulo(),
                             $mensaje->getFecha(),
-                            $usuarioService->obtenerUsuarioPorId($mensaje->getIdUsuario())->getNombre()
+                            $usuarioService->findById($mensaje->getIdUsuario())->getNombre()
                             )
                 );
 

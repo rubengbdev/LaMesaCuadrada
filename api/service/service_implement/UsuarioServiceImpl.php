@@ -29,6 +29,17 @@ class UsuarioServiceImpl implements UsuarioService {
         return $usuario;
     }
 
+    public function findById($id) {
+        try {
+            $usuario = $this->dao->findById($id);
+            return $usuario;
+        } catch (PDOException $e) {
+            // Manejo del error
+            echo "Error al buscar usuario por ID: " . $e->getMessage();
+            return null; // O cualquier otro manejo del error que desees
+        }
+    }
+
     public function obtenerUsuarioPorEmail($email) {
 
         $usuario = $this->dao->obtenerUsuarioPorEmail($email);

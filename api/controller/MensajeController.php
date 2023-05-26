@@ -23,15 +23,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "POST":
 
-        if (isset($_POST["texto"]) && isset($_POST["titulo"]) && isset($POST_['nombre_usuario'])) {
+        // if (isset($_POST["texto"]) && isset($_POST["titulo"]) && isset($POST_['nombre_usuario'])) {
 
             $texto = seguridadFormularios($_POST["texto"]);
             $titulo = seguridadFormularios($_POST["titulo"]);
 
             $servicio = new MensajeServiceImpl();
-            $id = $servicio->crear($_POST["id_hilo"],$_POST["texto"], $_POST["titulo"], $_POST['nombre_usuario']);
+            $id = $servicio->crear($_POST["id_hilo"],$texto, $titulo, $_POST['nombre_usuario']);
             exit(json_encode($id));
-        }
+        // }
 
         break;
 

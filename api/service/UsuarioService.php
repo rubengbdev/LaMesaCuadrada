@@ -9,6 +9,7 @@ interface UsuarioService {
     public function obtenerUsuarios();
     public function obtenerUsuarioPorEmail($email);
     public function obtenerUsuarioPorNombre($nombre);
+    public function findById($id);
     public function login($usuario, $password);
         // public function actualizarUsuario($id, $nombre, $email, $password);
     public function eliminarUsuario($id);
