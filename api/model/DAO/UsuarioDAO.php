@@ -50,6 +50,16 @@ class UsuarioDAO {
         
     }
 
+    public function  obtenerUsuarioPorNombre ($nombre) {
+        $stmt = $this->pdo->prepare('SELECT usuario_id FROM usuario WHERE usuario_nombre = ?');
+        $stmt->execute([$nombre]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return false;
+        }
+        return $row;
+    }
+
     public function obtenerUsuarios() {
 
         //meter todo en un try catch

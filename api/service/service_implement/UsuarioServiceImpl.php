@@ -38,6 +38,15 @@ class UsuarioServiceImpl implements UsuarioService {
         return false;
     }
 
+    public function obtenerUsuarioPorNombre($nombre) {
+        $usuario = $this->dao->obtenerUsuarioPorNombre($nombre);
+        if ($this->dao->obtenerUsuarioPorNombre($nombre)) {
+            return $this->dao->obtenerUsuarioPorNombre($nombre);
+        } 
+        return false;
+    }
+
+
     public function obtenerUsuarios() {
 
         $usuarios = $this->dao->obtenerUsuarios();

@@ -5,7 +5,7 @@ require_once(__DIR__.'/../../model/DAO/HiloDAO.php');
 require_once("../../php/funciones.php");
 
 
-class HiloServiceImpl implements hiloService {
+class HiloServiceImpl implements HiloService {
  
     private $dao;
 
@@ -42,7 +42,7 @@ class HiloServiceImpl implements hiloService {
 
     /********************POST********************/
 
-    public function crearHilo($texto,$tipo,$titulo) {
+    public function crear($texto,$tipo,$titulo) {
 
         if (!$texto || !$titulo) {
             throw new Exception("Faltan datos de hilo");

@@ -37,7 +37,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $titulo = seguridadFormularios($_POST["titulo"]);
 
             $servicio = new HiloServiceImpl();
-            $id = $servicio->crearHilo($_POST["texto"],"GENERAL",$_POST["titulo"]);
+            $id = $servicio->crear($_POST["texto"],"GENERAL",$_POST["titulo"]);
             exit(json_encode($id));
         }
 
