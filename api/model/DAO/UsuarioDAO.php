@@ -72,7 +72,7 @@ class UsuarioDAO {
         if (!$row) {
             return false;
         }
-        return $row['usuario_id'];        
+        return $row;        
     }
 
     public function  obtenerUsuarioPorNombre ($nombre) {

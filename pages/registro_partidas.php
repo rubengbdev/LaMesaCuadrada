@@ -286,11 +286,9 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-
-
     <main>
         <div class="container-fluid">
-            <h1 class="text-center my-4 text-light">El Buen Registro de Partidas</h1>
+            <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <form class="d-flex">
