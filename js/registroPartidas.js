@@ -1,5 +1,5 @@
 let partidas = [];
-let partidasPorPagina = 3;
+let partidasPorPagina = 5;
 let numeroPaginas;
 let primeraVez;
 let paginaActual;
@@ -11,14 +11,13 @@ function obtenerValorCookie(nombre) {
     var nombreCookie = nombre + "=";
     var cookies = document.cookie.split(';');
     for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.indexOf(nombreCookie) === 0) {
-        return cookie.substring(nombreCookie.length, cookie.length);
-      }
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(nombreCookie) === 0) {
+            return cookie.substring(nombreCookie.length, cookie.length);
+        }
     }
     return "";
-  }
-
+}
 
 function generarPartidasYBotones(primeraVez) {
     if (primeraVez == undefined) {
@@ -26,91 +25,60 @@ function generarPartidasYBotones(primeraVez) {
         var emailUsuario = obtenerValorCookie('correo'); // Suponiendo que la cookie se llama 'correo'
 
         $.ajax({
-          url: 'http://localhost:8001/partidas',
-          method: 'GET',
-          data: {
-            emailUsuario: emailUsuario
-          },
-          dataType: 'json',
-          success: function(response) {
-            // Hacer algo con la respuesta
-            console.log(response);
-          }
-        });
-        
-
-        $.ajax({
             url: 'http://localhost:8001/partidas',
             method: 'GET',
+            data: {
+                emailUsuario: emailUsuario
+            },
             dataType: 'json',
             success: function (response) {
 
-                noticias = response;
-                //Genera botones la primera vez
-                numeroPaginas = Math.ceil(response.length / noticiasPorPagina);
-                //PRIMERA CARGA
+                console.log(response);
+                partidas = response;
+                numeroPaginas = Math.ceil(response.length / partidasPorPagina);
                 pagina = 1;
 
-                // Obtener la parte correspondiente de las noticias según la página seleccionada
-                let inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                let fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                let noticiasPagina = noticias.slice(inicio, fin);
+                let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                let partidasPagina = partidas.slice(inicio, fin);
+                console.log(partidasPagina);
 
-                muestraNoticias(noticiasPagina);
-
-                $(document).on('click', '.leerMas', function () {
-                    var text = $(this).prev('.texto');
-                    text.toggleClass('expanded');
-                    if (text.hasClass('expanded')) {
-                        $(this).text('Ver menos');
-                    } else {
-                        $(this).text('Ver más');
-                    }
-                });
+                muestraPartidas(partidasPagina);
                 eventoBotonesPaginacion();
             },
             error: function (xhr, status, error) {
-                console.log(error); // Manejar el error de acuerdo a tus necesidades
+
+                console.log(error);
             }
         });
+
         primeraVez = false;
     }
 }
 
-function muestraNoticias(noticias) {
+function muestraPartidas(partidas) {
 
-    $("#noticias-contenido").empty();
+    $("#partidas-contenido").empty();
     // document.body.scrollTop = 0;
     // document.documentElement.scrollTop = 0;
-    $.each(noticias, function (index, obj) {
-        var $card = $('<div>').addClass('card mb-3');
-        var $img = $('<img>').addClass('card-img-top imagen').attr('src', obj.imagen).attr('alt', '...');
-        var $cardBody = $('<div>').addClass('card-body');
-        var $title = $('<h3>').addClass('card-title titulo').text(obj.titulo);
-        var $text = $('<article>').addClass('card-text clamp-text texto').html(obj.texto.replace(/\n/g, "<br>"));
-        var $leerMas = $('<button>').addClass('btn btn-sm btn-outline-primary mt-2 leerMas').text('Ver más');
-        var $cardFooter = $('<div>').addClass('card-footer');
-        var $fecha = $('<small>').addClass('text-muted fecha').text('Fecha de Publicación: ' + obj.fecha);
+    var tbody = $('tbody');
+    tbody.empty();
 
-        $card.append($img);
-        $cardBody.append($title);
-        $cardBody.append($text);
+    $.each(partidas, function (index, obj) {
+        console.log(obj);
+        var tbody = $('tbody');
+        var row = $('<tr>').attr('id', obj.id);
+        var logoCell = $('<td>').append($('<img>').addClass('logo-imagen').attr('src', obj.logo).attr('alt', 'Logo'));
+        var nombreJuegoCell = $('<td>').text(obj.nombreJuego);
+        var jugadoresCell = $('<td>').text(obj.numeroJugadores);
+        var jugadorGanadorCell = $('<td>').text(obj.vencedor);
+        var puntuacionCell = $('<td>').text(obj.puntuacionVencedor);
+        var fechaCell = $('<td>').text(obj.fecha);
+        var duracionCell = $('<td>').text(obj.tiempoJuego);
+        var accionesCell = $('<td>').html('<button type="button" class="btn btn-warning me-2">Editar</button><button type="button" class="btn btn-danger">Eliminar</button>');
 
-
-        $cardBody.append($leerMas);
-        $card.append($cardBody);
-        $cardFooter.append($fecha);
-        $card.append($cardFooter);
-
-        var $container = $('<div>').addClass('container-fluid my-4');
-        var $row = $('<div>').addClass('row');
-        var $col = $('<div>').addClass('col-12 col-md-8 offset-md-2 mx-auto');
-
-        $col.append($card);
-        $row.append($col);
-        $container.append($row);
-
-        $('#noticias-contenido').append($container);
+        row.append(logoCell, nombreJuegoCell, jugadoresCell, jugadorGanadorCell, puntuacionCell, fechaCell, duracionCell, accionesCell);
+        tbody.append(row);
         $("#mostrando").text("Mostrando la pagina " + pagina + " de " + numeroPaginas);
     });
     document.documentElement.scrollTo({
@@ -133,20 +101,20 @@ function eventoBotonesPaginacion() {
         switch (boton) {
             case "inicio":
                 pagina = 1;
-                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                noticiasPagina = noticias.slice(inicio, fin);
+                inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                partidasPagina = partidas.slice(inicio, fin);
                 $("#inicio").prop("disabled", true);
                 $("#anterior").prop("disabled", true);
                 $("#siguiente").prop("disabled", false);
                 $("#final").prop("disabled", false);
-                muestraNoticias(noticiasPagina);
+                muestraPartidas(partidasPagina);
                 break;
             case "anterior":
                 pagina--;
-                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                noticiasPagina = noticias.slice(inicio, fin);
+                inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                partidasPagina = partidas.slice(inicio, fin);
                 if (pagina == 1) {
                     $("#inicio").prop("disabled", true);
                     $("#anterior").prop("disabled", true);
@@ -158,13 +126,13 @@ function eventoBotonesPaginacion() {
                     $("#siguiente").prop("disabled", false);
                     $("#final").prop("disabled", false);
                 }
-                muestraNoticias(noticiasPagina);
+                muestraPartidas(partidasPagina);
                 break;
             case "siguiente":
                 pagina++;
-                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                noticiasPagina = noticias.slice(inicio, fin);
+                inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                partidasPagina = partidas.slice(inicio, fin);
                 if (pagina == numeroPaginas) {
                     $("#siguiente").prop("disabled", true);
                     $("#final").prop("disabled", true);
@@ -176,25 +144,25 @@ function eventoBotonesPaginacion() {
                     $("#siguiente").prop("disabled", false);
                     $("#final").prop("disabled", false);
                 }
-                muestraNoticias(noticiasPagina);
+                muestraPartidas(partidasPagina);
                 break;
             case "final":
                 pagina = numeroPaginas;
-                inicio = (pagina - 1) * noticiasPorPagina; // Índice de inicio
-                fin = inicio + noticiasPorPagina; // Índice de fin (no inclusivo)
-                noticiasPagina = noticias.slice(inicio, fin);
+                inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                partidasPagina = partidas.slice(inicio, fin);
                 $("#siguiente").prop("disabled", true);
                 $("#final").prop("disabled", true);
                 $("#inicio").prop("disabled", false);
                 $("#anterior").prop("disabled", false);
-                muestraNoticias(noticiasPagina);
+                muestraPartidas(partidasPagina);
                 break;
         }
     });
 }
 $(document).ready(function () {
 
-    generarNoticiasYBotones(primeraVez);
+    generarPartidasYBotones(primeraVez);
 
     // eventoBotonesPaginacion();
 });

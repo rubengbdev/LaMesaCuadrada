@@ -211,7 +211,6 @@ if (isset($_COOKIE['correo'])) {
                             });
                         </script>
                     <?php else : ?>
-
                         <div class="nav-item dropdown pr-2">
                             <button class="btn btn-success btn-outline-dark opciones-btn" style="border: 3px solid black;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="texto-bienvenida"><?= "Hola " . $_SESSION['nombre'] ?></span>
@@ -287,7 +286,65 @@ if (isset($_COOKIE['correo'])) {
         </div>
     </nav>
     <main>
-        <div class="container-fluid">
+        <div class="container-fluid d-flex justify-content-center">
+            <div>
+                <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form class="d-flex">
+                            <input class="form-control me-3" type="search" placeholder="Buscar" aria-label="Buscar">
+                            <button class="btn btn-outline-primary" type="submit">Buscar por nombre de juego</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table rounded rounded-3 table-bordered table-striped">
+                        <thead>
+                            <tr class="bg-success text-white">
+                                <th scope="col">Logo</th>
+                                <th scope="col">Nombre Juego</th>
+                                <th scope="col">Participantes</th>
+                                <th scope="col">Vencedor</th>
+                                <th scope="col">Puntuación Vencedor</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Tiempo de Juego</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-success">
+                        </tbody>
+                    </table>
+                    <?php if (isset($_SESSION['usuario'])) : ?>
+                        <script src="../js/registroPartidas.js"></script>
+                    <?php else : ?>
+                        <script src="../js/promocionRegistro.js"></script>
+                    <?php endif; ?>
+                </div>
+                <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
+                    <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                        <p id="mostrando"></p>
+                        <div id="paginacion-botones" class="d-flex justify-content-center">
+                            <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                <span class="bi bi-chevron-bar-left"></span>
+                            </button>
+
+                            <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                <span class="bi bi-chevron-left"></span>
+                            </button>
+
+                            <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                <span class="bi bi-chevron-right"></span>
+                            </button>
+
+                            <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                <span class="bi bi-chevron-bar-right"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="container-fluid">
             <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -297,8 +354,10 @@ if (isset($_COOKIE['correo'])) {
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 col-12">
+        </div>
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12">
                     <div claas="table-responsive">
                         <table class="table rounded rounded-3 table-bordered table-striped">
                             <thead>
@@ -314,202 +373,34 @@ if (isset($_COOKIE['correo'])) {
                                 </tr>
                             </thead>
                             <tbody class="table-success">
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50x50.png?text=Logo1" alt="Logo"></td>
-                                    <td>Juego 1</td>
-                                    <td>5</td>
-                                    <td>Jugador 3</td>
-                                    <td>10</td>
-                                    <td>12/05/2023</td>
-                                    <td>30 minutos</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning me-2">
-                                            Editar
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50x50.png?text=Logo2" alt="Logo"></td>
-                                    <td>Juego 2</td>
-                                    <td>4</td>
-                                    <td>Jugador 2</td>
-                                    <td>8</td>
-                                    <td>11/05/2023</td>
-                                    <td>45 minutos</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning me-2">
-                                            Editar
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50x50.png?text=Logo2" alt="Logo"></td>
-                                    <td>Juego 214</td>
-                                    <td>4</td>
-                                    <td>Jugador 2</td>
-                                    <td>8</td>
-                                    <td>11/05/2023</td>
-                                    <td>45 minutos</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning me-2">
-                                            Editar
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50x50.png?text=Logo2" alt="Logo"></td>
-                                    <td>Juego 424</td>
-                                    <td>4</td>
-                                    <td>Jugador 2</td>
-                                    <td>8</td>
-                                    <td>11/05/2023</td>
-                                    <td>45 minutos</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning me-2">
-                                            Editar
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://cf.geekdo-images.com/nagl1li6kYt9elV9jbfVQw__imagepage/img/bmtHK2zXBEUD-Wme7CvkPbL0goA=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6228507.jpg" alt="Logo"></td>
-                                    <td>Juego 2</td>
-                                    <td>4</td>
-                                    <td>Jugador 2</td>
-                                    <td>8</td>
-                                    <td>11/05/2023</td>
-                                    <td>45 minutos</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning me-2">
-                                            Editar
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Guardar
-                                        </button>
-                                        <button type="button" class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-start">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                </li>
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <?php if (isset($_SESSION['usuario'])) : ?>
+                            <script src="../js/registroPartidas.js"></script>
+                        <?php else : ?>
+                            <script src="../js/promocionRegistro.js"></script>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <div class="container-fluid col-md-3 col-8" id="movida2">
-                    <h2>Añadir nueva partida</h2>
-                    <form>
-                        <div class="mb-3">
-                            <label for="logo" class="form-label">Logo</label>
-                            <input type="text" class="form-control" id="logo" name="logo">
-                        </div>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre del juego</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="participantes" class="form-label">Número de participantes</label>
-                            <input type="number" class="form-control" id="participantes" name="participantes">
-                        </div>
-                        <div class="mb-3">
-                            <label for="vencedor" class="form-label">Vencedor</label>
-                            <input type="text" class="form-control" id="vencedor" name="vencedor">
-                        </div>
-                        <div class="mb-3">
-                            <label for="puntuacion" class="form-label">Puntuación del vencedor</label>
-                            <input type="number" class="form-control" id="puntuacion" name="puntuacion">
-                        </div>
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha">
-                        </div>
-                        <div class="mb-3">
-                            <label for="tiempo" class="form-label">Tiempo de juego</label>
-                            <input type="time" class="form-control" id="tiempo" name="tiempo">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Añadir juego</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        </div>
+                <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
+                    <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                        <p id="mostrando"></p>
+                        <div id="paginacion-botones" class="d-flex justify-content-center">
+                            <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                <span class="bi bi-chevron-bar-left"></span>
+                            </button>
 
-        <!-- 
+                            <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                <span class="bi bi-chevron-left"></span>
+                            </button>
 
-        <div class="container-fluid">
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-8">
-                    <div class="card rounded-3 shadow">
-                        <div class="card-header bg-primary text-white">
-                            <h4 class="mb-0">Juegos</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-2 fw-bold">Logo</div>
-                                <div class="col-12 col-md-2 fw-bold">Nombre Juego</div>
-                                <div class="col-12 col-md-1 fw-bold">Participantes</div>
-                                <div class="col-12 col-md-2 fw-bold">Vencedor</div>
-                                <div class="col-12 col-md-2 fw-bold">Puntuación Vencedor</div>
-                                <div class="col-12 col-md-1 fw-bold">Fecha</div>
-                                <div class="col-12 col-md-1 fw-bold">Tiempo de Juego</div>
-                                <div class="col-12 col-md-1 fw-bold">Acciones</div>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-12 col-md-2">
-                                            <img src="logo_juego.png" alt="Logo Juego" class="img-fluid">
-                                        </div>
-                                        <div class="col-12 col-md-2">Nombre del Juego 1</div>
-                                        <div class="col-12 col-md-1">4</div>
-                                        <div class="col-12 col-md-2">Usuario1</div>
-                                        <div class="col-12 col-md-2">500</div>
-                                        <div class="col-12 col-md-1">10/05/2023</div>
-                                        <div class="col-12 col-md-1">60 min</div>
-                                        <div class="col-12 col-md-1">
-                                            <button type="button" class="btn btn-sm btn-warning me-1">Editar</button>
-                                            <button type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                <span class="bi bi-chevron-right"></span>
+                            </button>
+
+                            <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                <span class="bi bi-chevron-bar-right"></span>
+                            </button>
                         </div>
                     </div>
                 </div>
