@@ -72,7 +72,7 @@ class NoticiaServiceImpl implements NoticiaService {
 
         $partida = $this->dao->obtenerNoticiaPorId($id);
         if (!$partida) {
-            throw new Exception("Partida no encontrado");
+            throw new Exception("Noticia no encontrado");
         }
 
         return ($this->dao->update($id, $texto, $imagen, $titulo));

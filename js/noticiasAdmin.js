@@ -192,7 +192,7 @@ function editarNoticia(id) {
     // Obtener los datos de la noticia del card
     var titulo = $card.find('.titulo').text();
     console.log(titulo);
-    var texto = $card.find('.texto').html();
+    var texto = $card.find('.texto').html().trim();
     var imagen = $card.find('.imagen').attr('src');
 
     // Crear el modal de edición
@@ -266,7 +266,7 @@ $modalFooter.append($buttonContainer);
 
         // Realizar la petición PUT mediante AJAX
         $.ajax({
-            url: 'localhost/noticias',
+            url: 'http://localhost:8001/noticias',
             type: 'PUT',
             dataType: 'json',
             data: JSON.stringify({
@@ -277,12 +277,13 @@ $modalFooter.append($buttonContainer);
             }),
             success: function (response) {
                 // Actualizar los datos en el card de la noticia
-                $card.find('.titulo').text(nuevoTitulo);
-                $card.find('.texto').html(nuevoTexto);
-                $card.find('.imagen').attr('src', nuevaImagen);
+                window.location.href = 'index.php';
+                // $card.find('.titulo').text(nuevoTitulo);
+                // $card.find('.texto').html(nuevoTexto);
+                // $card.find('.imagen').attr('src', nuevaImagen);
 
-                // Cerrar y eliminar el modal de edición
-                $('#modalEditar').modal('hide').remove();
+                // // Cerrar y eliminar el modal de edición
+                // $('#modalEditar').modal('hide').remove();
             },
             error: function (xhr, status, error) {
                 console.error(error);
