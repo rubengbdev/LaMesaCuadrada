@@ -13,7 +13,7 @@ class UsuarioServiceImpl implements UsuarioService {
         $this->dao = new UsuarioDao();
     }
 
-    /********************GET********************/
+    /* ------------------ GET ------------------ */
 
     public function obtenerUsuarioPorId($id) {
         
@@ -65,13 +65,14 @@ class UsuarioServiceImpl implements UsuarioService {
         if (count($usuarios) < 1) {
             throw new Exception("No hay usuarios");
         }
+        header('Content-Type: application/json');
 
         return $usuarios;
     }
 
 
 
-    /********************POST********************/
+    /* ------------------ POST ------------------ */
 
     public function login($usuario, $contrasena){
 
@@ -134,52 +135,43 @@ class UsuarioServiceImpl implements UsuarioService {
     }
 
 
-    /********************PUT********************/
+    /* ------------------ PUT ------------------ */
 
-    // public function actualizarUsuario($id, $nombre, $email, $password) {
-    //     // validar el ID del usuario y los nuevos datos a actualizar
-    //     if (!$id || (!$nombre && !$email && !$password)) {
-    //         throw new Exception("Faltan datos para actualizar el usuario");
-    //     }
+    public function update($id, $nombre, $email, $password) {
 
-    //     // buscar el usuario por su ID
-    //     $usuario = $this->dao->obtenerUsuarioPorId($id);
-    //     if (!$usuario) {
-    //         throw new Exception("Usuario no encontrado");
-    //     }
-
-    //     // actualizar los datos del usuario
-    //     if ($nombre) {
-    //         $usuario->setNombre($nombre);
-    //     }
-    //     if ($email) {
-    //         $usuario->setEmail($email);
-    //     }
-    //     if ($password) {
-    //         $usuario->setContrasena($password);
-    //     }
-    //     $this->dao->actualizarUsuario($usuario);
-    // }
-
-
-    /********************DELETE********************/
-
-
-    public function eliminarUsuario($id) {
-        // validar el ID del usuario
         if (!$id) {
-            throw new Exception("Falta el ID del usuario");
+            throw new Exception("Falta el id de Partida");
         }
 
-        // buscar el usuario por su ID
-        $usuario = $this->dao->obtenerUsuarioPorId($id);
-        if (!$usuario) {
-            throw new Exception("Usuario no encontrado");
+        $partida = $this->dao->findById($id);
+        if (!$partida) {
+            throw new Exception("Partida no encontrado");
         }
 
-        // eliminar el usuario
-        $this->dao->eliminarUsuario($id);
+        // Cifrado de contrasena
+
+        $salt = random_bytes(16);
+        $saltHex = bin2hex($salt);
+        $contrasenaConSalt = $password . $saltHex;
+        $contraseñaCifrada = password_hash($contrasenaConSalt, PASSWORD_BCRYPT);
+
+        return ($this->dao->update($id, $nombre, $email, $contraseñaCifrada, $saltHex));
     }
 
 
+    /* ------------------ DELETE ------------------ */
+
+    public function delete($id) {
+
+        if (!$id) {
+            throw new Exception("Falta el id de noticia");
+        }
+
+        $usuario = $this->dao->obtenerUsuarioPorId($id);
+        if (!$usuario) {
+            throw new Exception("Partida no encontrado");
+        }
+
+        return ($this->dao->delete($id));
+    }
 }

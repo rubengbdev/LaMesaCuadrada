@@ -12,6 +12,7 @@ class UsuarioDAO {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /* ------------------ POST ------------------ */
 
     public function createUsuario(Usuario $usuario) {
 
@@ -20,6 +21,8 @@ class UsuarioDAO {
         return $this->pdo->lastInsertId();
 
     }
+
+    /* ------------------ GET ------------------ */
 
     public function ultimoId() {
         return $this->pdo->lastInsertId() + 1;
@@ -30,10 +33,11 @@ class UsuarioDAO {
         $stmt = $this->pdo->prepare('SELECT * FROM usuario WHERE usuario_id = ?');
         $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
         if (!$row) {
+
             return null;
         }
-                //Hacer una copia de usuarios con solo los elementos que queremos
 
         return $row;
     }
@@ -68,8 +72,7 @@ class UsuarioDAO {
         if (!$row) {
             return false;
         }
-        return $row;
-        
+        return $row['usuario_id'];        
     }
 
     public function  obtenerUsuarioPorNombre ($nombre) {
@@ -84,8 +87,6 @@ class UsuarioDAO {
 
     public function obtenerUsuarios() {
 
-        //meter todo en un try catch
-
         $stmt = $this->pdo->prepare('SELECT * FROM mesa_cuadrada.usuario');
         $stmt->execute();
 
@@ -95,29 +96,59 @@ class UsuarioDAO {
                 $user = new Usuario($elemento['usuario_id'],$elemento['usuario_nombre'],$elemento['usuario_email'],$elemento['usuario_tipo'],$elemento['usuario_contrasena'],$elemento['usuario_fecha_creacion'],$elemento['usuario_salt']);
                 $usuarios[] = $user->toArray();
             }
-            print_r($usuarios);
-        //Hacer una copia de usuarios con solo los elementos que queremos
 
             return $usuarios;
         } else {
             return false;
         }
 
+    } 
+
+    /* ------------------ PUT ------------------ */
+
+    public function update($id, $nombre, $email, $password, $saltHex) {
+
+        try {
+            $stmt = $this->pdo->prepare('UPDATE usuario SET usuario_nombre = ?, usuario_email = ?, usuario_contrasena = ?, usuario_salt = ? WHERE usuario_id = ?');
+            $stmt->execute([$nombre, $email, $password, $saltHex, $id]);
+            $rowCount = $stmt->rowCount();
+            
+            if ($rowCount > 0) {
+                $resultado[] = ["actualizado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["actualizado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en la actualización: ' . $e->getMessage();
+            return null;
+        }
     }
 
-    public function update(Usuario $usuario) {
-        $stmt = $this->pdo->prepare('UPDATE usuario SET usuario_nombre = ?, usuario_email = ?, usuario_contrasena = ? WHERE usuario_id = ?');
-        $stmt->execute([$usuario->getNombre(), $usuario->getEmail(), $usuario->getContrasena(), $usuario->getId()]);
-        return $stmt->rowCount();
+    /* ------------------ DELETE ------------------ */
+
+    public function delete($id) {
+
+        try {
+
+            $stmt = $this->pdo->prepare('DELETE FROM mesa_cuadrada.usuario WHERE usuario_id = ?');
+            $stmt->execute([$id]);
+            $rowCount = $stmt->rowCount();
+            if ($rowCount > 0) {
+                $resultado[] = ["borrado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["borrado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en el borrado: ' . $e->getMessage();
+            return null;
+        }
     }
 
-    public function eliminarUsuario($id) {
-        $stmt = $this->pdo->prepare('DELETE FROM usuario WHERE id = ?');
-        $stmt->execute([$id]);
-        return $stmt->rowCount();
-    }
-
-                                            /*LOGIN*/
+    /* ------------------ LOGIN ------------------ */
 
     public function existsByUsuarioContrasena($usuario) {
         

@@ -71,7 +71,7 @@ class PartidaServiceImpl implements PartidaService {
             echo "Error al crear Partida: " . $e->getMessage();
         }
     }
-    
+     
 
     /********************PUT********************/
 

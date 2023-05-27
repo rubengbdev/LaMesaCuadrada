@@ -59,33 +59,18 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     case "PUT":
         
-        // $datos = json_decode(file_get_contents('php://input'));
-
-        // if($datos != null) {
-        //     //Los parametros se lo pasamos por el archivo json
-        //     if(UserService::putUsuario($datos->id, $datos->correo, $datos->contrasena)) {
-        //         $resultado[] = ["acceso" => true];
-        //     } else {
-        //         $resultado[] = ["acceso" => false];
-        //     }
-
-        //     exit(json_encode($resultado));
-        // } else {
-        //     echo "error";
-        // }
-
-        // break;
+        $datos = json_decode(file_get_contents('php://input'));
+        $servicio = new UsuarioServiceImpl();
+        $actualizado = $servicio->update($datos->id, $datos->nombre, $datos->email, $datos->contrasena);
+        exit(json_encode($actualizado));
 
     case "DELETE":
         
-        $id = $_GET["id"];
+        $datos = json_decode(file_get_contents('php://input'));
+        print_r($datos);
         $servicio = new UsuarioServiceImpl();
-        
-        if ($servicio->eliminarUsuario($_GET['id']) != null) {
-            $resultado[] = ["borrado" => true];
-        } else {
-            $resultado[] = ["borrado" => false];
-        }
+        $actualizado = $servicio->delete($datos->id);
+        exit(json_encode($actualizado));
 
         break;
 

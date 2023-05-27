@@ -96,12 +96,13 @@ class Usuario {
     /* OTROS */
 
     public function toArray() {
-        return [
-            "id" => $this->id,
-            "nombre" => $this->nombre,
-            "email" => $this->email,
-            "contrasena" => $this->contrasena,
-            "fechaCreacion" => $this->fechaCreacion
-        ];
+        return array(
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'email' => $this->email,
+            'tipo' => $this->tipo,
+            'contrasena' => $this->contrasena,
+            'fechaCreacion' => $this->fechaCreacion
+        );
     }
 }
