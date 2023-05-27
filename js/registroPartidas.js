@@ -1,5 +1,5 @@
 let partidas = [];
-let partidasPorPagina = 5;
+let partidasPorPagina = 10;
 let numeroPaginas;
 let primeraVez;
 let paginaActual;
@@ -59,25 +59,39 @@ function generarPartidasYBotones(primeraVez) {
 function muestraPartidas(partidas) {
 
     $("#partidas-contenido").empty();
-    // document.body.scrollTop = 0;
-    // document.documentElement.scrollTop = 0;
     var tbody = $('tbody');
     tbody.empty();
 
     $.each(partidas, function (index, obj) {
-        console.log(obj);
+
         var tbody = $('tbody');
         var row = $('<tr>').attr('id', obj.id);
         var logoCell = $('<td>').append($('<img>').addClass('logo-imagen').attr('src', obj.logo).attr('alt', 'Logo'));
-        var nombreJuegoCell = $('<td>').text(obj.nombreJuego);
-        var jugadoresCell = $('<td>').text(obj.numeroJugadores);
-        var jugadorGanadorCell = $('<td>').text(obj.vencedor);
-        var puntuacionCell = $('<td>').text(obj.puntuacionVencedor);
-        var fechaCell = $('<td>').text(obj.fecha);
-        var duracionCell = $('<td>').text(obj.tiempoJuego);
-        var accionesCell = $('<td>').html('<button type="button" class="btn btn-warning me-2">Editar</button><button type="button" class="btn btn-danger">Eliminar</button>');
+        var nombreJuegoCell = $('<td>').addClass('nombre_juego').text(obj.nombreJuego);
+        var jugadoresCell = $('<td>').addClass('jugadores').text(obj.numeroJugadores);
+        var jugadorGanadorCell = $('<td>').addClass('ganador').text(obj.vencedor);
+        var puntuacionCell = $('<td>').addClass('puntuacion').text(obj.puntuacionVencedor);
+        var fechaCell = $('<td>').addClass('fecha').text(obj.fecha);
+        var duracionCell = $('<td>').addClass('duracion').text(obj.tiempoJuego);
+        var editarBtn = $('<button>').addClass('btn btn-warning me-2 editar').text('Editar');
+        var eliminarBtn = $('<button>').addClass('btn btn-danger eliminar').text('Eliminar');
+        var editarCell = $('<td>').append(editarBtn);
+        var eliminarCell = $('<td>').append(eliminarBtn);
 
-        row.append(logoCell, nombreJuegoCell, jugadoresCell, jugadorGanadorCell, puntuacionCell, fechaCell, duracionCell, accionesCell);
+        editarBtn.on('click', function () {
+            // var boton = $(this).attr('id');
+            let registro = $(this).closest('tr');
+            console.log(registro.text());
+
+            editarPartida(registro);
+        });
+
+        eliminarBtn.on('click', function () {
+            var id = $(this).attr('id');
+            eliminarPartida(id);
+        });
+
+        row.append(logoCell, nombreJuegoCell, jugadoresCell, jugadorGanadorCell, puntuacionCell, fechaCell, duracionCell, editarCell, eliminarCell);
         tbody.append(row);
         $("#mostrando").text("Mostrando la pagina " + pagina + " de " + numeroPaginas);
     });
@@ -160,9 +174,214 @@ function eventoBotonesPaginacion() {
         }
     });
 }
+
+
+function editarPartida(registro) {
+
+    // Obtener el tr correspondiende entero (el padre)
+
+    // Obtener los datos de la partida
+    let idPartida = registro.attr('id');
+    let nombre = registro.find('.nombre_juego').html().trim();
+    let jugadores = registro.find('.jugadores').html().trim();
+    let ganador = registro.find('.ganador').html().trim();
+    let puntuacion = registro.find('.puntuacion').html().trim();
+    let fecha = registro.find('.fecha').html().trim();
+    let duracion = registro.find('.duracion').html().trim();
+    let logo = registro.find('.logo-imagen').attr('src');
+
+    // Crear el modal de edición
+    let modal = $('<div>').addClass('modal fade').attr('id', 'modalEditar');
+    let modalDialog = $('<div>').addClass('modal-dialog');
+    let modalContent = $('<div>').addClass('modal-content');
+    let modalHeader = $('<div>').addClass('modal-header');
+    let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
+    let modalBody = $('<div>').addClass('modal-body');
+
+    // Crear el formulario de edición
+    let form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
+
+    let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'idPartida').val(idPartida);
+    let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(nombre);
+    let jugadoresFormulario = $('<textarea>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'number').css('height', '300px').val(jugadores);
+    let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(ganador);
+    let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(puntuacion);
+    let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'imagen').val(fecha);
+    let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(duracion);
+    let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(logo);
+
+
+    // Agregar los elementos del formulario al modal
+    form.append(idFormulario);
+    form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
+    form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
+    form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
+    form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
+    form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
+    form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
+    form.append($('<label>').text('Logo: ')).append(logoFormulario);
+
+
+    modalBody.append(form);
+
+    // Crear los botones de cancelar y confirmar cambios
+    let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+    let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
+
+
+    var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+    buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
+
+    // Agregar los botones al modal
+    var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    modalFooter.append(buttonContainer);
+
+    // Construir la estructura del modal
+    modalHeader.append(modalTitle);
+    // $modalHeader.append($modalTitle).append($modalCloseButton);
+
+    modalContent.append(modalHeader).append(modalBody).append(modalFooter);
+    modalDialog.append(modalContent);
+    modal.append(modalDialog);
+
+    // Agregar el modal al documento
+    $('body').append(modal);
+
+    // Mostrar el modal de edición
+    $('#modalEditar').modal('show');
+
+    //BOTONES DEL MODAL
+
+    // Evento click en el botón "Cancelar"
+    cancelarButton.on('click', function () {
+        // Cerrar y eliminar el modal de edición
+        $('#modalEditar').modal('hide').remove();
+    });
+
+    // Evento click en el botón "Confirmar Cambios"
+    confirmarButton.on('click', function () {
+        // Obtener los datos actualizados del formular
+
+        // Realizar la petición PUT mediante AJAX
+        $.ajax({
+            url: 'http://localhost:8001/partidas',
+            type: 'PUT',
+            dataType: 'json',
+            data: JSON.stringify({
+                id: idPartida,
+                numeroJugadores: jugadoresFormulario.val(),
+                puntuacionVencedor: puntuacionFormulario.val(),
+                fecha: fechaFormulario.val(),
+                nombreJuego: nombreJuegoFormulario.val(),
+                logo: logoFormulario.val(),
+                tiempoJuego: duracionFormulario.val(),
+                vencedor: ganadorFormulario.val()
+            }),
+            success: function (response) {
+
+                window.location.href = 'registro_partidas.php';
+            },
+            error: function (xhr, status, error) {
+
+                console.error(error);
+            }
+        });
+    });
+
+}
+
 $(document).ready(function () {
 
     generarPartidasYBotones(primeraVez);
 
     // eventoBotonesPaginacion();
 });
+
+$(document).ready(function () {
+    $("#crearRegistro").on('click', function () {
+        // Crear el modal de edición
+        let modal = $('<div>').addClass('modal fade').attr('id', 'modalCrear');
+        let modalDialog = $('<div>').addClass('modal-dialog');
+        let modalContent = $('<div>').addClass('modal-content');
+        let modalHeader = $('<div>').addClass('modal-header');
+        let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
+        let modalBody = $('<div>').addClass('modal-body');
+
+        // Crear el formulario de edición
+        let form = $('<form>').addClass('needs-validation').attr('id', 'crear').attr('mehotd','post').attr('novalidate', true);
+
+        let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'numeroJugadores');
+        let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'puntuacionVencedor');
+        let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'fecha');
+        let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'nombreJuego');
+        let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombreUsuario').val(obtenerValorCookie('nombre'));
+        let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'logo')
+        let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'tiempoJuego');
+        let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'vencedor');
+
+        // Agregar los elementos del formulario al modal
+        form.append(nombreUsuario)
+        form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
+        form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
+        form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
+        form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
+        form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
+        form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
+        form.append($('<label>').text('Logo: ')).append(logoFormulario);
+
+        modalBody.append(form);
+
+        // Crear los botones de cancelar y confirmar cambios
+        let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+        let confirmarButton = $('<input>').addClass('btn btn-primary').attr('type', 'submit').text('Confirmar Cambios');
+
+
+        var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+        buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
+
+        // Agregar los botones al modal
+        var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+        modalFooter.append(buttonContainer);
+
+        // Construir la estructura del modal
+        modalHeader.append(modalTitle);
+        // $modalHeader.append($modalTitle).append($modalCloseButton);
+
+        modalContent.append(modalHeader).append(modalBody).append(modalFooter);
+        modalDialog.append(modalContent);
+        modal.append(modalDialog);
+
+        // Agregar el modal al documento
+        $('body').append(modal);
+
+        // Mostrar el modal de edición
+        $('#modalCrear').modal('show');
+
+        //BOTONES DEL MODAL
+
+        // Evento click en el botón "Cancelar"
+        cancelarButton.on('click', function () {
+            // Cerrar y eliminar el modal de edición
+            $('#modalCrear').modal('hide').remove();
+        });
+
+        confirmarButton.on('click', function () {
+            let formData = $('#crear').serialize();
+            console.log(formData);
+            // Realizar la petición PUT mediante AJAX
+            $.ajax({
+                url: 'http://localhost:8001/partidas',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+
+                    window.location.href = 'registro_partidas.php';
+                },
+                error: function (xhr, status, error) {
+
+                    console.error(error);
+                }
+            });
+        });
+    })
+})

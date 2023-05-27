@@ -34,7 +34,7 @@ if (isset($_COOKIE['correo'])) {
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
+            <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
                 <b id="titulo">La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -286,6 +286,11 @@ if (isset($_COOKIE['correo'])) {
         </div>
     </nav>
     <main>
+        <?php if (isset($_SESSION['usuario'])) : ?>
+            <div class="d-flex justify-content-center my-3">
+                <button type="button" class="btn btn-primary btn-violet" id="crearRegistro">Añadir registro</button>
+            </div>
+        <?php endif; ?>
         <div class="container-fluid d-flex justify-content-center">
             <div>
                 <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
@@ -308,7 +313,7 @@ if (isset($_COOKIE['correo'])) {
                                 <th scope="col">Puntuación Vencedor</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Tiempo de Juego</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col" colspan="2">Acciones
                             </tr>
                         </thead>
                         <tbody class="table-success">

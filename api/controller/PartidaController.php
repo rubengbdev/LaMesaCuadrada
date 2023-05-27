@@ -25,6 +25,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         // if (isset($_POST["texto"]) && isset($_POST["titulo"]) && isset($POST_['nombre_usuario'])) {
 
+            
             $numeroJugadores = seguridadFormularios($_POST["numeroJugadores"]);
             $puntuacionVencedor = seguridadFormularios($_POST["puntuacionVencedor"]);
             $fecha = seguridadFormularios($_POST["fecha"]);

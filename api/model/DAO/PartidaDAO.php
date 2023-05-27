@@ -47,7 +47,7 @@ class PartidaDAO {
 
         $mapperService = new MapperServiceImpl();
 
-        $stmt = $this->pdo->prepare('SELECT * FROM partida WHERE id_usuario = ? ORDER BY DATE_FORMAT(partida_fecha, "%Y-%m-%d") ASC');
+        $stmt = $this->pdo->prepare('SELECT * FROM partida WHERE id_usuario = ? ORDER BY DATE_FORMAT(partida_fecha, "%Y-%m-%d") DESC');
         $stmt->execute([$idUsuario]);
 
         if ($stmt->rowCount() > 0) {
