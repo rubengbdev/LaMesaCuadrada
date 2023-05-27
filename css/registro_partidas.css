@@ -1,0 +1,512 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Varela Round';
+    src: url('../fonts/VarelaRound-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Righteous Regular';
+    src: url('../fonts/Righteous-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Varela Round', sans-serif;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 10em;
+    background-image: linear-gradient(109.6deg, rgb(255, 239, 186) 11.2%, rgb(255, 193, 135) 91.1%);
+}
+
+.form-control {
+    box-shadow: none;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.navbar {
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid #dfe3e8;
+    border-radius: 0;
+}
+
+.nav-link img {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: -8px 0;
+    float: left;
+    margin-right: 10px;
+}
+
+.navbar .navbar-brand {
+    padding-left: 0;
+    font-size: 20px;
+    padding-right: 50px;
+}
+
+.navbar .navbar-brand b {
+    color: #33cabb;
+}
+
+.navbar .form-inline {
+    display: inline-block;
+}
+
+.navbar a {
+    color: #888;
+    /* font-size: 15px; */
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding-right: 35px;
+    border-color: #dfe3e8;
+    border-radius: 4px !important;
+    box-shadow: none
+}
+
+.search-box .input-group-text {
+    min-width: 35px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 7px;
+    height: 100%;
+}
+
+.search-box i {
+    color: #a0a5b1;
+    font-size: 19px;
+}
+
+.navbar .sign-up-btn {
+    min-width: 110px;
+    max-height: 36px;
+}
+
+.navbar .dropdown-menu {
+    color: #999;
+    font-weight: normal;
+    border-radius: 1px;
+    border-color: #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.navbar a {
+    color: #c72d2d;
+    padding: 8px 20px;
+    background: transparent;
+    line-height: normal;
+}
+
+/* .active {
+    color: blue;
+    text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
+} */
+
+.navbar .navbar-form {
+    border: none;
+}
+
+.navbar .action-form {
+    width: 280px;
+    padding: 20px;
+    left: auto;
+    right: 0;
+    font-size: 14px;
+}
+
+.navbar .action-form a {
+    color: #33cabb;
+    padding: 0 !important;
+    font-size: 14px;
+}
+
+.navbar .action-form .hint-text {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.navbar .btn-primary,
+.navbar .btn-primary:active {
+    color: #fff;
+    background: #33cabb !important;
+    border: none;
+}
+
+.dropdown-menu .form-group {
+    margin-bottom: 10px;
+}
+
+.navbar .btn-success,
+.navbar .btn-success:active {
+    color: #fff;
+    background: #108a00 !important;
+    border: none;
+}
+
+.navbar .btn-primary:hover,
+.navbar .btn-primary:focus {
+    color: #fff;
+    background: #31bfb1 !important;
+}
+
+.navbar .action-buttons .dropdown-toggle::after {
+    display: none;
+}
+
+.form-check-label input {
+    position: relative;
+    top: 1px;
+}
+
+@media (min-width: 1200px) {
+    .form-inline .input-group {
+        width: 300px;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .dropdown-menu.action-form {
+        width: 100%;
+        padding: 10px 15px;
+        background: transparent;
+        border: none;
+    }
+
+    .navbar .form-inline {
+        display: block;
+    }
+
+    .navbar .input-group {
+        width: 100%;
+    }
+}
+
+.movida {
+
+    margin-right: 20px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+
+.clamp-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    /* Ajusta este valor al número de líneas que quieres mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease-out;
+    max-height: calc(1.2em * 80);
+    /* Ajusta este valor al número de líneas que quieres mostrar */
+}
+
+.clamp-text.expanded {
+    -webkit-line-clamp: unset;
+    max-height: unset;
+}
+
+
+/* BOTON SCROLL*/
+#scrollBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 99;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #007bff;
+    color: #fff;
+}
+
+#scrollBtn:hover {
+    background-color: #0069d9;
+    color: #fff;
+}
+
+#editor {
+    min-height: 15em;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.671);
+    /* Ajusta el valor alpha para la opacidad deseada */
+}
+
+
+#paginacion-botones {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.square-textarea {
+    width: 50%;
+    /* Ajusta el ancho según tus necesidades */
+    height: 50%;
+    /* Ajusta la altura según tus necesidades */
+}
+
+.navegacion {
+    font-family: 'Righteous Regular', sans-serif;
+    font-size: 1em;
+    /* Ejemplo de tamaño de fuente inicial */
+    font-weight: bold;
+}
+
+.navegacion:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (max-width: 768px) {
+    .navegacion {
+        font-size: 2em;
+        /* Tamaño de fuente para pantallas más pequeñas */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navegacion {
+        font-size: 1.5em;
+        /* Tamaño de fuente para pantallas aún más pequeñas */
+    }
+}
+
+.navegacion.active {
+    color: #ffffff; /* Cambia el color del texto para el elemento activo */
+    background-color: #d8b6ff2c; /* Cambia el color de fondo para el elemento activo */
+    padding: 0.5em 1em; /* Añade un espacio interno alrededor del texto */
+    border-radius: 5px; /* Añade bordes redondeados */
+  }
+
+#titulo {
+    font-family: 'Righteous Regular', sans-serif;
+    font-size: 1.1em;
+}
+
+
+#movida2 {
+    background-color: #d6d6d6;
+    border-radius: 3em;
+    border: solid 0.5rem black;
+    padding: 1em;
+}
+
+.form-control {
+    box-shadow: none;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding-right: 35px;
+    border-color: #dfe3e8;
+    border-radius: 4px !important;
+    box-shadow: none
+}
+
+.search-box .input-group-text {
+    min-width: 35px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 7px;
+    height: 100%;
+}
+
+.search-box i {
+    color: #a0a5b1;
+    font-size: 19px;
+}
+
+.navbar .sign-up-btn {
+    min-width: 110px;
+    max-height: 36px;
+}
+
+.navbar .dropdown-menu {
+    color: #999;
+    font-weight: normal;
+    border-radius: 1px;
+    border-color: #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+.navbar a {
+    color: #ffffff;
+    padding: 8px 20px;
+    background: transparent;
+    line-height: normal;
+}
+
+.active {
+    color: blue;
+    text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
+}
+
+
+.navbar .navbar-form {
+    border: none;
+}
+
+.navbar .action-form {
+    width: 280px;
+    padding: 20px;
+    left: auto;
+    right: 0;
+    font-size: 14px;
+}
+
+.navbar .action-form a {
+    color: #33cabb;
+    padding: 0 !important;
+    font-size: 14px;
+}
+
+.navbar .action-form .hint-text {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.navbar .btn-primary,
+.navbar .btn-primary:active {
+    color: #fff;
+    background: #33cabb !important;
+    border: none;
+}
+
+.dropdown-menu .form-group {
+    margin-bottom: 10px;
+}
+
+.navbar .btn-success,
+.navbar .btn-success:active {
+    color: #fff;
+    background: #108a00 !important;
+    border: none;
+}
+
+.navbar .btn-primary:hover,
+.navbar .btn-primary:focus {
+    color: #fff;
+    background: #31bfb1 !important;
+}
+
+.navbar .action-buttons .dropdown-toggle::after {
+    display: none;
+}
+
+.form-check-label input {
+    position: relative;
+    top: 1px;
+}
+
+@media (min-width: 1200px) {
+    .form-inline .input-group {
+        width: 300px;
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .dropdown-menu.action-form {
+        width: 100%;
+        padding: 10px 15px;
+        background: transparent;
+        border: none;
+    }
+
+    .navbar .form-inline {
+        display: block;
+    }
+
+    .navbar .input-group {
+        width: 100%;
+    }
+}
+
+.movida {
+
+    margin-right: 20px;
+}
+
+@media (min-width: 992px) {}
+
+.card-header button {
+    color: #007bff;
+}
+
+.card-header button:hover {
+    text-decoration: none;
+    color: #0069d9;
+}
+
+.list-group-item:hover {
+    background-color: #f2f2f2;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.list-group,
+.card {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    display: block !important;
+    overflow-x: auto !important;
+    width: 100% !important;
+}
+
+#titulo {
+    font-family: 'Righteous Regular', sans-serif;
+    font-size: 1.1em;
+}
