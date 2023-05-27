@@ -36,6 +36,7 @@ class NoticiaServiceImpl implements NoticiaService {
         if (count($noticias) < 1 || $noticias == null || $noticias == false) {
             throw new Exception("No hay noticias");
         }
+        header('Content-Type: application/json');
 
         return $noticias;
     }
@@ -54,7 +55,7 @@ class NoticiaServiceImpl implements NoticiaService {
     
         try {
 
-            return $this->dao->createNoticia(new Noticia($fechaCreacion,$texto,$imagen,$titulo));
+            return $this->dao->createNoticia(new Noticia($id, $fechaCreacion,$texto,$imagen,$titulo));
         } catch (PDOException $e) {
 
             echo "Error al crear noticia: " . $e->getMessage();
@@ -63,11 +64,22 @@ class NoticiaServiceImpl implements NoticiaService {
 
     /********************PUT********************/
 
-    public function actualizarNoticiaPorId($id) {}
+    public function update($id, $texto, $imagen, $titulo) {
+
+        if (!$id) {
+            throw new Exception("Falta el id de Partida");
+        }
+
+        $partida = $this->dao->obtenerNoticiaPorId($id);
+        if (!$partida) {
+            throw new Exception("Partida no encontrado");
+        }
+
+        return ($this->dao->update($id, $texto, $imagen, $titulo));
+    }
         /********************DELETE********************/
 
-
-    public function eliminarNoticiaPorId($id) {
+    public function delete($id) {
 
         if (!$id) {
             throw new Exception("Falta el id de noticia");
@@ -75,11 +87,9 @@ class NoticiaServiceImpl implements NoticiaService {
 
         $usuario = $this->dao->obtenerNoticiaPorId($id);
         if (!$usuario) {
-            throw new Exception("Usuario no encontrado");
+            throw new Exception("Partida no encontrado");
         }
 
-        $this->dao->eliminarNoticiaPorId($id);
+        return ($this->dao->delete($id));
     }
-
-
 }

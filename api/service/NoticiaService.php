@@ -7,7 +7,6 @@ interface NoticiaService {
     public function crearNoticia($texto, $imagen, $titulo);
     public function obtenerNoticias();
     public function obtenerNoticiaPorId($id);
-    public function actualizarNoticiaPorId($id);
-    // public function update($id, $nombre, $email, $password);
-    public function eliminarNoticiaPorId($id);
+    public function update($id, $texto, $imagen, $titulo);
+    public function delete($id);
 }

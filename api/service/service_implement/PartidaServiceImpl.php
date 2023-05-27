@@ -45,6 +45,7 @@ class PartidaServiceImpl implements PartidaService {
 
             throw new Exception("No hay Partidas");
         }
+        header('Content-Type: application/json');
 
         return $partidas;
     }

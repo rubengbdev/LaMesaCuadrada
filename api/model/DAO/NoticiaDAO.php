@@ -43,7 +43,7 @@ class NoticiaDao {
 
         // $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen, noticia_titulo FROM noticia ORDER BY DATE_FORMAT(noticia_fecha, "%Y-%m-%d") DESC');
         // $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen FROM noticia ORDER BY noticia_fecha DESC');
-        $stmt = $this->pdo->prepare('SELECT noticia_fecha, noticia_texto, noticia_imagen, noticia_titulo FROM noticia ORDER BY DATE_FORMAT(noticia_fecha, "%Y-%m-%d %H:%i:%s") DESC');
+        $stmt = $this->pdo->prepare('SELECT noticia_id, noticia_fecha, noticia_texto, noticia_imagen, noticia_titulo FROM noticia ORDER BY DATE_FORMAT(noticia_fecha, "%Y-%m-%d %H:%i:%s") DESC');
 
 
         $stmt->execute();
@@ -51,7 +51,7 @@ class NoticiaDao {
         if ($stmt->rowCount() > 0) {
             $noticias = [];
             foreach ($stmt as $elemento) {
-                $noticia = new Noticia($elemento['noticia_fecha'],$elemento['noticia_texto'],$elemento['noticia_imagen'], $elemento['noticia_titulo']);
+                $noticia = new Noticia($elemento['noticia_id'],$elemento['noticia_fecha'],$elemento['noticia_texto'],$elemento['noticia_imagen'], $elemento['noticia_titulo']);
                 $noticias[] = $noticia->toArray();
             }
 
@@ -62,15 +62,43 @@ class NoticiaDao {
 
     }
 
-    // public function update(Usuario $usuario) {
-    //     $stmt = $this->pdo->prepare('UPDATE usuario SET nombre = ?, email = ?, password = ? WHERE id = ?');
-    //     $stmt->execute([$usuario->getNombre(), $usuario->getEmail(), $usuario->getPassword(), $usuario->getId()]);
-    //     return $stmt->rowCount();
-    // }
+    public function update($id, $texto, $imagen, $titulo) {
 
-    public function eliminarNoticiaPorId($id) {
-        $stmt = $this->pdo->prepare('DELETE FROM noticia WHERE id = ?');
-        $stmt->execute([$id]);
-        return $stmt->rowCount();
+        try {
+            $stmt = $this->pdo->prepare('UPDATE mesa_cuadrada.noticia SET noticia_texto = ?, noticia_imagen = ?, noticia_titulo = ? WHERE noticia_id = ?');
+            $stmt->execute([$texto, $imagen, $titulo, $id]);
+            $rowCount = $stmt->rowCount();
+            
+            if ($rowCount > 0) {
+                $resultado[] = ["actualizado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["actualizado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en la actualización: ' . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function delete($id) {
+
+        try {
+
+            $stmt = $this->pdo->prepare('DELETE FROM noticia WHERE noticia_id = ?');
+            $stmt->execute([$id]);
+            $rowCount = $stmt->rowCount();
+            if ($rowCount > 0) {
+                $resultado[] = ["borrado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["borrado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en el borrado: ' . $e->getMessage();
+            return null;
+        }
     }
 }

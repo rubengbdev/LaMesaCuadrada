@@ -7,7 +7,8 @@ class Noticia {
     private $imagen;
 	private $titulo;
 
-    public function __construct($fecha, $texto, $imagen, $titulo) {
+    public function __construct($id, $fecha, $texto, $imagen, $titulo) {
+        $this->id = $id;
         $this->fecha = $fecha;
         $this->texto = $texto;
         $this->imagen = $imagen;
