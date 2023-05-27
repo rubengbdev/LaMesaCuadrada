@@ -15,3 +15,6 @@ RewriteRule ^hilos/?$ api/controller/HiloController.php [L]
 RewriteRule ^hilo/?$ api/controller/MensajeController.php [L]
 RewriteRule ^hilo/([0-9]+)?$ api/controller/MensajeController.php?id_hilo=$1
 
+RewriteRule ^partidas/?$ api/controller/PartidaController.php [L]
+
+
