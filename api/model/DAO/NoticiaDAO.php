@@ -91,10 +91,10 @@ class NoticiaDao {
             $rowCount = $stmt->rowCount();
             if ($rowCount > 0) {
                 $resultado[] = ["borrado" => true];
-                return $resultado;
+                return json_encode($resultado);
             } else {
                 $resultado[] = ["borrado" => false];
-                return $resultado;
+                return json_encode($resultado);
             }
         } catch (PDOException $e) {
             echo 'Error en el borrado: ' . $e->getMessage();

@@ -84,10 +84,10 @@ class HiloDAO {
             $rowCount = $stmt->rowCount();
             if ($rowCount > 0) {
                 $resultado[] = ["borrado" => true];
-                return $resultado;
+                return ($resultado);
             } else {
                 $resultado[] = ["borrado" => false];
-                return $resultado;
+                return json_encode($resultado);
             }
         } catch (PDOException $e) {
             echo 'Error en la actualización: ' . $e->getMessage();

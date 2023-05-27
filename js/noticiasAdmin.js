@@ -12,7 +12,6 @@ function generarNoticiasYBotones(primeraVez) {
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                console.log(response);
 
                 noticias = response;
                 //Genera botones la primera vez
@@ -77,6 +76,8 @@ function muestraNoticias(noticias) {
 
         // Contenedor para los botones
         var $buttonContainer = $('<div>').addClass('text-center');
+        $buttonContainer.addClass('mx-2');
+
         // Botón Editar
         var $btnEditar = $('<button>').addClass('btn btn-sm btn-outline-secondary editar').text('Editar').attr('id', obj.id);
 
@@ -87,6 +88,11 @@ function muestraNoticias(noticias) {
 
         // Botón Eliminar
         var $btnEliminar = $('<button>').addClass('btn btn-sm btn-outline-danger eliminar').text('Eliminar').attr('id', obj.id);
+
+        $btnEliminar.on('click', function () {
+            var id = $(this).attr('id');
+            eliminarNoticia(id);
+        });
 
         $buttonContainer.append($btnEditar);
         $buttonContainer.append($btnEliminar);
@@ -191,7 +197,6 @@ function editarNoticia(id) {
 
     // Obtener los datos de la noticia del card
     var titulo = $card.find('.titulo').text();
-    console.log(titulo);
     var texto = $card.find('.texto').html().trim();
     var imagen = $card.find('.imagen').attr('src');
 
@@ -200,11 +205,7 @@ function editarNoticia(id) {
     var $modalDialog = $('<div>').addClass('modal-dialog');
     var $modalContent = $('<div>').addClass('modal-content');
     var $modalHeader = $('<div>').addClass('modal-header');
-    var $modalTitle = $('<h5>').addClass('modal-title').text('Editar Noticia');
-    // var $modalCloseButton = $('<button>').addClass('close').attr('type', 'button').attr('data-dismiss', 'modal').html('&times;');
-    // var $modalCloseButton = $('<button>').addClass('close btn').attr('type', 'button').attr('data-dismiss', 'modal').attr('aria-label', 'Close');
-    // var $closeIcon = $('<span>').addClass('glyphicon glyphicon-remove');
-    // $modalCloseButton.append($closeIcon);
+    var $modalTitle = $('<h5>').addClass('modal-title').text('Editar noticia');
     var $modalBody = $('<div>').addClass('modal-body');
 
     // Crear el formulario de edición
@@ -224,14 +225,14 @@ function editarNoticia(id) {
     // Crear los botones de cancelar y confirmar cambios
     var $cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
     var $confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
-    
+
 
     var $buttonContainer = $('<div>').addClass('d-flex justify-content-center');
     $buttonContainer.append($cancelarButton).append($('<div>').addClass('mx-2')).append($confirmarButton);
 
-// Agregar los botones al modal
-var $modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-$modalFooter.append($buttonContainer);
+    // Agregar los botones al modal
+    var $modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    $modalFooter.append($buttonContainer);
 
     // Construir la estructura del modal
     $modalHeader.append($modalTitle);
@@ -246,8 +247,6 @@ $modalFooter.append($buttonContainer);
 
     // Mostrar el modal de edición
     $('#modalEditar').modal('show');
-
-
 
     //BOTONES DEL MODAL
 
@@ -276,23 +275,96 @@ $modalFooter.append($buttonContainer);
                 imagen: nuevaImagen
             }),
             success: function (response) {
-                // Actualizar los datos en el card de la noticia
-                window.location.href = 'index.php';
-                // $card.find('.titulo').text(nuevoTitulo);
-                // $card.find('.texto').html(nuevoTexto);
-                // $card.find('.imagen').attr('src', nuevaImagen);
 
-                // // Cerrar y eliminar el modal de edición
-                // $('#modalEditar').modal('hide').remove();
+                window.location.href = 'index.php';
             },
             error: function (xhr, status, error) {
+
                 console.error(error);
-                // Mostrar mensaje de error o realizar acciones adicionales en caso de fallo
             }
         });
     });
 
 }
+
+function eliminarNoticia(id) {
+    // Obtener el card de la noticia correspondiente al ID
+    var $card = $('[id="' + id + '"]').closest('.card');
+
+    // Crear el modal de edición
+    var $modal = $('<div>').addClass('modal fade').attr('id', 'modalEditar');
+    var $modalDialog = $('<div>').addClass('modal-dialog');
+    var $modalContent = $('<div>').addClass('modal-content');
+    var $modalHeader = $('<div>').addClass('modal-header');
+    var $modalTitle = $('<h5>').addClass('modal-title').text('Borrar noticia');
+    var $modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar esta noticia?');
+
+    // Crear el formulario de edición
+    var $form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
+    var $id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(id);
+
+    // Agregar los elementos del formulario al modal
+    $form.append($id);
+    $modalBody.append($form);
+
+    // Crear los botones de cancelar y confirmar cambios
+    var $cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+    var $confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
+
+
+    var $buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+    $buttonContainer.append($cancelarButton).append($('<div>').addClass('mx-2')).append($confirmarButton);
+
+    // Agregar los botones al modal
+    var $modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    $modalFooter.append($buttonContainer);
+
+    // Construir la estructura del modal
+    $modalHeader.append($modalTitle);
+    // $modalHeader.append($modalTitle).append($modalCloseButton);
+
+    $modalContent.append($modalHeader).append($modalBody).append($modalFooter);
+    $modalDialog.append($modalContent);
+    $modal.append($modalDialog);
+
+    // Agregar el modal al documento
+    $('body').append($modal);
+
+    // Mostrar el modal de edición
+    $('#modalEditar').modal('show');
+
+    //BOTONES DEL MODAL
+
+    // Evento click en el botón "Cancelar"
+    $cancelarButton.on('click', function () {
+        // Cerrar y eliminar el modal de edición
+        $('#modalEditar').modal('hide').remove();
+    });
+
+    // Evento click en el botón "Confirmar Cambios"
+    $confirmarButton.on('click', function () {
+
+        // Realizar la petición PUT mediante AJAX
+        $.ajax({
+            url: 'http://localhost:8001/noticias',
+            type: 'DELETE',
+            dataType: 'json',
+            data: JSON.stringify({
+                id: id
+            }),
+            success: function (response) {
+
+                window.location.href = 'index.php';
+            },
+            error: function (xhr, status, error) {
+                
+                console.error(error);
+            }
+        });
+    });
+
+}
+
 
 $(document).ready(function () {
 

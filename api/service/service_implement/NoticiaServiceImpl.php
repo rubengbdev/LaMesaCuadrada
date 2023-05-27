@@ -90,6 +90,8 @@ class NoticiaServiceImpl implements NoticiaService {
             throw new Exception("Partida no encontrado");
         }
 
+        header('Content-Type: application/json');
+
         return ($this->dao->delete($id));
     }
 }
