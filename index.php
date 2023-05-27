@@ -437,7 +437,21 @@ if (isset($_COOKIE['correo'])) {
 
     <!-- Carga de noticias y paginacion -->
     <div class="pagination"></div>
-    <script src="./js/noticias.js"></script>
+
+    <?php if (!isset($_SESSION['usuario_tipo'])) : ?>
+    
+        <script src="./js/noticias.js"></script>
+
+    <?php elseif ($_SESSION['usuario_tipo'] == "u") : ?>
+
+        <script src="./js/noticias.js"></script>
+
+    <?php else : ?>
+    
+        <script src="./js/noticiasAdmin.js"></script>
+    
+    <?php endif; ?>
+
 
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
