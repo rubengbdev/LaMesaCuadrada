@@ -296,9 +296,9 @@ if (isset($_COOKIE['correo'])) {
                 <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <form class="d-flex">
-                            <input class="form-control me-3" type="search" placeholder="Buscar" aria-label="Buscar">
-                            <button class="btn btn-outline-primary" type="submit">Buscar por nombre de juego</button>
+                        <form id="buscador" class="d-flex">
+                            <input id="campoBusqueda" class="form-control me-3" type="search" placeholder="Buscar" aria-label="Buscar">
+                            <button id="buscar" class="btn btn-outline-primary" type="submit">Buscar por nombre de juego</button>
                         </form>
                     </div>
                 </div>
