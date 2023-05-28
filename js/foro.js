@@ -21,8 +21,6 @@ function obtenerValorCookie(nombre) {
 function generarHilosYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
-        var emailUsuario = obtenerValorCookie('correo'); // Suponiendo que la cookie se llama 'correo'
-
         $.ajax({
             url: 'http://localhost:8001/hilos',
             method: 'GET',
@@ -32,7 +30,6 @@ function generarHilosYBotones(primeraVez) {
             dataType: 'json',
             success: function (response) {
 
-                console.log(response);
                 hilos = response;
                 numeroPaginas = Math.ceil(response.length / hilosPorPagina);
                 let hilosPagina;
@@ -209,29 +206,29 @@ $(document).ready(function () {
         let modalDialog = $('<div>').addClass('modal-dialog');
         let modalContent = $('<div>').addClass('modal-content');
         let modalHeader = $('<div>').addClass('modal-header');
-        let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
+        let modalTitle = $('<h5>').addClass('modal-title').text('Crear Hilo');
         let modalBody = $('<div>').addClass('modal-body');
 
         // Crear el formulario de edición
         let form = $('<form>').addClass('needs-validation').attr('id', 'crear').attr('mehotd', 'post').attr('novalidate', true);
 
         let publicar = $('<input>').attr('type', 'hidden').attr('name', 'publicar_hilo');
-        let texto = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'texto');
-        let titulo = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'titulo');
-        let nombreUsuario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'nombre_usuario').val(obtenerValoraCookie('nombre'));
+        let texto = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'texto');
+        let titulo = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo');
+        let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombre_usuario').val(obtenerValorCookie('nombre'));
 
 
         // Agregar los elementos del formulario al modal
-        form.append(nombreUsuario)
-        form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
-        form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
-        form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
+        form.append(publicar);
+        form.append(nombreUsuario);
+        form.append($('<label>').text('Titulo: ')).append(titulo);
+        form.append($('<label>').text('Texto: ')).append(texto);
 
         modalBody.append(form);
 
         // Crear los botones de cancelar y confirmar cambios
         let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-        let confirmarButton = $('<input>').addClass('btn btn-primary').attr('type', 'submit').text('Confirmar Cambios');
+        let confirmarButton = $('<input>').addClass('btn btn-primary').attr('type', 'submit').text('Publicar hilo');
 
 
         var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
@@ -265,7 +262,6 @@ $(document).ready(function () {
 
         confirmarButton.on('click', function () {
             let formData = $('#crear').serialize();
-            console.log(formData);
             // Realizar la petición PUT mediante AJAX
             $.ajax({
                 url: 'http://localhost:8001/hilos',
@@ -273,7 +269,7 @@ $(document).ready(function () {
                 data: formData,
                 success: function (response) {
 
-                    window.location.href = 'registro_hilos.php';
+                    window.location.href = 'foro.php';
                 },
                 error: function (xhr, status, error) {
 

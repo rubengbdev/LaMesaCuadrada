@@ -4,7 +4,6 @@ var url = new URL(window.location.href);
 var id = url.searchParams.get("id");
 
 // Hacer algo con el valor del ID
-console.log("ID: " + id);
 
 
 let mensajes = [];
@@ -23,7 +22,6 @@ function generarMensajesYBotones(primeraVez) {
             dataType: 'json',
             success: function (response) {
 
-                console.log(response);
                 mensajes = response;
                 numeroPaginas = Math.ceil(response.length / mensajesPorPagina);
                 let mensajesPagina;
