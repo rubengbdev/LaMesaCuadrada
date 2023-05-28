@@ -48,7 +48,7 @@ class MensajeServiceImpl implements MensajeService {
 
         if (!$texto || !$titulo) {
             throw new Exception("Faltan datos de Mensaje");
-        }
+        } 
 
         $servicioUsuario = new UsuarioServiceImpl();
         //descomentarlo cuando vaya a probarlo en cliente ya que funciona con la sesion

@@ -215,24 +215,17 @@ $(document).ready(function () {
         // Crear el formulario de edición
         let form = $('<form>').addClass('needs-validation').attr('id', 'crear').attr('mehotd', 'post').attr('novalidate', true);
 
-        let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'numeroJugadores');
-        let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'puntuacionVencedor');
-        let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'fecha');
-        let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'nombreJuego');
-        let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombreUsuario').val(obtenerValorCookie('nombre'));
-        let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'logo')
-        let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'tiempoJuego');
-        let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'vencedor');
+        let publicar = $('<input>').attr('type', 'hidden').attr('name', 'publicar_hilo');
+        let texto = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'texto');
+        let titulo = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'titulo');
+        let nombreUsuario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'nombre_usuario').val(obtenerValoraCookie('nombre'));
+
 
         // Agregar los elementos del formulario al modal
         form.append(nombreUsuario)
         form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
         form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
         form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
-        form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
-        form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
-        form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
-        form.append($('<label>').text('Logo: ')).append(logoFormulario);
 
         modalBody.append(form);
 

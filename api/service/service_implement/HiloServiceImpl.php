@@ -42,20 +42,21 @@ class HiloServiceImpl implements HiloService {
 
     /********************POST********************/
 
-    public function crear($texto,$tipo,$titulo) {
+    public function crear($texto,$tipo,$titulo,$nombreUsuario) {
 
         if (!$texto || !$titulo) {
             throw new Exception("Faltan datos de hilo");
         }
 
-        $servicioUsuario = new UsuarioServiceImpl();
-        // $usuarioId = $servicioUsuario->obtenerUsuarioPorEmail($_SESSION['correo']);
-        $usuarioId = 19;
         $id = $this->dao->ultimoId();
         $fecha = date("Y-m-d H:i:s");
         
         try {
-            return $this->dao->crearHilo(new Hilo($id,$titulo,$texto,$tipo,$fecha,$usuarioId));
+
+            $usuarioService = new UsuarioServiceImpl();
+            $idUsuario =  $usuarioService->obtenerUsuarioPorNombre($nombreUsuario);
+            
+            return $this->dao->crearHilo(new Hilo($id,$titulo,$texto,$tipo,$fecha,$idUsuario));
             
         } catch (PDOException $e) {
 
