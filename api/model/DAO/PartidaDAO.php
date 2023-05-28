@@ -39,7 +39,7 @@ class PartidaDAO {
 
             return null;
         }
-
+ 
         return $row;
     }
 
@@ -94,15 +94,15 @@ class PartidaDAO {
 
         try {
 
-            $stmt = $this->pdo->prepare('DELETE FROM mesa_cuadrada.partida WHERE partida_id = ?');
+            $stmt = $this->pdo->prepare('DELETE FROM partida WHERE partida_id = ?');
             $stmt->execute([$id]);
             $rowCount = $stmt->rowCount();
             if ($rowCount > 0) {
                 $resultado[] = ["borrado" => true];
-                return $resultado;
+                return ($resultado);
             } else {
                 $resultado[] = ["borrado" => false];
-                return $resultado;
+                return ($resultado);
             }
         } catch (PDOException $e) {
             echo 'Error en el borrado: ' . $e->getMessage();

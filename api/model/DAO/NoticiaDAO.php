@@ -82,6 +82,8 @@ class NoticiaDao {
         }
     }
 
+    /* ------------------ DELETE ------------------ */
+
     public function delete($id) {
 
         try {

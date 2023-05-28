@@ -79,16 +79,14 @@ function muestraPartidas(partidas) {
         var eliminarCell = $('<td>').append(eliminarBtn);
 
         editarBtn.on('click', function () {
-            // var boton = $(this).attr('id');
             let registro = $(this).closest('tr');
-            console.log(registro.text());
 
             editarPartida(registro);
         });
 
         eliminarBtn.on('click', function () {
-            var id = $(this).attr('id');
-            eliminarPartida(id);
+            let registro = $(this).closest('tr');
+            eliminarPartida(registro);
         });
 
         row.append(logoCell, nombreJuegoCell, jugadoresCell, jugadorGanadorCell, puntuacionCell, fechaCell, duracionCell, editarCell, eliminarCell);
@@ -289,6 +287,79 @@ function editarPartida(registro) {
     });
 
 }
+
+function eliminarPartida(registro) {
+
+    let idPartida = registro.attr("id");
+
+    // Crear el modal de edición
+    let modal = $('<div>').addClass('modal fade').attr('id', 'modalBorrar');
+    let modalDialog = $('<div>').addClass('modal-dialog');
+    let modalContent = $('<div>').addClass('modal-content');
+    let modalHeader = $('<div>').addClass('modal-header');
+    let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
+    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
+
+    // Crear el formulario de edición
+    var form = $('<form>').addClass('needs-validation').attr('id', 'formularioBorrar').attr('novalidate', true);
+    var id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(id);
+
+    form.append(id);
+    modalBody.append(form);
+
+    let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+    let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar borrado');
+
+    let buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+    buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
+
+    let modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    modalFooter.append(buttonContainer);
+
+    modalHeader.append(modalTitle);
+
+    modalContent.append(modalHeader).append(modalBody).append(modalFooter);
+    modalDialog.append(modalContent);
+    modal.append(modalDialog);
+
+    // Agregar el modal al documento
+    $('body').append(modal);
+
+    // Mostrar el modal de edición
+    $('#modalBorrar').modal('show');
+
+    //BOTONES DEL MODAL
+
+    // Evento click en el botón "Cancelar"
+    cancelarButton.on('click', function () {
+        // Cerrar y eliminar el modal de edición
+        $('#modalBorrar').modal('hide').remove();
+    });
+
+    // Evento click en el botón "Confirmar Cambios"
+    confirmarButton.on('click', function () {
+
+        $.ajax({
+            url: 'http://localhost:8001/partidas',
+            type: 'DELETE',
+            dataType: 'json',
+            data: JSON.stringify({
+                id: idPartida
+            }),
+            success: function (response) {
+
+                window.location.href = 'registro_partidas.php';
+            },
+            error: function (xhr, status, error) {
+
+                console.error(error);
+            }
+        });
+    });
+
+}
+
+
 
 $(document).ready(function () {
 

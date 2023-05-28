@@ -53,7 +53,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "DELETE":
 
         $datos = json_decode(file_get_contents('php://input'));
-        print_r($datos);
         $servicio = new PartidaServiceImpl();
         $actualizado = $servicio->delete($datos->id);
         exit(json_encode($actualizado));
