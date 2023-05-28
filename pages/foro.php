@@ -289,370 +289,50 @@ if (isset($_COOKIE['correo'])) {
     </nav>
 
     <main>
-
         <div class="container-fluid">
             <div class="row justify-content-center mt-2 mb-2">
                 <div class="col-lg-8 col-md-10 col-12">
                     <div class="accordion" id="hilos-accordion">
                         <div class="card">
-                            <!-- 
                             <div class="card-header">
-                                <h2 class="mb-0">
-                                    <a href="#" class="text-decoration-none" data-bs-toggle="collapse" data-bs-target="#general3-hilos" aria-expanded="true" aria-controls="general3-hilos">
-                                        General
-                                    </a>
-                                </h2>
-                            </div>
-                            <ul class="list-group list-group-flush collapse show" id="general3-hilos">
-                                <li class="list-group-item">Hilo 1</li>
-                                <li class="list-group-item">Hilo 2</li>
-                                <li class="list-group-item">Hilo 3</li>
-                            </ul>
-
-
-                                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#general2-hilos" aria-expanded="true" aria-controls="general2-hilos">
-                                  <h2 class="mb-0">
-                                    General
-                                  </h2>
-                                </div>
-                                <div id="general2-hilos" class="collapse show">
-                                  <div class="card-body">
-                                    <ul class="list-group">
-                                      <li class="list-group-item">
-                                        Hilo 1
-                                      </li>
-                                      <li class="list-group-item">
-                                        Hilo 2
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div> -->
-
-                            <div class="card-header">
+                                <?php if (isset($_SESSION['usuario'])) : ?>
+                                    <div class="d-flex justify-content-center my-3">
+                                        <button type="button" class="btn btn-danger" id="crearHiloGeneral">Añadir registro</button>
+                                    </div>
+                                <?php endif; ?>
                                 <h2 class="mb-0">
                                     <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#general-hilos" aria-expanded="true" aria-controls="general-hilos">
                                         <h2>General</h2>
                                     </button>
                                 </h2>
                             </div>
-
                             <div id="general-hilos" class="collapse show" aria-labelledby="headingOne">
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    <strong>Jugando a Mansiones de la Locura y NO SE RICARDO</strong>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    <strong>Lo mejor sería fumarse un petardo mientras jugamos al
-                                                        rescate??? [SEMI-SIRIO]</strong>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    <strong>Estaba con mi mano jugando al Codigo Secreto Duo y...
-                                                        +18</strong>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
+
                                     </ul>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Siguiente</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
                                 </div>
                             </div>
-                        </div>
+                            <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
+                                <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                                    <p id="mostrando"></p>
+                                    <div id="paginacion-botones" class="d-flex justify-content-center">
+                                        <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                            <span class="bi bi-chevron-bar-left"></span>
+                                        </button>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#experiencias-hilos" aria-expanded="false" aria-controls="experiencias-hilos">
-                                        <h2>Experiencias</h2>
-                                    </button>
-                                </h2>
-                            </div>
+                                        <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                                            <span class="bi bi-chevron-left"></span>
+                                        </button>
 
-                            <div id="experiencias-hilos" class="collapse show" aria-labelledby="headingTwo">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Siguiente</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
+                                        <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                            <span class="bi bi-chevron-right"></span>
+                                        </button>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#analisis-hilos" aria-expanded="false" aria-controls="analisis-hilos">
-                                        <h2>Análisis de Juegos</h2>
-                                    </button>
-                                </h2>
-                            </div>
-
-                            <div id="analisis-hilos" class="collapse show" aria-labelledby="headingTwo">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Siguiente</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#lanzamientos-hilos" aria-expanded="false" aria-controls="lanzamientos-hilos">
-                                        <h2>Lanzamientos</h2>
-                                    </button>
-                                </h2>
-                            </div>
-
-                            <div id="lanzamientos-hilos" class="collapse show" aria-labelledby="headingTwo">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 1
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hola que tal me presento
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">13:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">pepito_19</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Quas ipsum quia dolore?
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">14:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">jugon4</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    badge bg-primary rounded-
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">tontito</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-sm-10">
-                                                    Hilo 5
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-primary rounded-pill">10:00</span>
-                                                </div>
-                                                <div class="col-sm-1 text-end">
-                                                    <span class="badge bg-danger rounded-pill">Usuario1</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Siguiente</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                        <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                                            <span class="bi bi-chevron-bar-right"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -660,6 +340,7 @@ if (isset($_COOKIE['correo'])) {
                 </div>
             </div>
         </div>
+        <script src="../js/foro.js"></script>
     </main>
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">

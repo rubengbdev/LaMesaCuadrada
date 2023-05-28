@@ -12,18 +12,24 @@ class HiloDAO {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function ultimoId() {
+        return $this->pdo->lastInsertId() + 1;
+    }
 
     public function crearHilo(Hilo $hilo) {
 
         $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.hilo (hilo_fecha,hilo_contenido,id_usuario,hilo_tipo,hilo_titulo) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute([$hilo->getFecha(), $hilo->getContenido(), $hilo->getIdUsuario(), $hilo->getTipo(), $hilo->getTitulo()]);
         
+        $id = $this->pdo->lastInsertId();
+
+        $stmt = $this->pdo->prepare('INSERT INTO mesa_cuadrada.mensaje (id_hilo,mensaje_contenido,mensaje_titulo,mensaje_fecha,id_usuario) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$id,$hilo->getContenido(), $hilo->getTitulo(),$hilo->getFecha(), $hilo->getIdUsuario()]);
+
         return $this->pdo->lastInsertId();
     }
 
-    public function ultimoId() {
-        return $this->pdo->lastInsertId() + 1;
-    }
+
 
     public function obtenerHiloPorId($id) {
 
