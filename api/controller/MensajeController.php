@@ -1,56 +1,60 @@
 <?php
+session_start();
 
-require_once("../service/service_implement/MensajeServiceImpl.php");
-require_once("../service/service_implement/UsuarioServiceImpl.php");
+if (isset($_SESSION['usuario'])) {
 
-switch ($_SERVER['REQUEST_METHOD']) {
+    require_once("../service/service_implement/MensajeServiceImpl.php");
+    require_once("../service/service_implement/UsuarioServiceImpl.php");
 
-    case "GET":
+    switch ($_SERVER['REQUEST_METHOD']) {
 
-        if (isset($_GET["id_hilo"])) {
+        case "GET":
 
-            $servicio = new MensajeServiceImpl();
-            $datos = $servicio->getAllByHilo($_GET['id_hilo']);
+            if (isset($_GET["id_hilo"])) {
 
-            if (count($datos) > 0) {
-                exit(json_encode($datos));
-            } else {
-                echo "No hay datos";
+                $servicio = new MensajeServiceImpl();
+                $datos = $servicio->getAllByHilo($_GET['id_hilo']);
+
+                if (count($datos) > 0) {
+                    exit(json_encode($datos));
+                } else {
+                    echo "No hay datos";
+                }
             }
-        }
 
-        break;
+            break;
 
-    case "POST":
+        case "POST":
 
-        // if (isset($_POST["texto"]) && isset($_POST["titulo"]) && isset($POST_['nombre_usuario'])) {
+            // if (isset($_POST["texto"]) && isset($_POST["titulo"]) && isset($POST_['nombre_usuario'])) {
 
             $texto = seguridadFormularios($_POST["texto"]);
             $titulo = seguridadFormularios($_POST["titulo"]);
 
             $servicio = new MensajeServiceImpl();
-            $id = $servicio->crear($_POST["id_hilo"],$texto, $titulo, $_POST['nombre_usuario']);
+            $id = $servicio->crear($_POST["id_hilo"], $texto, $titulo, $_POST['nombre_usuario']);
             exit(json_encode($id));
-        // }
+            // }
 
-        break;
+            break;
 
-    case "PUT":
+        case "PUT":
 
-        $datos = json_decode(file_get_contents('php://input'));
-        $servicio = new MensajeServiceImpl();
-        $actualizado = $servicio->update($datos->id, $datos->titulo, $datos->texto);
-        exit(json_encode($actualizado));
+            $datos = json_decode(file_get_contents('php://input'));
+            $servicio = new MensajeServiceImpl();
+            $actualizado = $servicio->update($datos->id, $datos->titulo, $datos->texto);
+            exit(json_encode($actualizado));
 
-    case "DELETE":
+        case "DELETE":
 
-        $datos = json_decode(file_get_contents('php://input'));
-        $servicio = new MensajeServiceImpl();
-        $actualizado = $servicio->delete($datos->id);
+            $datos = json_decode(file_get_contents('php://input'));
+            $servicio = new MensajeServiceImpl();
+            $actualizado = $servicio->delete($datos->id);
 
-        header('Content-Type: application/json');
+            header('Content-Type: application/json');
 
-        exit(json_encode($actualizado));
+            exit(json_encode($actualizado));
 
-        break;
+            break;
+    }
 }

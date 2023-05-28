@@ -341,10 +341,10 @@ function editarMensaje(mensaje) {
 
     let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'id').val(idMensaje);
     let textoFormulario = $('<textarea>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(textoMensaje);
-    let tituloFormulario;
+    let tituloFormulario = null;
 
     if (mensajes[0].id == mensaje.id) {
-        tituloFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'number').val(tituloMensaje);
+        tituloFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'texto').val(tituloMensaje);
     }
 
     // Agregar los elementos del formulario al modal
@@ -407,8 +407,8 @@ function editarMensaje(mensaje) {
                     titulo: tituloFormulario.val()
                 }),
                 success: function (response) {
-
-                    window.location.href = 'hilo.php?id=' + id;
+                    console.log("ok");
+                    // window.location.href = 'hilo.php?id=' + id;
                 },
                 error: function (xhr, status, error) {
 
@@ -416,12 +416,15 @@ function editarMensaje(mensaje) {
                 }
             });
 
+            let urlHilo = new URL(window.location.href);
+            let idHiloUrl = urlHilo.searchParams.get("id");
+
             $.ajax({
                 url: 'http://localhost:8001/hilos',
                 type: 'PUT',
                 dataType: 'json',
                 data: JSON.stringify({
-                    id: idUrl,
+                    id: idHiloUrl,
                     texto: textoFormulario.val(),
                     titulo: tituloFormulario.val()
                 }),
@@ -478,13 +481,13 @@ function eliminarMensaje(mensaje) {
     let modalContent = $('<div>').addClass('modal-content');
     let modalHeader = $('<div>').addClass('modal-header');
     let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
-    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
+    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este mensaje?');
 
     // Crear el formulario de edición
     var form = $('<form>').addClass('needs-validation').attr('id', 'formularBorraMensajes').attr('novalidate', true);
     var idInput = $('<input>').attr('type', 'hidden').attr('name', 'id').val(idMensaje);
 
-    form.append(id);
+    form.append(idInput);
     modalBody.append(form);
 
     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');

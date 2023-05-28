@@ -297,7 +297,7 @@ if (isset($_COOKIE['correo'])) {
                             <div class="card-header">
                                 <?php if (isset($_SESSION['usuario'])) : ?>
                                     <div class="d-flex justify-content-center my-3">
-                                        <button type="button" class="btn btn-danger" id="crearHiloGeneral">Añadir registro</button>
+                                        <button type="button" class="btn btn-danger" id="crearHiloGeneral">Añadir hilo en general</button>
                                     </div>
                                 <?php endif; ?>
                                 <h2 class="mb-0">
