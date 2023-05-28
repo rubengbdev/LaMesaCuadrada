@@ -35,7 +35,7 @@ if (isset($_COOKIE['correo'])) {
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
+            <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
                 <b id="titulo">La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

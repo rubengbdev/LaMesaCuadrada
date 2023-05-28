@@ -52,40 +52,70 @@ function generarMensajesYBotones(primeraVez) {
 function muestraMensajes(mensajes) {
     $("#general-mensajes").html('');
 
-    $.each(mensajes, function(index, obj) {
-        var cardBody = $('<div>').addClass('card-body h-70');
+    $.each(mensajes, function (index, obj) {
         var card = $('<div>').addClass('card mb-3 h-100 my-1');
-        var row = $('<div>').addClass('row g-0 h-100');
-        var col1 = $('<div>').addClass('col-2 border-end h-100');
-        var col2 = $('<div>').addClass('col-10 h-100');
+        var cardBody = $('<div>').addClass('card-body');
+        var cardFooter = $('<div>').addClass('card-footer d-flex justify-content-center align-items-center');
+        var row = $('<div>').addClass('row g-0');
+        var col1 = $('<div>').addClass('col-2 border-end');
+        var col2 = $('<div>').addClass('col-10');
         var col1CardBody = $('<div>').addClass('card-body d-flex flex-column align-items-center');
         var col2CardBody = $('<div>').addClass('card-body d-flex flex-column justify-content-between');
         var nombreUsuario = $('<h5>').addClass('card-title mb-1').text(obj.nombreUsuario);
         var fecha = $('<p>').addClass('card-text small text-muted mb-1').text(obj.fecha);
         var texto = $('<p>').addClass('card-text mb-0').text(obj.texto);
-      
+
         col1CardBody.append(nombreUsuario, fecha);
         col2CardBody.append(texto);
         col1.append(col1CardBody);
         col2.append(col2CardBody);
         row.append(col1, col2);
-        card.append(row);
-        cardBody.append(card);
-      
+        cardBody.append(row);
+
         if (index === 0 && pagina === 1) { // Verifica si es el primer mensaje total y también el de la primera página
-          col1.addClass('border-danger');
-          col2.addClass('border-danger');
-          var titulo = $('<h5>').addClass('card-title').text(obj.titulo);
-          col2CardBody.prepend(titulo);
+            col1.addClass('border-danger');
+            col2.addClass('border-danger');
+            var titulo = $('<h5>').addClass('card-title').text(obj.titulo);
+            col2CardBody.prepend(titulo);
         } else {
-          col1.addClass('border-primary');
-          col2.addClass('border-primary');
+            col1.addClass('border-primary');
+            col2.addClass('border-primary');
         }
-      
-        cardBody.append(card);
-      
-        $('#general-mensajes').append(cardBody);
-      });
+
+        // Botón Editar
+
+        var editarButton = $('<button>').addClass('btn btn-primary btn-sm').attr('id', obj.id).text('Editar');
+        editarButton.data('mensaje', obj); // Adjuntar los datos del mensaje al botón
+
+        editarButton.on('click', function () {
+            let mensaje = $(this).data('mensaje'); // Obtener los datos del mensaje del botón
+            editarMensaje(mensaje);
+        });
+
+        cardFooter.append(editarButton);
+
+        // Botón Eliminar
+
+        if (index !== 0) {
+
+            var eliminarButton = $('<button>').addClass('btn btn-danger btn-sm').attr('id', obj.id).text('Eliminar');
+            eliminarButton.data('mensaje', obj); // Adjuntar los datos del mensaje al botón
+
+            eliminarButton.on('click', function () {
+                let mensaje = $(this).data('mensaje'); // Obtener los datos del mensaje del botón
+                eliminarMensaje(mensaje);
+            });
+
+            cardFooter.append(eliminarButton);
+        }
+
+        card.append(cardBody, cardFooter);
+
+
+        console.log($(this).data('mensaje'));
+        $('#general-mensajes').append(card);
+    });
+
     if (mensajes.length > 0) {
         $("#mostrando").text("Mostrando la página " + pagina + " de " + numeroPaginas);
     } else {
@@ -195,8 +225,6 @@ function eventoBotonesPaginacion() {
 }
 
 
-
-
 $(document).ready(function () {
 
     generarMensajesYBotones(primeraVez);
@@ -291,192 +319,225 @@ $(document).ready(function () {
     })
 })
 
+function editarMensaje(mensaje) {
+
+    console.log(mensaje);
+    // Obtener el tr correspondiende entero (el padre)
+
+    let idMensaje = mensaje.id;
+    let textoMensaje = mensaje.texto;
+    let tituloMensaje = mensaje.titulo;
+
+    // Crear el modal de edición
+    let modal = $('<div>').addClass('modal fade').attr('id', 'modalEditar');
+    let modalDialog = $('<div>').addClass('modal-dialog');
+    let modalContent = $('<div>').addClass('modal-content');
+    let modalHeader = $('<div>').addClass('modal-header');
+    let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
+    let modalBody = $('<div>').addClass('modal-body');
+
+    // Crear el formulario de edición
+    let form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
+
+    let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'id').val(idMensaje);
+    let textoFormulario = $('<textarea>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(textoMensaje);
+    let tituloFormulario;
+
+    if (mensajes[0].id == mensaje.id) {
+        tituloFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'number').val(tituloMensaje);
+    }
+
+    // Agregar los elementos del formulario al modal
+    form.append(idFormulario);
+    if (mensajes[0].id == mensaje.id) {
+        form.append($('<label>').text('Titulo: ')).append(tituloFormulario);
+    }
+    form.append($('<label>').text('Texto ')).append(textoFormulario);
+
+    modalBody.append(form);
+
+    // Crear los botones de cancelar y confirmar cambios
+    let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+    let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
 
 
-// function editarMensaje(registro) {
+    var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+    buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
 
-//     // Obtener el tr correspondiende entero (el padre)
+    // Agregar los botones al modal
+    var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    modalFooter.append(buttonContainer);
 
-//     // Obtener los datos de la partida
-//     let idPartida = registro.attr('id');
-//     let nombre = registro.find('.nombre_juego').html().trim();
-//     let jugadores = registro.find('.jugadores').html().trim();
-//     let ganador = registro.find('.ganador').html().trim();
-//     let puntuacion = registro.find('.puntuacion').html().trim();
-//     let fecha = registro.find('.fecha').html().trim();
-//     let duracion = registro.find('.duracion').html().trim();
-//     let logo = registro.find('.logo-imagen').attr('src');
+    // Construir la estructura del modal
+    modalHeader.append(modalTitle);
+    // $modalHeader.append($modalTitle).append($modalCloseButton);
 
-//     // Crear el modal de edición
-//     let modal = $('<div>').addClass('modal fade').attr('id', 'modalEditar');
-//     let modalDialog = $('<div>').addClass('modal-dialog');
-//     let modalContent = $('<div>').addClass('modal-content');
-//     let modalHeader = $('<div>').addClass('modal-header');
-//     let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
-//     let modalBody = $('<div>').addClass('modal-body');
+    modalContent.append(modalHeader).append(modalBody).append(modalFooter);
+    modalDialog.append(modalContent);
+    modal.append(modalDialog);
 
-//     // Crear el formulario de edición
-//     let form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
+    // Agregar el modal al documento
+    $('body').append(modal);
 
-//     let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'idPartida').val(idPartida);
-//     let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(nombre);
-//     let jugadoresFormulario = $('<textarea>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'number').css('height', '300px').val(jugadores);
-//     let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(ganador);
-//     let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(puntuacion);
-//     let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'imagen').val(fecha);
-//     let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(duracion);
-//     let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(logo);
+    // Mostrar el modal de edición
+    $('#modalEditar').modal('show');
+
+    //BOTONES DEL MODAL
+
+    // Evento click en el botón "Cancelar"
+    cancelarButton.on('click', function () {
+        // Cerrar y eliminar el modal de edición
+        $('#modalEditar').modal('hide').remove();
+    });
 
 
-//     // Agregar los elementos del formulario al modal
-//     form.append(idFormulario);
-//     form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
-//     form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
-//     form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
-//     form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
-//     form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
-//     form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
-//     form.append($('<label>').text('Logo: ')).append(logoFormulario);
+    // Evento click en el botón "Confirmar Cambios"
+    confirmarButton.on('click', function () {
+        // Obtener los datos actualizados del formular
+        if (mensajes[0].id == mensaje.id) {
+
+            // Realizar la petición PUT mediante AJAX
+            $.ajax({
+                url: 'http://localhost:8001/hilo',
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id: idMensaje,
+                    texto: textoFormulario.val(),
+                    titulo: tituloFormulario.val()
+                }),
+                success: function (response) {
+
+                    window.location.href = 'hilo.php?id=' + id;
+                },
+                error: function (xhr, status, error) {
+
+                    console.error(error);
+                }
+            });
+
+            $.ajax({
+                url: 'http://localhost:8001/hilos',
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id: idUrl,
+                    texto: textoFormulario.val(),
+                    titulo: tituloFormulario.val()
+                }),
+                success: function (response) {
+
+                    window.location.href = 'hilo.php?id=' + id;
+                },
+                error: function (xhr, status, error) {
+
+                    console.error(error);
+                }
+            });
+        } else {
+            $.ajax({
+                url: 'http://localhost:8001/hilo',
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id: idMensaje,
+                    texto: textoFormulario.val(),
+                    titulo: null
+                }),
+                success: function (response) {
+
+                    window.location.href = 'hilo.php?id=' + id;
+                },
+                error: function (xhr, status, error) {
+
+                    console.error(error);
+                }
+            });
+        }
+
+        var url = new URL(window.location.href);
+
+        // Obtener el valor del parámetro "id" de la URL
+        var idUrl = url.searchParams.get("id");
 
 
-//     modalBody.append(form);
 
-//     // Crear los botones de cancelar y confirmar cambios
-//     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-//     let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
+    });
 
+}
 
-//     var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
-//     buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
+function eliminarMensaje(mensaje) {
 
-//     // Agregar los botones al modal
-//     var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-//     modalFooter.append(buttonContainer);
+    console.log(mensaje);
 
-//     // Construir la estructura del modal
-//     modalHeader.append(modalTitle);
-//     // $modalHeader.append($modalTitle).append($modalCloseButton);
+    let idMensaje = mensaje.id;
 
-//     modalContent.append(modalHeader).append(modalBody).append(modalFooter);
-//     modalDialog.append(modalContent);
-//     modal.append(modalDialog);
+    // Crear el modal de edición
+    let modal = $('<div>').addClass('modal fade').attr('id', 'modalBorrar');
+    let modalDialog = $('<div>').addClass('modal-dialog');
+    let modalContent = $('<div>').addClass('modal-content');
+    let modalHeader = $('<div>').addClass('modal-header');
+    let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
+    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
 
-//     // Agregar el modal al documento
-//     $('body').append(modal);
+    // Crear el formulario de edición
+    var form = $('<form>').addClass('needs-validation').attr('id', 'formularBorraMensajes').attr('novalidate', true);
+    var idInput = $('<input>').attr('type', 'hidden').attr('name', 'id').val(idMensaje);
 
-//     // Mostrar el modal de edición
-//     $('#modalEditar').modal('show');
+    form.append(id);
+    modalBody.append(form);
 
-//     //BOTONES DEL MODAL
+    let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
+    let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar borrado');
 
-//     // Evento click en el botón "Cancelar"
-//     cancelarButton.on('click', function () {
-//         // Cerrar y eliminar el modal de edición
-//         $('#modalEditar').modal('hide').remove();
-//     });
+    let buttonContainer = $('<div>').addClass('d-flex justify-content-center');
+    buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
 
-//     // Evento click en el botón "Confirmar Cambios"
-//     confirmarButton.on('click', function () {
-//         // Obtener los datos actualizados del formular
+    let modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
+    modalFooter.append(buttonContainer);
 
-//         // Realizar la petición PUT mediante AJAX
-//         $.ajax({
-//             url: 'http://localhost:8001/mensajes',
-//             type: 'PUT',
-//             dataType: 'json',
-//             data: JSON.stringify({
-//                 id: idPartida,
-//                 numeroJugadores: jugadoresFormulario.val(),
-//                 puntuacionVencedor: puntuacionFormulario.val(),
-//                 fecha: fechaFormulario.val(),
-//                 nombreJuego: nombreJuegoFormulario.val(),
-//                 logo: logoFormulario.val(),
-//                 tiempoJuego: duracionFormulario.val(),
-//                 vencedor: ganadorFormulario.val()
-//             }),
-//             success: function (response) {
+    modalHeader.append(modalTitle);
 
-//                 window.location.href = 'registro_mensajes.php';
-//             },
-//             error: function (xhr, status, error) {
+    modalContent.append(modalHeader).append(modalBody).append(modalFooter);
+    modalDialog.append(modalContent);
+    modal.append(modalDialog);
 
-//                 console.error(error);
-//             }
-//         });
-//     });
+    // Agregar el modal al documento
+    $('body').append(modal);
 
-// }
+    // Mostrar el modal de edición
+    $('#modalBorrar').modal('show');
 
-// function eliminarMensaje(registro) {
+    //BOTONES DEL MODAL
 
-//     let idPartida = registro.attr("id");
+    // Evento click en el botón "Cancelar"
+    cancelarButton.on('click', function () {
+        // Cerrar y eliminar el modal de edición
+        $('#modalBorrar').modal('hide').remove();
+    });
 
-//     // Crear el modal de edición
-//     let modal = $('<div>').addClass('modal fade').attr('id', 'modalBorrar');
-//     let modalDialog = $('<div>').addClass('modal-dialog');
-//     let modalContent = $('<div>').addClass('modal-content');
-//     let modalHeader = $('<div>').addClass('modal-header');
-//     let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
-//     let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
+    // Evento click en el botón "Confirmar Cambios"
 
-//     // Crear el formulario de edición
-//     var form = $('<form>').addClass('needs-validation').attr('id', 'formularioBorrar').attr('novalidate', true);
-//     var id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(id);
+    confirmarButton.on('click', function () {
 
-//     form.append(id);
-//     modalBody.append(form);
+        $.ajax({
+            url: 'http://localhost:8001/hilo',
+            type: 'DELETE',
+            dataType: 'json',
+            data: JSON.stringify({
+                id: idInput.val()
+            }),
+            success: function (response) {
 
-//     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-//     let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar borrado');
+                window.location.href = 'hilo.php?id=' + id;
+            },
+            error: function (xhr, status, error) {
 
-//     let buttonContainer = $('<div>').addClass('d-flex justify-content-center');
-//     buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
-
-//     let modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-//     modalFooter.append(buttonContainer);
-
-//     modalHeader.append(modalTitle);
-
-//     modalContent.append(modalHeader).append(modalBody).append(modalFooter);
-//     modalDialog.append(modalContent);
-//     modal.append(modalDialog);
-
-//     // Agregar el modal al documento
-//     $('body').append(modal);
-
-//     // Mostrar el modal de edición
-//     $('#modalBorrar').modal('show');
-
-//     //BOTONES DEL MODAL
-
-//     // Evento click en el botón "Cancelar"
-//     cancelarButton.on('click', function () {
-//         // Cerrar y eliminar el modal de edición
-//         $('#modalBorrar').modal('hide').remove();
-//     });
-
-//     // Evento click en el botón "Confirmar Cambios"
-//     confirmarButton.on('click', function () {
-
-//         $.ajax({
-//             url: 'http://localhost:8001/mensajes',
-//             type: 'DELETE',
-//             dataType: 'json',
-//             data: JSON.stringify({
-//                 id: idPartida
-//             }),
-//             success: function (response) {
-
-//                 window.location.href = 'registro_mensajes.php';
-//             },
-//             error: function (xhr, status, error) {
-
-//                 console.error(error);
-//             }
-//         });
-//     });
-
-// }
+                console.error(error);
+            }
+        });
+    });
+}
 
 function eliminarHilo(id) {
 
@@ -548,13 +609,12 @@ function eliminarHilo(id) {
 }
 
 
-$(document).ready(function() {
-    $("#eliminarHilo").on("click", function() {
+$(document).ready(function () {
+    $("#eliminarHilo").on("click", function () {
 
         let url = new URL(window.location.href);
         let id = url.searchParams.get("id");
 
         eliminarHilo(id);
     });
-  });
-  
+});

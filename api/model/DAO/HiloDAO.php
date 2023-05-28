@@ -93,7 +93,7 @@ class HiloDAO {
                 return ($resultado);
             } else {
                 $resultado[] = ["borrado" => false];
-                return json_encode($resultado);
+                return ($resultado);
             }
         } catch (PDOException $e) {
             echo 'Error en la actualización: ' . $e->getMessage();

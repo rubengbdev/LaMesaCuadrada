@@ -50,28 +50,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $actualizado = $servicio->update($datos->id, $datos->titulo, $datos->texto);
         exit(json_encode($actualizado));
 
-
-        // if($datos != null) {
-        //     //Los parametros se lo pasamos por el archivo json
-        //     if(UserService::putUsuario($datos->id, $datos->correo, $datos->contrasena)) {
-        //         $resultado[] = ["acceso" => true];
-        //     } else {
-        //         $resultado[] = ["acceso" => false];
-        //     }
-
-        //     exit(json_encode($resultado));
-        // } else {
-        //     echo "error";
-        // }
-
-        // break;
-
     case "DELETE":
         
         $datos = json_decode(file_get_contents('php://input'));
-        print_r($datos);
         $servicio = new HiloServiceImpl();
         $actualizado = $servicio->delete($datos->id);
+        header('Content-Type: application/json');
+
         exit(json_encode($actualizado));
 
         break;

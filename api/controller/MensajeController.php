@@ -45,9 +45,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "DELETE":
 
         $datos = json_decode(file_get_contents('php://input'));
-        print_r($datos);
         $servicio = new MensajeServiceImpl();
         $actualizado = $servicio->delete($datos->id);
+
+        header('Content-Type: application/json');
+
         exit(json_encode($actualizado));
 
         break;

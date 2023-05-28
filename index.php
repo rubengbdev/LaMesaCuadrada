@@ -340,64 +340,6 @@ if (isset($_COOKIE['correo'])) {
                                     });
                                 </script>
                                 <script src="./js/crearNoticias.js"></script>
-                                <!-- <script>
-                                    // Inicializar el editor de texto
-                                    // var quill = new Quill('#editor', {
-                                    //     modules: {
-                                    //         toolbar: [
-                                    //             ['bold', 'italic', 'underline', 'strike'], // Negrita, cursiva, subrayado y tachado
-                                    //             [{
-                                    //                 'size': ['small', false, 'large', 'huge']
-                                    //             }], // Tamaño del texto
-                                    //             [{
-                                    //                 'color': []
-                                    //             }, {
-                                    //                 'background': []
-                                    //             }] // Color del texto y del fondo
-                                    //         ]
-                                    //     },
-                                    //     theme: 'snow'
-                                    // });
-                                    // Escuchar el evento submit del formulario
-                                    //PUBLICAR NOTICIAS:
-                                    $(document).ready(function() {
-                                        $('#publicarNoticia').click(function(event) {
-                                            event.preventDefault(); // Evitar el envío del formulario por defecto
-
-                                            var formData = {
-                                                imagen: $('#newsImageInput').val(),
-                                                texto: $('#newsTextInput').val()
-                                            };
-
-                                            // Convertir formData a JSON
-                                            var jsonData = JSON.stringify(formData);
-
-                                            // Realizar la solicitud Ajax
-                                            $.ajax({
-                                                url: 'http://localhost:8001/noticias',
-                                                type: 'POST',
-                                                data: jsonData,
-                                                contentType: 'application/json',
-                                                success: function(response) {
-                                                    // Manejar la respuesta del servidor
-                                                    console.log(response);
-                                                },
-                                                error: function(xhr, status, error) {
-                                                    // Manejar errores de la solicitud
-                                                    console.log(xhr.responseText);
-                                                }
-                                            });
-                                        });
-                                    });
-
-
-                                    // var form = document.querySelector('form');
-                                    // form.addEventListener('submit', function(e) {
-                                    //     // Actualizar el valor del textarea oculto con el contenido del editor
-                                    //     var newsTextInput = document.querySelector('#newsTextInput');
-                                    //     newsTextInput.value = quill.root.innerHTML;
-                                    // });
-                                </script> -->
                             </div>
                         </div>
                     </div>

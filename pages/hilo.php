@@ -293,10 +293,21 @@ if (isset($_COOKIE['correo'])) {
             <div class="row justify-content-center mt-2 mb-2">
                 <div class="col-lg-8 col-md-10 col-12">
                     <div class="row">
+                        <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
+                            <div class="d-flex justify-content-center my-3">
+                                <button type="button" class="btn btn-danger" id="eliminarHilo">Eliminar hilo</button>
+                            </div>
+                        <?php endif; ?>
                         <div class="col-12">
                             <div id="general-mensajes" class="collapse show" aria-labelledby="headingOne">
                             </div>
                         </div>
+
+                        <?php if (isset($_SESSION['usuario'])) : ?>
+                            <div class="d-flex justify-content-center my-3">
+                                <button type="button" class="btn btn-danger" id="crearMensaje">Añadir mensaje</button>
+                            </div>
+                        <?php endif; ?>
                         <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
                             <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
                                 <p id="mostrando"></p>
@@ -323,7 +334,19 @@ if (isset($_COOKIE['correo'])) {
                 </div>
             </div>
         </div>
-        <script src="../js/mensaje.js"></script>
+        <?php if (!isset($_SESSION['usuario_tipo'])) : ?>
+
+            <script src="../js/mensaje.js"></script>
+
+        <?php elseif ($_SESSION['usuario_tipo'] == "u") : ?>
+
+            <script src="../js/mensaje.js"></script>
+
+        <?php else : ?>
+
+            <script src="../js/mensajeAdmin.js"></script>
+
+        <?php endif; ?>
     </main>
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
