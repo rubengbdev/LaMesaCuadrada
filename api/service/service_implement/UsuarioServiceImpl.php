@@ -50,6 +50,21 @@ class UsuarioServiceImpl implements UsuarioService {
         return false;
     }
 
+
+    public function obtenerUsuarioDtoPorEmail($email) {
+
+        $mapperService = new MapperServiceImpl();
+
+        
+        if ($this->dao->obtenerUsuarioPorEmail($email)) {
+
+            $usuario = $this->dao->obtenerUsuarioDtoPorEmail($email);
+            return $mapperService->usuarioToDto($usuario)->toArray();
+        } 
+        return false;
+    }
+    
+
     public function obtenerUsuarioPorNombre($nombre) {
         $usuario = $this->dao->obtenerUsuarioPorNombre($nombre);
         if ($this->dao->obtenerUsuarioPorNombre($nombre)) {

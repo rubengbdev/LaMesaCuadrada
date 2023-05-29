@@ -95,7 +95,7 @@ function muestraUsuarios(usuariosDTO) {
 
         eliminarBtn.on('click', function () {
             eliminarUsuario(obj.id); // Llamada a la función para eliminar el usuario
-            card.remove(); // Eliminar la tarjeta correspondiente al usuario
+            // card.remove(); // Eliminar la tarjeta correspondiente al usuario
         });
 
         row.append(col1, col2, col3, col4);

@@ -75,6 +75,25 @@ class UsuarioDAO {
         return $row;        
     }
 
+    public function obtenerUsuarioDtoPorEmail($email) {
+
+        $stmt = $this->pdo->prepare('SELECT * FROM usuario WHERE usuario_email = ?');
+        $stmt->execute([$email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return false;
+        }
+        return new Usuario(
+            $row['usuario_id'],
+            $row['usuario_nombre'],
+            $row['usuario_email'],
+            $row['usuario_tipo'],
+            $row['usuario_contrasena'],
+            $row['usuario_fecha_creacion'],
+            $row['usuario_salt']
+        );
+    }
+
     public function  obtenerUsuarioPorNombre ($nombre) {
         $stmt = $this->pdo->prepare('SELECT usuario_id FROM usuario WHERE usuario_nombre = ?');
         $stmt->execute([$nombre]);

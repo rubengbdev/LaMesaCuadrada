@@ -11,8 +11,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             exit(json_encode($datos));
 
-        } else {
+        } elseif (isset($_GET['email'])) {
 
+            $servicio = new UsuarioServiceImpl();
+            $datos = $servicio->obtenerUsuarioDtoPorEmail($_GET['email']);
+
+            exit(json_encode($datos));
+        } else {
             $servicio = new UsuarioServiceImpl();
             $datos = $servicio->obtenerUsuariosDTO();
 
