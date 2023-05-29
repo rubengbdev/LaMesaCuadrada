@@ -24,7 +24,7 @@ function generarUsuariosYBotones(primeraVez) {
             method: 'GET',
             data: {
                 email: correoUsuario
-              },
+            },
             success: function (response) {
 
                 usuario = response;
@@ -48,35 +48,44 @@ function muestraUsuarios(usuario) {
 
     listaUsuarios.empty();
 
-        var card = $('<div>').addClass('card mb-3 bg-dark text-white');
-        var cardBody = $('<div>').addClass('card-body p-0');
-        var row = $('<div>').addClass('row m-0 align-items-center');
-        var col1 = $('<div>').addClass('col p-2 border-end text-center').text("nombre");
-        var col2 = $('<div>').addClass('col p-2 border-end text-center').text("Email");
-        var col3 = $('<div>').addClass('col p-2 border-end text-center').text('Fecha de creacion');
-        var col4 = $('<div>').addClass('col p-2 border-end text-center').text('Accion');
+    var card = $('<div>').addClass('card mb-3 bg-dark text-white');
+    var cardBody = $('<div>').addClass('card-body p-0');
+    var row = $('<div>').addClass('row m-0 align-items-center');
+    var col1 = $('<div>').addClass('col p-2 border-end text-center').text("nombre");
+    var col2 = $('<div>').addClass('col p-2 border-end text-center').text("Email");
+    var col3 = $('<div>').addClass('col p-2 border-end text-center').text('Fecha de creacion');
 
-        row.append(col1, col2, col3, col4);
-        cardBody.append(row);
-        card.append(cardBody);
-        var colWrapper = $('<div>').addClass('col-12').append(card);
-        listaUsuarios.append(colWrapper);
+    row.append(col1, col2, col3);
+    cardBody.append(row);
+    card.append(cardBody);
+    var colWrapper = $('<div>').addClass('col-12').append(card);
+    listaUsuarios.append(colWrapper);
+
     var card = $('<div>').addClass('card mb-3');
     var cardBody = $('<div>').addClass('card-body p-0');
     var row = $('<div>').addClass('row m-0 align-items-center');
     var col1 = $('<div>').addClass('col p-2 border-end text-center').text(usuarioObjeto.nombre);
     var col2 = $('<div>').addClass('col p-2 border-end text-center').text(usuarioObjeto.email);
     var col3 = $('<div>').addClass('col p-2 border-end text-center').text(usuarioObjeto.fechaCreacion);
-    var editarBtn = $('<button>').addClass('btn btn-success editar').text('Editar');
-    var col4 = $('<div>').addClass('col p-2 border-end text-center').append(editarBtn);
 
-    editarBtn.on('click', function () {
-        editarUsuario(usuarioObjeto.id); // Llamada a la función para eliminar el usuario
+    row.append(col1, col2, col3);
+    cardBody.append(row);
+
+    //CardFooter
+    var cardFooter = $('<div>').addClass('card-footer p-2  text-center');
+
+    var cambiarCorreoBtn = $('<button>').addClass('btn btn-primary me-2').text('Cambiar correo');
+    cambiarCorreoBtn.on('click', function () {
+        cambiarCorreo(usuarioObjeto.id); // Llamada a la función para eliminar el usuario
     });
 
-    row.append(col1, col2, col3, col4);
-    cardBody.append(row);
-    card.append(cardBody);
+    var cambiarContrasenaBtn = $('<button>').addClass('btn btn-danger').text('Cambiar contraseña');
+    cambiarContrasenaBtn.on('click', function () {
+        cambairContrasena(usuarioObjeto.id); // Llamada a la función para eliminar el usuario
+    });
+    cardFooter.append(cambiarCorreoBtn, cambiarContrasenaBtn);
+
+    card.append(cardBody, cardFooter);
     var colWrapper = $('<div>').addClass('col-12').append(card);
     listaUsuarios.append(colWrapper);
     listaUsuarios.addClass('d-flex flex-wrap justify-cotente-center');

@@ -76,9 +76,8 @@ function muestraUsuarios(usuariosDTO) {
             var col1 = $('<div>').addClass('col p-2 border-end text-center').text("nombre");
             var col2 = $('<div>').addClass('col p-2 border-end text-center').text("Email");
             var col3 = $('<div>').addClass('col p-2 border-end text-center').text('Fecha de creacion');
-            var col4 = $('<div>').addClass('col p-2 border-end text-center').text('Accion');
 
-            row.append(col1, col2, col3, col4);
+            row.append(col1, col2, col3);
             cardBody.append(row);
             card.append(cardBody);
             var colWrapper = $('<div>').addClass('col-12').append(card);
@@ -90,17 +89,21 @@ function muestraUsuarios(usuariosDTO) {
         var col1 = $('<div>').addClass('col p-2 border-end text-center').text(obj.nombre);
         var col2 = $('<div>').addClass('col p-2 border-end text-center').text(obj.email);
         var col3 = $('<div>').addClass('col p-2 border-end text-center').text(obj.fechaCreacion);
-        var eliminarBtn = $('<button>').addClass('btn btn-danger eliminar').text('Eliminar');
-        var col4 = $('<div>').addClass('col p-2 border-end text-center').append(eliminarBtn);
 
+        row.append(col1, col2, col3);
+        cardBody.append(row);
+
+        //CardFooter
+        var cardFooter = $('<div>').addClass('card-footer p-2  text-center');
+
+        var eliminarBtn = $('<button>').addClass('btn btn-danger eliminar').text('Eliminar');
         eliminarBtn.on('click', function () {
-            eliminarUsuario(obj.id); // Llamada a la función para eliminar el usuario
-            // card.remove(); // Eliminar la tarjeta correspondiente al usuario
+            eliminarUsuario(obj.id); 
         });
 
-        row.append(col1, col2, col3, col4);
-        cardBody.append(row);
-        card.append(cardBody);
+        cardFooter.append(eliminarBtn);
+
+        card.append(cardBody,cardFooter);
         var colWrapper = $('<div>').addClass('col-12').append(card);
         listaUsuarios.append(colWrapper);
     });

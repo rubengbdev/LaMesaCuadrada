@@ -1,28 +1,31 @@
 <?php
-require_once(__DIR__.'../../../model/Usuario.php');
-require_once (__DIR__.'/../UsuarioService.php');
-require_once (__DIR__.'/MapperServiceImpl.php');
-require_once(__DIR__.'/../../model/DAO/UsuarioDAO.php');
+require_once(__DIR__ . '../../../model/Usuario.php');
+require_once(__DIR__ . '/../UsuarioService.php');
+require_once(__DIR__ . '/MapperServiceImpl.php');
+require_once(__DIR__ . '/../../model/DAO/UsuarioDAO.php');
 require_once("../../php/funciones.php");
 
 
-class UsuarioServiceImpl implements UsuarioService {
- 
+class UsuarioServiceImpl implements UsuarioService
+{
+
     private $dao;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->dao = new UsuarioDao();
     }
 
     /* ------------------ GET ------------------ */
 
-    public function obtenerUsuarioPorId($id) {
-        
+    public function obtenerUsuarioPorId($id)
+    {
+
         if (!$id) {
             throw new Exception("Falta el ID del usuario");
         }
         $usuario = $this->dao->obtenerUsuarioPorId($id);
-        
+
         if (!$usuario) {
             throw new Exception("Usuario no encontrado");
         }
@@ -30,7 +33,8 @@ class UsuarioServiceImpl implements UsuarioService {
         return $usuario;
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         try {
             $usuario = $this->dao->findById($id);
             return $usuario;
@@ -41,40 +45,44 @@ class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
-    public function obtenerUsuarioPorEmail($email) {
+    public function obtenerUsuarioPorEmail($email)
+    {
 
         $usuario = $this->dao->obtenerUsuarioPorEmail($email);
         if ($this->dao->obtenerUsuarioPorEmail($email)) {
             return $this->dao->obtenerUsuarioPorEmail($email);
-        } 
+        }
         return false;
     }
 
 
-    public function obtenerUsuarioDtoPorEmail($email) {
+    public function obtenerUsuarioDtoPorEmail($email)
+    {
 
         $mapperService = new MapperServiceImpl();
 
-        
+
         if ($this->dao->obtenerUsuarioPorEmail($email)) {
 
             $usuario = $this->dao->obtenerUsuarioDtoPorEmail($email);
             return $mapperService->usuarioToDto($usuario)->toArray();
-        } 
+        }
         return false;
     }
-    
 
-    public function obtenerUsuarioPorNombre($nombre) {
+
+    public function obtenerUsuarioPorNombre($nombre)
+    {
         $usuario = $this->dao->obtenerUsuarioPorNombre($nombre);
         if ($this->dao->obtenerUsuarioPorNombre($nombre)) {
             return $this->dao->obtenerUsuarioPorNombre($nombre);
-        } 
+        }
         return false;
     }
 
 
-    public function obtenerUsuarios() {
+    public function obtenerUsuarios()
+    {
 
         $usuarios = $this->dao->obtenerUsuarios();
 
@@ -86,7 +94,8 @@ class UsuarioServiceImpl implements UsuarioService {
         return $usuarios;
     }
 
-    public function obtenerUsuariosDTO() {
+    public function obtenerUsuariosDTO()
+    {
 
         $mapperService = new MapperServiceImpl();
 
@@ -111,7 +120,8 @@ class UsuarioServiceImpl implements UsuarioService {
 
     /* ------------------ POST ------------------ */
 
-    public function login($usuario, $contrasena){
+    public function login($usuario, $contrasena)
+    {
 
         $usuarioVerificado = seguridadFormularios($usuario);
         $contrasenaVerificado = seguridadFormularios($contrasena);
@@ -119,15 +129,58 @@ class UsuarioServiceImpl implements UsuarioService {
         //Añadir tema seguridad, es decir el verify
 
         if ($this->dao->existsByUsuarioContrasena($usuarioVerificado)) {
-            
-            return $this->dao->login($usuarioVerificado,$contrasenaVerificado);
+
+            return $this->dao->login($usuarioVerificado, $contrasenaVerificado);
         }
 
         return null;
     }
 
-    public function crearUsuario($nombre, $email, $contrasena, $tipo) {
+    public function updateContrasena($email, $contrasena, $contrasenaNueva)
+    {
+
+        $usuarioVerificado = seguridadFormularios($email);
+        $contrasenaVerificado = seguridadFormularios($contrasena);
+        $contrasenaNuevaVerificada = seguridadFormularios($contrasenaNueva);
+        //Añadir tema seguridad, es decir el verify
+
+        if ($this->dao->existsByUsuarioContrasena($usuarioVerificado)) {
+
+            if ($this->dao->login($usuarioVerificado, $contrasenaVerificado) != null) {
+
+                //Ciframos la nuva contraseña
+                $salt = random_bytes(16);
+                $saltHex = bin2hex($salt);
+                $contrasenaConSalt = $contrasenaNuevaVerificada . $saltHex;
+                $contraseñaCifrada = password_hash($contrasenaConSalt, PASSWORD_BCRYPT);
+
+                try {
+
+                    return $this->dao->updateContrasena($usuarioVerificado,$contraseñaCifrada,$saltHex);
+                } catch (PDOException $e) {
         
+                    echo "Error al crear el usuario: " . $e->getMessage();
+                }
+            }
+        }
+    }
+
+    public function updateCorreo($correo, $correoNuevo) {
+
+        $correoVerificado = seguridadFormularios($correo);
+        $correoNuevoVerificado = seguridadFormularios($correoNuevo);
+
+        try {
+
+            return $this->dao->updateCorreo($correoVerificado,$correoNuevoVerificado);
+        } catch (PDOException $e) {
+
+            echo "Error al crear el usuario: " . $e->getMessage();
+        }
+    }
+
+    public function crearUsuario($nombre, $email, $contrasena, $tipo) {
+
         $nombre = seguridadFormularios($nombre);
         $contrasena = seguridadFormularios($contrasena);
         $email = seguridadFormularios($email);
@@ -148,23 +201,23 @@ class UsuarioServiceImpl implements UsuarioService {
 
         // Obtener la fecha actual del servidor
         $fechaCreacion = date("Y-m-d H:i:s");
-    
+
         // Generar un salt aleatorio para la contraseña
         $salt = random_bytes(16);
 
         //conversion a formato leible
         $saltHex = bin2hex($salt);
-    
+
         // Concatenar el salt con la contraseña
         $contrasenaConSalt = $contrasena . $saltHex;
-    
+
         // Cifrar la contraseña usando el algoritmo bcrypt y el salt generado
         $contraseñaCifrada = password_hash($contrasenaConSalt, PASSWORD_BCRYPT);
 
-    
+
         try {
 
-            return $this->dao->createUsuario(new Usuario($id,$nombre,$email,$tipo,$contraseñaCifrada,$fechaCreacion, $saltHex));
+            return $this->dao->createUsuario(new Usuario($id, $nombre, $email, $tipo, $contraseñaCifrada, $fechaCreacion, $saltHex));
         } catch (PDOException $e) {
 
             echo "Error al crear el usuario: " . $e->getMessage();
@@ -174,7 +227,8 @@ class UsuarioServiceImpl implements UsuarioService {
 
     /* ------------------ PUT ------------------ */
 
-    public function update($id, $nombre, $email, $password) {
+    public function update($id, $nombre, $email, $password)
+    {
 
         if (!$id) {
             throw new Exception("Falta el id de Partida");
@@ -198,7 +252,8 @@ class UsuarioServiceImpl implements UsuarioService {
 
     /* ------------------ DELETE ------------------ */
 
-    public function delete($id) {
+    public function delete($id)
+    {
 
         if (!$id) {
             throw new Exception("Falta el id de noticia");

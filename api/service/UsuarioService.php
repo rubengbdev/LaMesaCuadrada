@@ -19,4 +19,7 @@ interface UsuarioService {
     public function update($id, $nombre, $email, $password);
 
     public function delete($id);
+
+    public function updateContrasena($email,$contrasena,$contrasena_nueva);
+    public function updateCorreo($correo,$correoNuevo);
 }

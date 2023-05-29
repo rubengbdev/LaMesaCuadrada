@@ -164,6 +164,44 @@ class UsuarioDAO {
         }
     }
 
+    public function updateCorreo($correo,$correoNuevo) {
+        try {
+            $stmt = $this->pdo->prepare('UPDATE usuario SET usuario_email = ? WHERE usuario_email = ?');
+            $stmt->execute([$correoNuevo, $correo]);
+            $rowCount = $stmt->rowCount();
+            
+            if ($rowCount > 0) {
+                $resultado[] = ["actualizado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["actualizado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en la actualización: ' . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function updateContrasena($correo,$contraseñaCifrada,$saltHex) {
+        try {
+            $stmt = $this->pdo->prepare('UPDATE usuario SET usuario_contrasena = ?, usuario_salt = ? WHERE usuario_email = ?');
+            $stmt->execute([$contraseñaCifrada, $saltHex, $correo]);
+            $rowCount = $stmt->rowCount();
+            
+            if ($rowCount > 0) {
+                $resultado[] = ["actualizado" => true];
+                return $resultado;
+            } else {
+                $resultado[] = ["actualizado" => false];
+                return $resultado;
+            }
+        } catch (PDOException $e) {
+            echo 'Error en la actualización: ' . $e->getMessage();
+            return null;
+        }
+    }
+
     /* ------------------ DELETE ------------------ */
 
     public function delete($id) {
