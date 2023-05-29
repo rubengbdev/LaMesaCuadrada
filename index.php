@@ -33,9 +33,7 @@ if (isset($_COOKIE['correo'])) {
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <!-- <link rel="stylesheet" href="css/foro.css"> -->
 </head>
-
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
@@ -381,7 +379,7 @@ if (isset($_COOKIE['correo'])) {
     <div class="pagination"></div>
 
     <?php if (!isset($_SESSION['usuario_tipo'])) : ?>
-    
+
         <script src="./js/noticias.js"></script>
 
     <?php elseif ($_SESSION['usuario_tipo'] == "u") : ?>
@@ -389,9 +387,9 @@ if (isset($_COOKIE['correo'])) {
         <script src="./js/noticias.js"></script>
 
     <?php else : ?>
-    
+
         <script src="./js/noticiasAdmin.js"></script>
-    
+
     <?php endif; ?>
 
 

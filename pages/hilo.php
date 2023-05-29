@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['usuario'])) {
+    header("Location: foro.php");
+    exit();
+}
 
 if (!isset($_SESSION['usuario'])) {
     header("Location foro.php");
@@ -303,11 +307,29 @@ if (isset($_COOKIE['correo'])) {
                             </div>
                         </div>
 
-                        <?php if (isset($_SESSION['usuario'])) : ?>
+                        <div class="col-12">
                             <div class="d-flex justify-content-center my-3">
-                                <button type="button" class="btn btn-danger" id="crearMensaje">Añadir mensaje</button>
+                                <?php if (isset($_SESSION['usuario'])) : ?>
+                                    <div class="card mb-3 h-100 my-1 w-100" style="max-width: 30rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Mensaje</h5>
+                                            <form id="publicar-mensaje">
+                                                <div class="mb-3">
+                                                    <label for="texto" class="form-label">Mensaje</label>
+                                                    <textarea class="form-control" id="texto" name="texto" rows="4"></textarea>
+                                                </div>
+                                                <input type="hidden" name="titulo" value="null" >
+                                                <input type="hidden" name="nombre_usuario" value="<?=$_SESSION['nombre']?>" >
+                                                <input type="hidden" name="id_hilo" value="<?= $_GET['id'] ?>">
+                                                <div class="text-end">
+                                                    <input type="submit" class="btn btn-primary btn-block" value="Publicar mensaje">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                        <?php endif; ?>
+                        </div>
                         <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
                             <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
                                 <p id="mostrando"></p>

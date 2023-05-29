@@ -110,9 +110,6 @@ function muestraMensajes(mensajes) {
         }
 
         card.append(cardBody, cardFooter);
-
-
-        console.log($(this).data('mensaje'));
         $('#general-mensajes').append(card);
     });
 
@@ -619,5 +616,25 @@ $(document).ready(function () {
         let id = url.searchParams.get("id");
 
         eliminarHilo(id);
+    });
+
+    $('#publicar-mensaje').submit(function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let url = 'http://localhost:8001/hilo';
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: form.serialize(),
+            success: function (response) {
+
+                window.location.href = 'hilo.php?id=' + id;
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
 });
