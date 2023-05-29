@@ -28,12 +28,9 @@ if (isset($_COOKIE['correo'])) {
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
-    <!-- EDITOR TEXTAREA -->
-    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/index.css" />
 </head>
+
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
@@ -250,7 +247,12 @@ if (isset($_COOKIE['correo'])) {
                             </button>
                             <form id="logout-form" method="post">
                                 <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="pages/mi_cuenta.php">Mi cuenta</a>
+                                    <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
+                                        <a class="dropdown-item" href="pages/mi_cuenta_admin.php">Mi cuenta personal</a>
+                                        <a class="dropdown-item" href="pages/mi_cuenta.php">Gestion de usuarios</a>
+                                    <?php else: ?>
+                                        <a class="dropdown-item" href="pages/mi_cuenta.php">Mi cuenta</a>
+                                    <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
                                 </div>
                             </form>

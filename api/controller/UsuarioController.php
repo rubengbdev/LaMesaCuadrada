@@ -51,25 +51,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $id = $servicio->crearUsuario($_POST["nombre"], $_POST["correo"], $_POST["contrasena"], "u");
             exit(json_encode($id));
 
-        } elseif (isset($_POST['correo'])) {
+        } else {
+
+            if (isset($_POST['correo'])) {
                 
                 $servicio = new UsuarioServiceImpl();
                 $datos = $servicio->obtenerUsuarioPorEmail($_POST['correo']);
     
-                exit(json_encode($datos));
-
-        } elseif (isset($_POST['contrasena']) && isset($_POST['contrasena_nueva'])) {
-                $servicio = new UsuarioServiceImpl();
-
-                $datos = $servicio->updateContrasena($_POST['correo'],$_POST['contrasena'], $_POST['contrasena_nueva']);
-                exit(json_encode($datos));
-        } else {
-
-            if (isset($_POST['correo']) && isset($_POST['correo_nuevo'])) {
-                
-                $servicio = new UsuarioServiceImpl();
-
-                $datos = $servicio->updateCorreo($_POST['correo'],$_POST['correo_nuevo']);
                 exit(json_encode($datos));
             }
         }
@@ -79,9 +67,29 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "PUT":
         
         $datos = json_decode(file_get_contents('php://input'));
-        $servicio = new UsuarioServiceImpl();
-        $actualizado = $servicio->update($datos->id, $datos->nombre, $datos->email, $datos->contrasena);
-        exit(json_encode($actualizado));
+
+        if (isset($datos->correo_nuevo)) {
+
+            $servicio = new UsuarioServiceImpl();
+
+            $datos = $servicio->updateCorreo($datos->correo,$datos->correo_nuevo);
+            exit(json_encode($datos));
+
+        }
+        if (isset($datos->contrasena_nueva)) {
+
+            $servicio = new UsuarioServiceImpl();
+
+            $datos = $servicio->updateContrasena($datos->correo,$datos->contrasena, $datos->contrasena_nueva);
+            exit(json_encode($datos));
+
+        } else {
+
+            $servicio = new UsuarioServiceImpl();
+            $actualizado = $servicio->update($datos->id, $datos->nombre, $datos->email, $datos->contrasena);
+            exit(json_encode($actualizado));
+        }
+
 
     case "DELETE":
         

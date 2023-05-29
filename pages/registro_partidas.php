@@ -245,9 +245,12 @@ if (isset($_COOKIE['correo'])) {
                             </button>
                             <form id="logout-form" method="post">
                                 <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Mi cuenta</a>
-                                    <a class="dropdown-item" href="#">Mis pedidos</a>
-                                    <a class="dropdown-item" href="#">Mis pedidos</a>
+                                    <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
+                                        <a class="dropdown-item" href="mi_cuenta_admin.php">Mi cuenta personal</a>
+                                        <a class="dropdown-item" href="mi_cuenta.php">Gestion de usuarios</a>
+                                    <?php else: ?>
+                                        <a class="dropdown-item" href="mi_cuenta.php">Mi cuenta</a>
+                                    <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
                                 </div>
                             </form>
