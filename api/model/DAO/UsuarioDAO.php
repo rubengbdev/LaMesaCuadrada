@@ -104,6 +104,25 @@ class UsuarioDAO {
 
     } 
 
+    public function obtenerUsuariosDTO() {
+
+        $stmt = $this->pdo->prepare('SELECT * FROM mesa_cuadrada.usuario');
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $usuarios = [];
+            foreach ($stmt as $elemento) {
+                $user = new Usuario($elemento['usuario_id'],$elemento['usuario_nombre'],$elemento['usuario_email'],$elemento['usuario_tipo'],$elemento['usuario_contrasena'],$elemento['usuario_fecha_creacion'],$elemento['usuario_salt']);
+                $usuarios[] = $user;
+            }
+
+            return $usuarios;
+        } else {
+            return false;
+        }
+
+    } 
+
     /* ------------------ PUT ------------------ */
 
     public function update($id, $nombre, $email, $password, $saltHex) {

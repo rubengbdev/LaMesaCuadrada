@@ -8,6 +8,7 @@ interface UsuarioService {
 
     public function obtenerUsuarioPorId($id);
     public function obtenerUsuarios();
+    public function obtenerUsuariosDTO();
     public function obtenerUsuarioPorEmail($email);
     public function obtenerUsuarioPorNombre($nombre);
     public function findById($id);

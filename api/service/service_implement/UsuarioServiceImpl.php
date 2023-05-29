@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__.'../../../model/Usuario.php');
 require_once (__DIR__.'/../UsuarioService.php');
+require_once (__DIR__.'/MapperServiceImpl.php');
 require_once(__DIR__.'/../../model/DAO/UsuarioDAO.php');
 require_once("../../php/funciones.php");
 
@@ -68,6 +69,27 @@ class UsuarioServiceImpl implements UsuarioService {
         header('Content-Type: application/json');
 
         return $usuarios;
+    }
+
+    public function obtenerUsuariosDTO() {
+
+        $mapperService = new MapperServiceImpl();
+
+        $usuarios = $this->dao->obtenerUsuariosDTO();
+
+        if (count($usuarios) < 1) {
+            throw new Exception("No hay usuarios");
+        }
+        header('Content-Type: application/json');
+
+        $usuariosDTO = array();
+
+        foreach ($usuarios as $usuario) {
+            $usuarioDTO = $mapperService->usuarioToDto($usuario); // Llamada al método usuarioToDto
+            $usuariosDTO[] = $usuarioDTO->toArray();
+        }
+
+        return $usuariosDTO;
     }
 
 

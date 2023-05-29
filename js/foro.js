@@ -75,7 +75,7 @@ function muestraHilos(hilos) {
         col2Element.append(horaBadge);
 
         var col3Element = $('<div>').addClass('col-sm-1 text-end');
-        var usuarioBadge = $('<span>').addClass('badge bg-danger rounded-pill').text(obj.idUsuario);
+        var usuarioBadge = $('<span>');
         col3Element.append(usuarioBadge);
 
         rowElement.append(col1Element, col2Element, col3Element);

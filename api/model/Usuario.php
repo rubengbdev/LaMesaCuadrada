@@ -56,18 +56,6 @@ class Usuario {
     public function setContrasena($contrasena) {
         $this->contrasena = $contrasena;
     }
-    
-    // public function getHilos() {
-    //     return $this->hilos;
-    // }
-    
-    // public function setHilos($hilos) {
-    //     $this->hilos = $hilos;
-    // }
-    
-    // public function agregarHilo($hilo) {
-    //     array_push($this->hilos, $hilo);
-    // }
 
     public function getTipo() {
         return $this->tipo;

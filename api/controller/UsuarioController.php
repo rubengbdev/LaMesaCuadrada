@@ -14,7 +14,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         } else {
 
             $servicio = new UsuarioServiceImpl();
-            $datos = $servicio->obtenerUsuarios();
+            $datos = $servicio->obtenerUsuariosDTO();
 
             if (count($datos) > 0) {
                 exit(json_encode($datos));
