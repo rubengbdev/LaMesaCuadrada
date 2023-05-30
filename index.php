@@ -48,7 +48,7 @@ if (isset($_COOKIE['correo'])) {
                     <a href="pages/registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
-                <div class="navbar-nav ms-auto ml-auto action-buttons text-center">
+                <div class="navbar-nav ms-auto ml-auto action-buttons">
 
                     <?php if (!isset($_SESSION['usuario'])) : ?>
                         <div class="nav-item dropdown pr-2">

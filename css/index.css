@@ -308,14 +308,14 @@ footer {
 
 @media screen and (max-width: 768px) {
     .navegacion {
-        font-size: 1.3em;
+        font-size: 1.1em;
         /* Tamaño de fuente para pantallas más pequeñas */
     }
 }
 
 @media screen and (max-width: 480px) {
     .navegacion {
-        font-size: 1.1em;
+        font-size: 1em;
         /* Tamaño de fuente para pantallas aún más pequeñas */
     }
 }
@@ -329,6 +329,20 @@ footer {
 #titulo {
     font-family: 'Righteous Regular', sans-serif;
     font-size: 1.1em;
+}
+
+@media screen and (max-width: 768px) {
+    #titulo {
+        font-size: 1em;
+        /* Tamaño de fuente para pantallas más pequeñas */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #titulo {
+        font-size: 0.9em;
+        /* Tamaño de fuente para pantallas aún más pequeñas */
+    }
 }
 
 .navbar-nav.text-light .seleccionado {
@@ -358,3 +372,8 @@ footer {
     background-color: #3498db;
     color: #fff;
 }
+@media (max-width: 767px) {
+    .nav-item.dropdown.pr-2 {
+      margin-bottom: 10px;
+    }
+  }

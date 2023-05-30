@@ -305,7 +305,7 @@ $(document).ready(function () {
                 data: formData,
                 success: function (response) {
 
-                    window.location.href = 'registro_mensajes.php';
+                    window.location.href = 'foro.php';
                 },
                 error: function (xhr, status, error) {
 

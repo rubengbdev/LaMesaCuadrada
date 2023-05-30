@@ -485,8 +485,8 @@ function eliminarHilo(id) {
     let modalDialog = $('<div>').addClass('modal-dialog');
     let modalContent = $('<div>').addClass('modal-content');
     let modalHeader = $('<div>').addClass('modal-header');
-    let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
-    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
+    let modalTitle = $('<h5>').addClass('modal-title').text('Borrar mensaje');
+    let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este mensaje?');
 
     // Crear el formulario de edición
     var form = $('<form>').addClass('needs-validation').attr('id', 'formularioBorrar').attr('novalidate', true);
