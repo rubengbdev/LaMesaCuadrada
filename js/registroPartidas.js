@@ -1,9 +1,9 @@
 let partidas = [];
-let partidasPorPagina = 10;
+let partidasPorPagina = 5;
 let numeroPaginas;
 let primeraVez;
-let paginaActual;
 let pagina = -1;
+let partidasPagina;
 
 console.log(partidas);
 // Función para obtener el valor de una cookie por su nombre
@@ -36,7 +36,7 @@ function generarPartidasYBotones(primeraVez) {
                 console.log(response);
                 partidas = response;
                 numeroPaginas = Math.ceil(response.length / partidasPorPagina);
-                let partidasPagina;
+                partidasPagina;
                 if (numeroPaginas > 1) {
 
                     pagina = 1;
@@ -48,10 +48,8 @@ function generarPartidasYBotones(primeraVez) {
                     partidasPagina = partidas;
                 }
 
-                console.log(partidasPagina);
-
                 muestraPartidas(partidasPagina);
-                eventoBotonesPaginacion();
+                eventoBotonesPaginacion(partidas);
             },
             error: function (xhr, status, error) {
 
@@ -60,16 +58,17 @@ function generarPartidasYBotones(primeraVez) {
         });
 
         primeraVez = false;
+        primeraVez;
     }
 }
 
-function muestraPartidas(partidas) {
+function muestraPartidas(partidasMostrar) {
 
     $("#partidas-contenido").empty();
     var tbody = $('tbody');
     tbody.empty();
 
-    $.each(partidas, function (index, obj) {
+    $.each(partidasMostrar, function (index, obj) {
 
         var tbody = $('tbody');
         var row = $('<tr>').attr('id', obj.id);
@@ -99,7 +98,7 @@ function muestraPartidas(partidas) {
         row.append(logoCell, nombreJuegoCell, jugadoresCell, jugadorGanadorCell, puntuacionCell, fechaCell, duracionCell, editarCell, eliminarCell);
         tbody.append(row);
 
-        if(partidas.length > 0) {
+        if (partidas.length > 0) {
             $("#mostrando").text("Mostrando la pagina " + pagina + " de " + numeroPaginas);
         } else {
             $("#mostrando").text("Mostrando la pagina 1 de 1 ");
@@ -116,17 +115,25 @@ function muestraPartidas(partidas) {
     });
 }
 
-function eventoBotonesPaginacion() {
+function eventoBotonesPaginacion(partidasMostrar) {
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (numeroPaginas <= 1) {
-          $("#siguiente").prop("disabled", true);
-          $("#final").prop("disabled", true);
-          $("#inicio").prop("disabled", true);
-          $("#anterior").prop("disabled", true);
+            $("#siguiente").prop("disabled", true);
+            $("#final").prop("disabled", true);
+            $("#inicio").prop("disabled", true);
+            $("#anterior").prop("disabled", true);
         }
-      });
+    });
 
+    $(document).ready(function () {
+        if (numeroPaginas > 1) {
+            $("#siguiente").prop("disabled", false);
+            $("#final").prop("disabled", false);
+            $("#inicio").prop("disabled", true);
+            $("#anterior").prop("disabled", true);
+        }
+    });
 
     $(document).on("click", ".botones", function (event) {
         event.preventDefault();
@@ -139,7 +146,7 @@ function eventoBotonesPaginacion() {
                     pagina = 1;
                     inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
                     fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidas.slice(inicio, fin);
+                    partidasPagina = partidasMostrar.slice(inicio, fin);
                     $("#inicio").prop("disabled", true);
                     $("#anterior").prop("disabled", true);
                     $("#siguiente").prop("disabled", false);
@@ -150,7 +157,7 @@ function eventoBotonesPaginacion() {
                     pagina--;
                     inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
                     fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidas.slice(inicio, fin);
+                    partidasPagina = partidasMostrar.slice(inicio, fin);
                     if (pagina == 1) {
                         $("#inicio").prop("disabled", true);
                         $("#anterior").prop("disabled", true);
@@ -168,7 +175,7 @@ function eventoBotonesPaginacion() {
                     pagina++;
                     inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
                     fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidas.slice(inicio, fin);
+                    partidasPagina = partidasMostrar.slice(inicio, fin);
                     if (pagina == numeroPaginas) {
                         $("#siguiente").prop("disabled", true);
                         $("#final").prop("disabled", true);
@@ -186,7 +193,7 @@ function eventoBotonesPaginacion() {
                     pagina = numeroPaginas;
                     inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
                     fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidas.slice(inicio, fin);
+                    partidasPagina = partidasMostrar.slice(inicio, fin);
                     $("#siguiente").prop("disabled", true);
                     $("#final").prop("disabled", true);
                     $("#inicio").prop("disabled", false);
@@ -196,7 +203,7 @@ function eventoBotonesPaginacion() {
             }
         } else {
             pagina = 1;
-            partidasPagina = partidas;
+            partidasPagina = partidasMostrar;
             $("#siguiente").prop("disabled", true);
             $("#final").prop("disabled", true);
             $("#inicio").prop("disabled", true);
@@ -235,7 +242,7 @@ function editarPartida(registro) {
 
     let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'idPartida').val(idPartida);
     let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(nombre);
-    let jugadoresFormulario = $('<textarea>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'number').css('height', '300px').val(jugadores);
+    let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'number').val(jugadores);
     let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(ganador);
     let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(puntuacion);
     let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'imagen').val(fecha);
@@ -356,10 +363,7 @@ function eliminarPartida(registro) {
     modalDialog.append(modalContent);
     modal.append(modalDialog);
 
-    // Agregar el modal al documento
     $('body').append(modal);
-
-    // Mostrar el modal de edición
     $('#modalBorrar').modal('show');
 
     //BOTONES DEL MODAL
@@ -394,12 +398,9 @@ function eliminarPartida(registro) {
 }
 
 
-
 $(document).ready(function () {
 
     generarPartidasYBotones(primeraVez);
-
-    // eventoBotonesPaginacion();
 });
 
 $(document).ready(function () {
@@ -492,28 +493,135 @@ $(document).ready(function () {
 })
 
 
-var buscador = document.getElementById('buscador');
+//BUSCADOR
+
 var searchTermInput = document.getElementById('campoBusqueda');
 
-// Agregar evento submit al formulario
-buscador.addEventListener('submit', function (event) {
-    event.preventDefault(); // Evitar el envío del formulario
-    buscarPartida();
+var timeoutId;
+
+$('#busqueda-input').on('keyup', function () {
+    clearTimeout(timeoutId);
+    var searchTerm = $(this).val();
+
+    if (searchTerm.length >= 3) {
+        timeoutId = setTimeout(function () {
+            buscarPartidas(searchTerm);
+        }, 300);
+
+    } else {
+        numeroPaginas = Math.ceil(partidas.length / partidasPorPagina);
+        if (numeroPaginas > 1) {
+            pagina = 1;
+            let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+            let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+            partidasPagina = partidas.slice(inicio, fin);
+        } else {
+            pagina = 1;
+            partidasPagina = partidas;
+        }
+
+        muestraPartidas(partidasPagina);
+        eventoBotonesPaginacion(partidas);
+    }
 });
 
 
-function buscarPartida() {
-    // Obtener el valor del campo de búsqueda
-    var searchTerm = searchTermInput.value.toLowerCase();
-
-    // Filtrar las partidas que coincidan con el término de búsqueda
-    var resultados = partidas.filter(function (partida) {
-        return partida.nombreJuego.toLowerCase().includes(searchTerm);
+function buscarPartidas(searchTerm) {
+    console.log(searchTerm);
+    var partidasFiltradas = partidas.filter(function(obj) {
+      return obj.nombreJuego.toLowerCase().includes(searchTerm.toLowerCase());
     });
+    numeroPaginas = Math.ceil(partidasFiltradas.length / partidasPorPagina);
+        if (numeroPaginas > 1) {
+            pagina = 1;
+            let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+            let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+            partidasPagina = partidasFiltradas.slice(inicio, fin);
+        } else {
+            pagina = 1;
+            partidasPagina = partidasFiltradas;
+        }
+    muestraPartidas(partidasPagina);
+    eventoBotonesPaginacion(partidasFiltradas);
+  }
 
-    // Mostrar los resultados
-    console.log(resultados);
+
+//ORDENAMIENTO POR FECHA
+
+var ordenAscendente = true;
+
+$(document).ready(function() {
+
+    $(document).on("click", "#ordenar-ascendente", function () {
+        ordenAscendente = true;
+        ordenarPartidas();
+    });
+    
+    $(document).on("click", "#ordenar-descendente", function () {
+        ordenAscendente = false;
+        ordenarPartidas();
+    });  });
+  
+
+function ordenarPartidas() {
+    var partidasOrdenadas = partidas.slice(); // Crea una copia del arreglo original
+    if (ordenAscendente) {
+        partidasOrdenadas.sort(function (a, b) {
+            return new Date(a.fecha) - new Date(b.fecha);
+        });
+    } else {
+        partidasOrdenadas.sort(function (a, b) {
+            return new Date(b.fecha) - new Date(a.fecha);
+        });
+    }
+
+    numeroPaginas = Math.ceil(partidasOrdenadas.length / partidasPorPagina);
+    if (numeroPaginas > 1) {
+        pagina = 1;
+        let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+        let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+        partidasPagina = partidasOrdenadas.slice(inicio, fin);
+    } else {
+        pagina = 1;
+        partidasPagina = partidasOrdenadas;
+    }
+
+    muestraPartidas(partidasPagina);
+    eventoBotonesPaginacion(partidasOrdenadas);
 }
+
+// $(document).on("click", "#ordenar-ascendente", function () {
+//     partidas.sort(function (a, b) {
+//         return new Date(a.fecha) - new Date(b.fecha);
+//     });
+//     muestraPartidas(partidasOrdenadas);
+// });
+
+// $(document).on("click", "#ordenar-descendente", function () {
+//     partidas.sort(function (a, b) {
+//         return new Date(b.fecha) - new Date(a.fecha);
+//     });
+//     muestraPartidas(partidasOrdenadas);
+// });
+// // Agregar evento submit al formulario
+// buscador.addEventListener('submit', function (event) {
+//     event.preventDefault(); // Evitar el envío del formulario
+//     buscarPartida();
+// });
+
+
+// function buscarPartida() {
+//     // Obtener el valor del campo de búsqueda
+//     var searchTerm = searchTermInput.value.toLowerCase();
+
+//     // Filtrar las partidas que coincidan con el término de búsqueda
+//     var resultados = partidas.filter(function (partida) {
+//         return partida.nombreJuego.toLowerCase().includes(searchTerm);
+//     });
+
+//     // Mostrar los resultados
+//     console.log(resultados);
+// }
 
 // // Función de búsqueda
 // function buscarPartida() {

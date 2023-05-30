@@ -306,8 +306,8 @@ if (isset($_COOKIE['correo'])) {
                                 <form id="publicar-noticias">
                                     <input type="hidden" name="publicar">
                                     <div class="mb-3">
-                                        <label for="titulo" class="form-label">Titulo de la noticia</label>
-                                        <input type="text" class="form-control" id="titulo" name="titulo">
+                                        <label for="titulo" class="form-label">Título de la noticia</label>
+                                        <input type="text" class="form-control" id="tituloNoticia" name="titulo">
                                     </div>
                                     <div class="mb-3">
                                         <label for="imagen" class="form-label">Enlace de la imagen de cabecera</label>

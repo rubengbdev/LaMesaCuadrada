@@ -248,7 +248,7 @@ if (isset($_COOKIE['correo'])) {
                                     <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
                                         <a class="dropdown-item" href="mi_cuenta_admin.php">Mi cuenta personal</a>
                                         <a class="dropdown-item" href="mi_cuenta.php">Gestion de usuarios</a>
-                                    <?php else: ?>
+                                    <?php else : ?>
                                         <a class="dropdown-item" href="mi_cuenta.php">Mi cuenta</a>
                                     <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
@@ -300,8 +300,10 @@ if (isset($_COOKIE['correo'])) {
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <form id="buscador" class="d-flex">
-                            <input id="campoBusqueda" class="form-control me-3" type="search" placeholder="Buscar" aria-label="Buscar">
-                            <button id="buscar" class="btn btn-outline-primary" type="submit">Buscar por nombre de juego</button>
+                            <input id="busqueda-input" type="text" class="form-control" placeholder="Buscar por nombre de juego...">
+                            <button id="ordenar-ascendente" type="button" class="btn btn-primary">Ordenar Ascendente</button>
+                            <button id="ordenar-descendente" type="button" class="btn btn-primary">Ordenar Descendente</button>
+
                         </form>
                     </div>
                 </div>
