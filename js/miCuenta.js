@@ -120,9 +120,9 @@ function cambiarContrasena() {
 
     // Crear el formulario de edición
     let form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
-    let contrasenaVieja = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'contrasenaVieja');
-    let contrasenaNueva = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'contrasenaNueva');
-    let contrasenaRepetida = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'contrasenaRepetida');
+    let contrasenaVieja = $('<input>').attr('type', 'password').addClass('form-control mb-3').attr('name', 'contrasenaVieja');
+    let contrasenaNueva = $('<input>').attr('type', 'password').addClass('form-control mb-3').attr('name', 'contrasenaNueva');
+    let contrasenaRepetida = $('<input>').attr('type', 'password').addClass('form-control mb-3').attr('name', 'contrasenaRepetida');
 
 
     // Agregar los elementos del formulario al modal

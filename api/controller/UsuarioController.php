@@ -74,8 +74,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
             $datos = $servicio->updateCorreo($datos->correo,$datos->correo_nuevo);
             exit(json_encode($datos));
+        }
+
+        if (isset($datos->contrasena_olvidada)) {
+
+            $servicio = new UsuarioServiceImpl();
+
+            $datos = $servicio->updateContrasenaOlvidada($datos->correo,$datos->contrasena_nueva);
+            exit(json_encode($datos));
 
         }
+
         if (isset($datos->contrasena_nueva)) {
 
             $servicio = new UsuarioServiceImpl();

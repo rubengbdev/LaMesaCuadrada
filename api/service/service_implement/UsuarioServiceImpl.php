@@ -165,6 +165,31 @@ class UsuarioServiceImpl implements UsuarioService
         }
     }
 
+    public function updateContrasenaOlvidada($email, $contrasenaNueva)
+    {
+
+        $usuarioVerificado = seguridadFormularios($email);
+        $contrasenaNuevaVerificada = seguridadFormularios($contrasenaNueva);
+        //Añadir tema seguridad, es decir el verify
+
+        if ($this->dao->existsByUsuarioContrasena($usuarioVerificado)) {
+
+                //Ciframos la nuva contraseña
+                $salt = random_bytes(16);
+                $saltHex = bin2hex($salt);
+                $contrasenaConSalt = $contrasenaNuevaVerificada . $saltHex;
+                $contraseñaCifrada = password_hash($contrasenaConSalt, PASSWORD_BCRYPT);
+
+                try {
+
+                    return $this->dao->updateContrasena($usuarioVerificado,$contraseñaCifrada,$saltHex);
+                } catch (PDOException $e) {
+        
+                    echo "Error al crear el usuario: " . $e->getMessage();
+                }
+        }
+    }
+
     public function updateCorreo($correo, $correoNuevo) {
 
         $correoVerificado = seguridadFormularios($correo);

@@ -22,4 +22,5 @@ interface UsuarioService {
 
     public function updateContrasena($email,$contrasena,$contrasena_nueva);
     public function updateCorreo($correo,$correoNuevo);
+    public function updateContrasenaOlvidada($email, $contrasenaNueva);
 }

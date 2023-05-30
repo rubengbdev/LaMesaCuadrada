@@ -3,49 +3,76 @@ session_start();
 
 
 if (!isset($_SESSION['usuario'])) {
-    header("Location index.php");
+    header("Location foro.php");
 
     $_SESSION['token_login'] = bin2hex(random_bytes(16));
     $_SESSION['token_registro'] = bin2hex(random_bytes(16));
 }
+
 if (isset($_COOKIE['correo'])) {
 
     $_SESSION['usuario'] = $_COOKIE['correo'];
     $_SESSION['usuario_tipo'] = $_COOKIE['tipo'];
     $_SESSION['nombre'] = $_COOKIE['nombre'];
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>La Mesa Cuadrada</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/jquery-3.6.4.min.js"></script>
+    <title>Foro - La Mesa Cuadrada</title>
+    <link rel="stylesheet" href="./../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/foro.css" />
+    <style>
+        #olvidar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        #olvidar .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 30%;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                max-width: 20em;
+            }
+        }
+
+        #mensajeError {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php"><img src="img/logo.png" alt="logo" width="50em" height="50em">
+            <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
                 <b id="titulo">La Mesa Cuadrada</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start ">
+            <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
-                    <a href="index.php" class="nav-item nav-link active navegacion">Actualidad</a>
-                    <a href="pages/foro.php" class="nav-item nav-link navegacion">Foro</a>
-                    <a href="pages/registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
+                    <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
+                    <a href="foro.php" class="nav-item nav-link active navegacion">Foro</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
@@ -66,7 +93,7 @@ if (isset($_COOKIE['correo'])) {
                                     </div>
                                     <input type="submit" class="btn btn-primary btn-block" value="Login">
                                     <div class="text-center mt-2">
-                                        <a href="pages/olvide_contrasena.php">¿Olvidaste tu contraseña?</a>
+                                        <a href="#">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 </form>
                             </div>
@@ -101,11 +128,11 @@ if (isset($_COOKIE['correo'])) {
                                                 let email = userData.usuario_email;
                                                 let tipo = userData.usuario_tipo;
 
-                                                document.cookie = "nombre=" + nombre;
-                                                document.cookie = "correo=" + email;
-                                                document.cookie = "tipo=" + tipo;
+                                                document.cookie = "nombre=" + nombre + "; path=/";
+                                                document.cookie = "correo=" + email + "; path=/";
+                                                document.cookie = "tipo=" + tipo + "; path=/";
 
-                                                window.location.href = 'index.php';
+                                                window.location.href = 'foro.php';
                                             }
                                         },
                                         error: function(xhr, status, error) {
@@ -248,10 +275,10 @@ if (isset($_COOKIE['correo'])) {
                             <form id="logout-form" method="post">
                                 <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
                                     <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
-                                        <a class="dropdown-item" href="pages/mi_cuenta_admin.php">Mi cuenta personal</a>
-                                        <a class="dropdown-item" href="pages/mi_cuenta.php">Gestion de usuarios</a>
-                                    <?php else: ?>
-                                        <a class="dropdown-item" href="pages/mi_cuenta.php">Mi cuenta</a>
+                                        <a class="dropdown-item" href="mi_cuenta_admin.php">Mi cuenta personal</a>
+                                        <a class="dropdown-item" href="mi_cuenta.php">Gestion de usuarios</a>
+                                    <?php else : ?>
+                                        <a class="dropdown-item" href="mi_cuenta.php">Mi cuenta</a>
                                     <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
                                 </div>
@@ -276,7 +303,7 @@ if (isset($_COOKIE['correo'])) {
                                             document.cookie = "nombre" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                                             document.cookie = "tipo" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-                                            window.location.href = 'index.php';
+                                            window.location.href = 'foro.php';
                                         },
                                         error: function(xhr, status, error) {
                                             console.log(error);
@@ -290,111 +317,32 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-    <section class="container-fluid">
-        <?php if (isset($_SESSION['usuario_tipo']) && ($_SESSION['usuario_tipo'] == "a")) : ?>
-            <div class="container-fluid my-4">
-                <div class="row">
-                    <div class="col-12 text-center mx-auto">
-                        <button class=" btn btn-lg btn-primary" id="crearNoticias">Crear Noticia</button>
+    <main>
+        <div class="container" id="olvidar">
+            <div class="form-container text-center">
+                <h3 class="text-center mb-4">Formulario de Olvidé mi Contraseña</h3>
+                <form id="olvidarForm">
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="correo">Correo</label>
+                        <input type="email" id="correo" class="form-control" />
                     </div>
-                </div>
-                <hr>
-                <div class="row d-none no-gutters" id="crearNoticiasForm">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form id="publicar-noticias">
-                                    <input type="hidden" name="publicar">
-                                    <div class="mb-3">
-                                        <label for="titulo" class="form-label">Titulo de la noticia</label>
-                                        <input type="text" class="form-control" id="titulo" name="titulo">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="imagen" class="form-label">Enlace de la imagen de cabecera</label>
-                                        <input type="text" class="form-control" id="texto" name="imagen">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="imagen" class="form-label">Contenido de la noticia</label>
-                                        <textarea class="form-control square-textarea" id="imagen" name="texto"></textarea>
-                                    </div>
 
-                                    <div class="text-end">
-                                        <button type="button" class="btn btn-danger" id="cancelarNoticia">Cancelar</button>
-                                        <input type="submit" class="btn btn-primary btn-block" value="Publicar">
-                                    </div>
-                                </form>
-                                <!-- CREAR NOTICIAS -->
-                                <script>
-                                    const crearNoticias = document.querySelector('#crearNoticias');
-                                    const crearNoticiasForm = document.querySelector('#crearNoticiasForm');
-                                    const cancelarNoticia = document.querySelector('#cancelarNoticia');
-
-                                    crearNoticias.addEventListener('click', () => {
-                                        crearNoticias.classList.add('d-none');
-                                        crearNoticiasForm.classList.remove('d-none');
-                                    });
-
-                                    cancelarNoticia.addEventListener('click', () => {
-                                        crearNoticiasForm.classList.add('d-none');
-                                        crearNoticias.classList.remove('d-none');
-                                    });
-                                </script>
-                                <script src="./js/crearNoticias.js"></script>
-                            </div>
-                        </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="nuevaContrasena">Nueva contraseña</label>
+                        <input type="password" id="nuevaContrasena" class="form-control" />
                     </div>
-                </div>
-            </div>
-        <?php endif; ?>
-    </section>
 
-
-    <main class="container-fluid">
-
-        <div id="noticias-contenido"></div>
-        <div id="paginacion-contenedor" class="d-flex justify-content-center  p-3">
-            <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
-                <p id="mostrando"></p>
-                <div id="paginacion-botones" class="d-flex justify-content-center">
-                    <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                        <span class="bi bi-chevron-bar-left"></span>
-                    </button>
-
-                    <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                        <span class="bi bi-chevron-left"></span>
-                    </button>
-
-                    <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
-                        <span class="bi bi-chevron-right"></span>
-                    </button>
-
-                    <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
-                        <span class="bi bi-chevron-bar-right"></span>
-                    </button>
-                </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="repetirContrasena">Repite la contraseña</label>
+                        <input type="password" id="repetirContrasena" class="form-control" />
+                    </div>
+                    <p id="mensajeError"></p>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+                </form>
             </div>
         </div>
-
     </main>
-
-    <!-- Carga de noticias y paginacion -->
-    <div class="pagination"></div>
-
-    <?php if (!isset($_SESSION['usuario_tipo'])) : ?>
-
-        <script src="./js/noticias.js"></script>
-
-    <?php elseif ($_SESSION['usuario_tipo'] == "u") : ?>
-
-        <script src="./js/noticias.js"></script>
-
-    <?php else : ?>
-
-        <script src="./js/noticiasAdmin.js"></script>
-
-    <?php endif; ?>
-
-
+    <script src="../js/olvidarContrasena.js"></script>
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
             <div class="row">
@@ -408,39 +356,11 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </footer>
-
     <script>
-        $('.read-more-btn').click(function() {
-            var text = $(this).prev();
-            text.toggleClass('expanded');
-            if (text.hasClass('expanded')) {
-                $(this).text('Ver menos');
-            } else {
-                $(this).text('Ver más');
-            }
-        });
         $("#propagacion").on("click", function(event) {
             event.stopPropagation();
         });
-
-        //Tema de ver mas del body de las noticias
-        const readMoreButtons = document.querySelectorAll('.leerMas');
-        readMoreButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const text = btn.previousElementSibling;
-                text.classList.toggle('expanded');
-                if (text.classList.contains('expanded')) {
-                    btn.textContent = 'Ver menos';
-                } else {
-                    btn.textContent = 'Ver más';
-                }
-            });
-        });
     </script>
-
-    <!-- BOTON SCROLL -->
-    <button onclick="topFunction()" id="scrollBtn" class="btn btn-primary rounded-circle"><i class="bi bi-arrow-up"></i></button>
-    <script src="./js/botonScroll.js"></script>
 </body>
 
 </html>
