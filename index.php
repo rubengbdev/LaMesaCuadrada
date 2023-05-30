@@ -43,17 +43,17 @@ if (isset($_COOKIE['correo'])) {
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start ">
                 <div class="navbar-nav text-light">
-                    <a href="index.php" class="nav-item nav-link active navegacion">Actualidad</a>
+                    <a href="index.php" class="nav-item nav-link active navegacion seleccionado">Actualidad</a>
                     <a href="pages/foro.php" class="nav-item nav-link navegacion">Foro</a>
                     <a href="pages/registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
-                <div class="navbar-nav ms-auto ml-auto action-buttons">
+                <div class="navbar-nav ms-auto ml-auto action-buttons text-center">
 
                     <?php if (!isset($_SESSION['usuario'])) : ?>
                         <div class="nav-item dropdown pr-2">
-                            <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
-                            <div class="dropdown-menu action-form">
+                            <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida ">Iniciar sesión</a>
+                            <div class="dropdown-menu action-form rounded" id="login-dropdown">
                                 <form id="login-form" action="api/controller" method="post">
                                     <!-- value=\"{$_SESSION['token']}\" -->
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
@@ -64,13 +64,18 @@ if (isset($_COOKIE['correo'])) {
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">
                                     </div>
-                                    <input type="submit" class="btn btn-primary btn-block" value="Login">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Iniciar sesión">
                                     <div class="text-center mt-2">
                                         <a href="pages/olvide_contrasena.php">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 </form>
                             </div>
                         </div>
+                        <script>
+                            $(document).on("click", "#login-dropdown", function(event) {
+                                event.stopPropagation();
+                            });
+                        </script>
                         <script>
                             $(document).ready(function() {
                                 $('#login-form').submit(function(event) {
@@ -89,8 +94,23 @@ if (isset($_COOKIE['correo'])) {
                                             if (response == "null") {
 
                                                 $(document).ready(function() {
-                                                    $('.errorLogin').before('<p id="error-msg">Datos erroneos</p>');
+                                                    var errorMessage = '<p id="error-msg">Datos erróneos</p>';
+                                                    var $existingErrorMsg = $('#error-msg');
+
+                                                    if ($existingErrorMsg.length) {
+                                                        // El mensaje de error ya existe, actualizar su contenido
+                                                        $existingErrorMsg.text('Datos erróneos');
+                                                    } else {
+                                                        // El mensaje de error no existe, crearlo
+                                                        $('.errorLogin').before(errorMessage);
+                                                    }
+
                                                     $('#error-msg').css('color', 'red');
+
+                                                    // En caso de que quieras actualizar el mensaje de error en algún momento
+                                                    function actualizarMensajeError(nuevoMensaje) {
+                                                        $('#error-msg').text(nuevoMensaje);
+                                                    }
                                                 });
 
                                             } else {
@@ -118,7 +138,7 @@ if (isset($_COOKIE['correo'])) {
 
                         <div class="nav-item dropdown" id="movida">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
-                            <div class="dropdown-menu action-form">
+                            <div class="dropdown-menu action-form rounded">
                                 <form id="registro" action="api/controller" method="post">
                                     <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
                                     <input type="hidden" name="token_registro" value="<?= $_SESSION['token_registro'] ?>">
@@ -246,11 +266,11 @@ if (isset($_COOKIE['correo'])) {
                                 </span>
                             </button>
                             <form id="logout-form" method="post">
-                                <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu action-form rounded" aria-labelledby="dropdownMenuButton">
                                     <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
                                         <a class="dropdown-item" href="pages/mi_cuenta_admin.php">Mi cuenta personal</a>
                                         <a class="dropdown-item" href="pages/mi_cuenta.php">Gestion de usuarios</a>
-                                    <?php else: ?>
+                                    <?php else : ?>
                                         <a class="dropdown-item" href="pages/mi_cuenta.php">Mi cuenta</a>
                                     <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">
