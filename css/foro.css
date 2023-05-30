@@ -24,8 +24,9 @@ body {
     position: relative;
     min-height: 100vh;
     padding-bottom: 10em;
-    background-image: linear-gradient(109.6deg, rgba(156, 252, 248, 1) 11.2%, rgba(110, 123, 251, 1) 91.1%);
-
+    /* background-image: linear-gradient(109.6deg, rgb(255, 239, 186) 11.2%, rgb(255, 193, 135) 91.1%); */
+    /* background-color: #004588 */
+    background-image: linear-gradient(109.6deg, rgb(0, 69, 136) 11.2%, rgb(116, 134, 153) 91.1%);
 }
 
 .form-control {
@@ -38,7 +39,6 @@ body {
     background: #fff;
     padding-left: 16px;
     padding-right: 16px;
-    border-bottom: 1px solid #dfe3e8;
     border-radius: 0;
 }
 
@@ -68,6 +68,8 @@ body {
 .navbar a {
     color: #888;
     /* font-size: 15px; */
+    padding-left: 0.1em;
+    padding-right: 0.1em;
 }
 
 .search-box {
@@ -117,12 +119,6 @@ body {
     line-height: normal;
 }
 
-/* .active {
-    color: blue;
-    text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
-} */
-
-
 .navbar .navbar-form {
     border: none;
 }
@@ -149,17 +145,27 @@ body {
 
 .navbar .btn-primary,
 .navbar .btn-primary:active {
+    font-family: 'Righteous Regular', sans-serif;
+
     color: #fff;
     background: #33cabb !important;
     border: none;
 }
 
+.navbar .btn-danger,
+.navbar .btn-danger:active {
+    font-family: 'Righteous Regular', sans-serif;
+
+}
+
 .dropdown-menu .form-group {
+    border-radius: 30px;
     margin-bottom: 10px;
 }
 
 .navbar .btn-success,
 .navbar .btn-success:active {
+    font-family: 'Righteous Regular', sans-serif;
     color: #fff;
     background: #108a00 !important;
     border: none;
@@ -167,6 +173,8 @@ body {
 
 .navbar .btn-primary:hover,
 .navbar .btn-primary:focus {
+    font-family: 'Righteous Regular', sans-serif;
+
     color: #fff;
     background: #31bfb1 !important;
 }
@@ -267,17 +275,83 @@ footer {
 }
 
 .navegacion.active {
-    color: #ffffff;
-    /* Cambia el color del texto para el elemento activo */
-    background-color: #d8b6ff2c;
-    /* Cambia el color de fondo para el elemento activo */
     padding: 0.5em 1em;
-    /* Añade un espacio interno alrededor del texto */
     border-radius: 5px;
-    /* Añade bordes redondeados */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.63);
 }
 
 #titulo {
     font-family: 'Righteous Regular', sans-serif;
     font-size: 1.1em;
+}
+
+.navbar-nav.text-light .seleccionado {
+    color: #D59F4F;
+    background-color: #ffffff25;
+    border-color: #bb7e22;
+    border: solid 1px;
+}
+
+
+#logout-form .dropdown-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+#logout-form .dropdown-item:first-child {
+    margin-bottom: 5px;
+}
+
+#logout-form .btn {
+    margin-top: 15px;
+}
+
+
+main {
+    padding-top: 20px;
+  }
+
+  .card a {
+    text-decoration: none;
+  }
+
+/* //Boton crear hilo */
+
+#crearHiloGeneral {
+    background-color: #D59F4F;
+    border-color: #000000;
+    border: solid 2px;
+    color:white
+  }
+
+  /* BOTON SCROLL*/
+#scrollBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 99;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #007bff;
+    color: #fff;
+}
+
+#scrollBtn:hover {
+    background-color: #0069d9;
+    color: #fff;
+}
+
+#otroHilo {
+    background-color: #3498db;
+    color: #fff;
+}
+
+h2 {
+    font-weight: bold;
+    color: #D59F4F
 }

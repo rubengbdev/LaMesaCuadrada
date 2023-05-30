@@ -44,7 +44,7 @@ if (isset($_COOKIE['correo'])) {
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
                     <a href="foro.php" class="nav-item nav-link navegacion">Foro</a>
-                    <a href="registro_partidas.php" class="nav-item nav-link active navegacion">Registro de Partidas</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link active navegacion seleccionado">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
@@ -52,7 +52,7 @@ if (isset($_COOKIE['correo'])) {
                     <?php if (!isset($_SESSION['usuario'])) : ?>
                         <div class="nav-item dropdown pr-2">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida">Login</a>
-                            <div class="dropdown-menu action-form">
+                            <div class="dropdown-menu action-form rounded">
                                 <form id="login-form" action="api/controller" method="post">
                                     <!-- value=\"{$_SESSION['token']}\" -->
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
@@ -88,8 +88,23 @@ if (isset($_COOKIE['correo'])) {
                                             if (response == "null") {
 
                                                 $(document).ready(function() {
-                                                    $('.errorLogin').before('<p id="error-msg">Datos erroneos</p>');
+                                                    var errorMessage = '<p id="error-msg">Datos erróneos</p>';
+                                                    var $existingErrorMsg = $('#error-msg');
+
+                                                    if ($existingErrorMsg.length) {
+                                                        // El mensaje de error ya existe, actualizar su contenido
+                                                        $existingErrorMsg.text('Datos erróneos');
+                                                    } else {
+                                                        // El mensaje de error no existe, crearlo
+                                                        $('.errorLogin').before(errorMessage);
+                                                    }
+
                                                     $('#error-msg').css('color', 'red');
+
+                                                    // En caso de que quieras actualizar el mensaje de error en algún momento
+                                                    function actualizarMensajeError(nuevoMensaje) {
+                                                        $('#error-msg').text(nuevoMensaje);
+                                                    }
                                                 });
 
                                             } else {
@@ -117,7 +132,7 @@ if (isset($_COOKIE['correo'])) {
 
                         <div class="nav-item dropdown" id="movida">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
-                            <div class="dropdown-menu action-form">
+                            <div class="dropdown-menu action-form rounded">
                                 <form id="registro" action="api/controller" method="post">
                                     <p class="hint-text">Rellena el formulario para crear tu cuenta</p>
                                     <input type="hidden" name="token_registro" value="<?= $_SESSION['token_registro'] ?>">
@@ -211,6 +226,7 @@ if (isset($_COOKIE['correo'])) {
                             });
                         </script>
                     <?php else : ?>
+
                         <div class="nav-item dropdown pr-2">
                             <button class="btn btn-success btn-outline-dark opciones-btn" style="border: 3px solid black;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="texto-bienvenida"><?= "Hola " . $_SESSION['nombre'] ?></span>
@@ -244,7 +260,7 @@ if (isset($_COOKIE['correo'])) {
                                 </span>
                             </button>
                             <form id="logout-form" method="post">
-                                <div class="dropdown-menu action-form" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu action-form rounded" aria-labelledby="dropdownMenuButton">
                                     <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
                                         <a class="dropdown-item" href="mi_cuenta_admin.php">Mi cuenta personal</a>
                                         <a class="dropdown-item" href="mi_cuenta.php">Gestion de usuarios</a>
@@ -288,71 +304,71 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
     </nav>
-    <main>
+    <main class="container-fluid text-center justify-concenter-center">
+        <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <form id="buscador" class="d-flex">
+                    <input id="busqueda-input" type="text" class="form-control" placeholder="Buscar por nombre de juego...">
+                    <button id="ordenar-ascendente" type="button" class="btn btn-primary">Ordenar Ascendente</button>
+                    <button id="ordenar-descendente" type="button" class="btn btn-primary">Ordenar Descendente</button>
+                </form>
+            </div>
+        </div>
+        <div class="table-responsive justify-content-center">
+            <div class="d-flex justify-content-center"> <!-- Agrega la clase justify-content-center -->
+
+                <table class="table rounded rounded-3 table-bordered table-striped">
+                    <thead>
+                        <tr class="bg-success text-white">
+                            <th scope="col">Logo</th>
+                            <th scope="col">Nombre Juego</th>
+                            <th scope="col">Participantes</th>
+                            <th scope="col">Vencedor</th>
+                            <th scope="col">Puntuación Vencedor</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Tiempo de Juego</th>
+                            <th scope="col" colspan="2">Acciones
+                        </tr>
+                    </thead>
+                    <tbody class="table-success">
+                    </tbody>
+                </table>
+            </div>
+            <?php if (isset($_SESSION['usuario'])) : ?>
+                <script src="../js/registroPartidas.js"></script>
+            <?php else : ?>
+                <script src="../js/promocionRegistro.js"></script>
+            <?php endif; ?>
+        </div>
         <?php if (isset($_SESSION['usuario'])) : ?>
             <div class="d-flex justify-content-center my-3">
-                <button type="button" class="btn btn-primary btn-violet" id="crearRegistro">Añadir registro</button>
+                <button type="button" class="btn btn-primary" id="crearRegistro">Añadir registro</button>
             </div>
         <?php endif; ?>
-        <div class="container-fluid d-flex justify-content-center">
-            <div>
-                <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <form id="buscador" class="d-flex">
-                            <input id="busqueda-input" type="text" class="form-control" placeholder="Buscar por nombre de juego...">
-                            <button id="ordenar-ascendente" type="button" class="btn btn-primary">Ordenar Ascendente</button>
-                            <button id="ordenar-descendente" type="button" class="btn btn-primary">Ordenar Descendente</button>
+        <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
+            <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                <p id="mostrando"></p>
+                <div id="paginacion-botones" class="d-flex justify-content-center">
+                    <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                        <span class="bi bi-chevron-bar-left"></span>
+                    </button>
 
-                        </form>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table rounded rounded-3 table-bordered table-striped">
-                        <thead>
-                            <tr class="bg-success text-white">
-                                <th scope="col">Logo</th>
-                                <th scope="col">Nombre Juego</th>
-                                <th scope="col">Participantes</th>
-                                <th scope="col">Vencedor</th>
-                                <th scope="col">Puntuación Vencedor</th>
-                                <th scope="col">Fecha</th>
-                                <th scope="col">Tiempo de Juego</th>
-                                <th scope="col" colspan="2">Acciones
-                            </tr>
-                        </thead>
-                        <tbody class="table-success">
-                        </tbody>
-                    </table>
-                    <?php if (isset($_SESSION['usuario'])) : ?>
-                        <script src="../js/registroPartidas.js"></script>
-                    <?php else : ?>
-                        <script src="../js/promocionRegistro.js"></script>
-                    <?php endif; ?>
-                </div>
-                <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
-                    <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
-                        <p id="mostrando"></p>
-                        <div id="paginacion-botones" class="d-flex justify-content-center">
-                            <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                                <span class="bi bi-chevron-bar-left"></span>
-                            </button>
+                    <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                        <span class="bi bi-chevron-left"></span>
+                    </button>
 
-                            <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                                <span class="bi bi-chevron-left"></span>
-                            </button>
+                    <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                        <span class="bi bi-chevron-right"></span>
+                    </button>
 
-                            <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
-                                <span class="bi bi-chevron-right"></span>
-                            </button>
-
-                            <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
-                                <span class="bi bi-chevron-bar-right"></span>
-                            </button>
-                        </div>
-                    </div>
+                    <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                        <span class="bi bi-chevron-bar-right"></span>
+                    </button>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </main>
     <footer class="bg-dark text-light py-3 mt-auto">

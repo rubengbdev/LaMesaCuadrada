@@ -27,7 +27,6 @@ body {
     /* background-image: linear-gradient(109.6deg, rgb(255, 239, 186) 11.2%, rgb(255, 193, 135) 91.1%); */
     /* background-color: #004588 */
     background-image: linear-gradient(109.6deg, rgb(0, 69, 136) 11.2%, rgb(116, 134, 153) 91.1%);
-
 }
 
 .form-control {
@@ -119,11 +118,6 @@ body {
     background: transparent;
     line-height: normal;
 }
-
-/* .active {
-    color: blue;
-    text-shadow: 0px 0px 30px red, 0px 0px 30px white, 0px 0px 30px white, 0px 0px 10px #553300, 0px 0px 10px #553300;
-} */
 
 .navbar .navbar-form {
     border: none;
@@ -283,7 +277,7 @@ footer {
     /* background-color: #007EFC; */
     /* background-color: rgba(0, 126, 252, 0.411); */
     /* background-color: rgba(0, 0, 0, 0.671); */
-        background-color: rgba(0, 0, 0, 0.671);
+    background-color: rgba(0, 0, 0, 0.671);
 
     /* Ajusta el valor alpha para la opacidad deseada */
 }
@@ -314,24 +308,23 @@ footer {
 
 @media screen and (max-width: 768px) {
     .navegacion {
-        font-size: 2em;
+        font-size: 1.3em;
         /* Tamaño de fuente para pantallas más pequeñas */
     }
 }
 
 @media screen and (max-width: 480px) {
     .navegacion {
-        font-size: 1.5em;
+        font-size: 1.1em;
         /* Tamaño de fuente para pantallas aún más pequeñas */
     }
 }
 
 .navegacion.active {
-    color: #ffffff; /* Cambia el color del texto para el elemento activo */
-    background-color: #d8b6ff2c; /* Cambia el color de fondo para el elemento activo */
-    padding: 0.5em 1em; /* Añade un espacio interno alrededor del texto */
-    border-radius: 5px; /* Añade bordes redondeados */
-  }
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.63);
+}
 
 #titulo {
     font-family: 'Righteous Regular', sans-serif;
@@ -343,25 +336,25 @@ footer {
     background-color: #ffffff25;
     border-color: #bb7e22;
     border: solid 1px;
-  }
+}
 
 
-  #logout-form .dropdown-item {
+#logout-form .dropdown-item {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 16px;
-  }
+}
 
-  #logout-form .dropdown-item:first-child {
+#logout-form .dropdown-item:first-child {
     margin-bottom: 5px;
-  }
+}
 
-  #logout-form .btn {
+#logout-form .btn {
     margin-top: 15px;
-  }
+}
 
-  /*BOTON CREAR NOTICIAS*/
-  #crearNoticias {
+/*BOTON CREAR NOTICIAS*/
+#crearNoticias {
     background-color: #3498db;
     color: #fff;
-  }
+}

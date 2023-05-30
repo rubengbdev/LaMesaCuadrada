@@ -295,7 +295,7 @@ if (isset($_COOKIE['correo'])) {
         </div>
     </nav>
     <main>
-        <a href="foro.php" class="btn btn-primary m-4">Ver otro hilo</a>
+        <a href="foro.php" class="btn btn-primary m-4" id="otroHilo">Ver otro hilo</a>
         <div class="container-fluid">
             <div class="row justify-content-center mt-2 mb-2">
                 <div class="col-lg-8 col-md-10 col-12">
