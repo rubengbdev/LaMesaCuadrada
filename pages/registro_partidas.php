@@ -305,9 +305,9 @@ if (isset($_COOKIE['correo'])) {
         </div>
     </nav>
     <main class="container-fluid text-center justify-concenter-center">
-        <h1 class="text-center my-4 text-light">El Registro de Partidas</h1>
+        <h1 class="text-center my-4">Registro de Partidas</h1>
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-12 d-flex align-items-center justify-content-center">
                 <form id="buscador" class="d-flex">
                     <input id="busqueda-input" type="text" class="form-control" placeholder="Buscar por nombre de juego...">
                     <button id="ordenar-ascendente" type="button" class="btn btn-primary">Ordenar Ascendente</button>
@@ -315,59 +315,60 @@ if (isset($_COOKIE['correo'])) {
                 </form>
             </div>
         </div>
-        <div class="table-responsive justify-content-center">
+        <div class="table-responsive justify-content-center text-center">
             <div class="d-flex justify-content-center"> <!-- Agrega la clase justify-content-center -->
+                <div class="col-12 col-md-auto"> <!-- Agrega las clases col-12 col-md-auto -->
 
-                <table class="table rounded rounded-3 table-bordered table-striped">
-                    <thead>
-                        <tr class="bg-success text-white">
-                            <th scope="col">Logo</th>
-                            <th scope="col">Nombre Juego</th>
-                            <th scope="col">Participantes</th>
-                            <th scope="col">Vencedor</th>
-                            <th scope="col">Puntuación Vencedor</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Tiempo de Juego</th>
-                            <th scope="col" colspan="2">Acciones
-                        </tr>
-                    </thead>
-                    <tbody class="table-success">
-                    </tbody>
-                </table>
+                    <table class="table rounded rounded-3 table-bordered table-striped">
+                        <thead>
+                            <tr class="encabezado-tabla text-white">
+                                <th scope="col">Logo</th>
+                                <th scope="col">Nombre Juego</th>
+                                <th scope="col">Participantes</th>
+                                <th scope="col">Vencedor</th>
+                                <th scope="col">Puntuación Vencedor</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Tiempo de Juego</th>
+                                <th scope="col" colspan="2">Acciones
+                            </tr>
+                        </thead>
+                        <tbody class="table-success">
+                        </tbody>
+                    </table>
+                </div>
+                <?php if (isset($_SESSION['usuario'])) : ?>
+                    <script src="../js/registroPartidas.js"></script>
+                <?php else : ?>
+                    <script src="../js/promocionRegistro.js"></script>
+                <?php endif; ?>
             </div>
             <?php if (isset($_SESSION['usuario'])) : ?>
-                <script src="../js/registroPartidas.js"></script>
-            <?php else : ?>
-                <script src="../js/promocionRegistro.js"></script>
+                <div class="d-flex justify-content-center my-3">
+                    <button type="button" class="btn btn-primary" id="crearRegistro">Añadir registro</button>
+                </div>
             <?php endif; ?>
-        </div>
-        <?php if (isset($_SESSION['usuario'])) : ?>
-            <div class="d-flex justify-content-center my-3">
-                <button type="button" class="btn btn-primary" id="crearRegistro">Añadir registro</button>
-            </div>
-        <?php endif; ?>
-        <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
-            <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
-                <p id="mostrando"></p>
-                <div id="paginacion-botones" class="d-flex justify-content-center">
-                    <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                        <span class="bi bi-chevron-bar-left"></span>
-                    </button>
+            <div id="paginacion-contenedor" class="d-flex justify-content-center p-3">
+                <div id="paginacion-borde" class="w-20 border rounded bg-white p-3">
+                    <p id="mostrando"></p>
+                    <div id="paginacion-botones" class="d-flex justify-content-center">
+                        <button type="button" id="inicio" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                            <span class="bi bi-chevron-bar-left"></span>
+                        </button>
 
-                    <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
-                        <span class="bi bi-chevron-left"></span>
-                    </button>
+                        <button type="button" id="anterior" class="botones btn btn-sm btn-primary text-white fw-bold" disabled>
+                            <span class="bi bi-chevron-left"></span>
+                        </button>
 
-                    <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
-                        <span class="bi bi-chevron-right"></span>
-                    </button>
+                        <button type="button" id="siguiente" class="botones btn btn-sm btn-primary text-white fw-bold">
+                            <span class="bi bi-chevron-right"></span>
+                        </button>
 
-                    <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
-                        <span class="bi bi-chevron-bar-right"></span>
-                    </button>
+                        <button type="button" id="final" class="botones btn btn-sm btn-primary text-white fw-bold">
+                            <span class="bi bi-chevron-bar-right"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
         </div>
     </main>

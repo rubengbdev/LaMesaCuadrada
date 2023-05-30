@@ -48,7 +48,7 @@ if (isset($_COOKIE['correo'])) {
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
                     <a href="foro.php" class="nav-item nav-link navegacion">Foro</a>
-                    <a href="registro_partidas.php" class="nav-item nav-link active navegacion">Registro de Partidas</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
