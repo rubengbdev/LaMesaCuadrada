@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "5a0d5b17-37c1-4342-baaf-d25dd5314d7a",
+		"name": "Partidas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "todas por usuario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:8001/partidas?emailUsuario=admin@email.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"partidas"
+					],
+					"query": [
+						{
+							"key": "emailUsuario",
+							"value": "admin@email.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "numeroJugadores",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "puntuacionVencedor",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "fecha",
+							"value": "2009-03-03",
+							"type": "default"
+						},
+						{
+							"key": "nombreJuego",
+							"value": "fes5",
+							"type": "default"
+						},
+						{
+							"key": "nombreUsuario",
+							"value": "admin",
+							"type": "default"
+						},
+						{
+							"key": "logo",
+							"value": "www.movidas.com/movida.jpg",
+							"type": "default"
+						},
+						{
+							"key": "tiempoJuego",
+							"value": "300 min",
+							"type": "default"
+						},
+						{
+							"key": "vencedor",
+							"value": "pepito junior",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8001/partidas",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"partidas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": \"2\",\n        \"numeroJugadores\": \"800000\",\n        \"puntuacionVencedor\": \"500\",\n        \"fecha\": \"2015-03-03\",\n        \"nombreJuego\": \"ACTUALIZAME ESTA\",\n        \"logo\": \"www.movidas.com/ACTUALIZADA.jpg\",\n        \"tiempoJuego\": \"3000 HORAS\",\n        \"vencedor\": \"pepito junior NO FUE QUIEN GANO CHAVAL\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/partidas",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"partidas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 13\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/partidas",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"partidas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

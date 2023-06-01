@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "3d0ac106-c3e5-495d-866e-2d90679ba64b",
+		"name": "Usuario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuario por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/usuario/31",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario",
+						"31"
+					],
+					"query": [
+						{
+							"key": "usuario_id",
+							"value": "19",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crear usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "correo",
+							"value": "qawdawd",
+							"type": "default"
+						},
+						{
+							"key": "contrasena",
+							"value": "1234",
+							"type": "default"
+						},
+						{
+							"key": "registro",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "nombre",
+							"value": "2adw3",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/registro",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"registro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "correo",
+							"value": "pepito",
+							"type": "default"
+						},
+						{
+							"key": "contrasena",
+							"value": "1234",
+							"type": "default"
+						},
+						{
+							"key": "login",
+							"value": "",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "correo",
+							"value": "admin@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "contrasena",
+							"value": "1234",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuario por email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "correo",
+							"value": "admin@email.com",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8001/api/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": \"21\",\n        \"nombre\": \"ElMovidas33\",\n        \"email\": \"movida33@email.com\",\n        \"contrasena\": \"ruben\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"id\": \"30\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuario por email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/usuario?email=admin@email.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "admin@email.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateCorreo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \n        \"correo\": \"pepito@email.com\",\n        \"correo_nuevo\": \"pepito2@email.com\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateContra",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \n        \"correo\": \"pepito2@email.com\",\n        \"contrasena\": \"1234\",\n        \"contrasena_nueva\": \"123456\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/usuario",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

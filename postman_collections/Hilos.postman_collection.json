@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "d663b0fc-1d10-4b40-8761-d3663ca41b7a",
+		"name": "Hilos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hilos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/hilos?hilo_tipo=GENERAL",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"hilos"
+					],
+					"query": [
+						{
+							"key": "hilo_tipo",
+							"value": "GENERAL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crear",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "texto",
+							"value": "hubo una movida en el parque de los patos",
+							"type": "default"
+						},
+						{
+							"key": "titulo",
+							"value": "EL BUEN HILO2",
+							"type": "default"
+						},
+						{
+							"key": "publicar_hilo",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "nombre_usuario",
+							"value": "pepito",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/hilos",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"hilos"
+					],
+					"query": [
+						{
+							"key": "hilo_tipo",
+							"value": "GENERAL",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":18,\n    \"texto\":\"UY esta\",\n    \"titulo\":\"pues ques2323o\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/hilos",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"hilos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":9\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/hilos",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"hilos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

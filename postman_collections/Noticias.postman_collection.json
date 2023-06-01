@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "8bb064f4-3045-448c-b790-f7580cb1046d",
+		"name": "Noticias",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "noticias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/noticias",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"noticias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crear noticia",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "imagen",
+							"value": "https://cf.geekdo-images.com/LIooA9bTdjnE9qmhjL-UFw__itemrep/img/G_-z236LOfeZMfomDg5oPNJvyrg=/fit-in/246x300/filters:strip_icc()/pic3118622.jpg",
+							"type": "default"
+						},
+						{
+							"key": "texto",
+							"value": "Mansions of Madness: Second Edition is a fully co-operative, app-driven board game of horror and mystery for one to five players that takes place in the same universe as Eldritch Horror and Elder Sign. Let the immersive app guide you through the veiled streets of Innsmouth and the haunted corridors of Arkham's cursed mansions as you search for answers and respite. Eight brave investigators stand ready to confront four scenarios of fear and mystery, collecting weapons, tools, and information, solving complex puzzles, and fighting monsters, insanity, and death. Open the door and step inside these hair-raising Mansions of Madness: Second Edition. It will take more than just survival to conquer the evils terrorizing this town.",
+							"type": "default"
+						},
+						{
+							"key": "publicar",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "titulo",
+							"value": "Movida de prueba",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8001/noticias",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"noticias"
+					],
+					"query": [
+						{
+							"key": "imagen",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "texto",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "publicar",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\n        \"id\": \"6\",\n        \"texto\": \"OJITO 2 VECINITO\",\n        \"imagen\": \"NO IMAGEN\",\n        \"titulo\": \"OJO\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/noticias",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"noticias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 34\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/noticias",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"noticias"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

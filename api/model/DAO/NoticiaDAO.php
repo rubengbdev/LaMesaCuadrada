@@ -91,14 +91,18 @@ class NoticiaDao {
             $stmt = $this->pdo->prepare('DELETE FROM noticia WHERE noticia_id = ?');
             $stmt->execute([$id]);
             $rowCount = $stmt->rowCount();
+
             if ($rowCount > 0) {
+
                 $resultado[] = ["borrado" => true];
                 return json_encode($resultado);
             } else {
+
                 $resultado[] = ["borrado" => false];
                 return json_encode($resultado);
             }
         } catch (PDOException $e) {
+            
             echo 'Error en el borrado: ' . $e->getMessage();
             return null;
         }
