@@ -1,0 +1,34 @@
+1. Una vez situado en esta carpeta ejecute:
+
+sudo docker compose up -d
+
+2. Para eliminar lo anterior
+
+sudo docker compose down
+
+3. Para iniciar y parar todos los contenedores (vigilar tener solo los necesarios):
+
+sudo docker start $(sudo docker ps -aq)
+sudo docker stop $(sudo docker ps -aq)
+
+4. Para entrar dentro de un contenedor:
+
+sudo docker exec -it 253dc7713ae4 /bin/bash
+
+5. Es necesario entrar al web/apache y añadirle una directiva asi en etc/apache2/apache2.conf
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+        Order Allow,Deny
+        Allow from All
+</Directory>
+
+<Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>
+
+
+
