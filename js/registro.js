@@ -73,6 +73,11 @@ $(document).ready(function () {
         habilitarBotonRegistro();
     });
 
+    $('#registro #propagacion input[type="checkbox"]').change(function () {
+        terminosAceptados = $(this).is(':checked');
+        habilitarBotonRegistro();
+    });
+
     // Función para habilitar o deshabilitar el botón de registro
     function habilitarBotonRegistro() {
         var formCompleto = true;
@@ -85,7 +90,7 @@ $(document).ready(function () {
             }
         });
 
-        if (formCompleto && nombreValido && correoValido && contrasenaValida) {
+        if (formCompleto && nombreValido && correoValido && contrasenaValida && terminosAceptados) {
             $('#boton-registro').prop('disabled', false);
         } else {
             $('#boton-registro').prop('disabled', true);
