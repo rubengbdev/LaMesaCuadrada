@@ -55,7 +55,6 @@ if (isset($_COOKIE['correo'])) {
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-success dropdown-toggle sign-up-btn movida ">Iniciar sesión</a>
                             <div class="dropdown-menu action-form rounded" id="login-dropdown">
                                 <form id="login-form" action="api/controller" method="post">
-                                    <!-- value=\"{$_SESSION['token']}\" -->
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
                                     <input type="hidden" name="login">
                                     <div class="form-group errorLogin">
@@ -145,15 +144,18 @@ if (isset($_COOKIE['correo'])) {
                                     <input type="hidden" name="registro">
                                     <div class="form-group errorRegistro">
                                         <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+                                        <p id="nombre-error" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <input type="text" name="correo" class="form-control" placeholder="Email" required>
+                                        <p id="correo-error" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Confirma Contraseña" required>
+                                        <input type="password" name="contrasena-repetir" class="form-control" placeholder="Confirma Contraseña" required>
+                                        <p id="contrasena-error" style="color: red;"></p>
                                     </div>
                                     <div class="form-group">
                                         <label id="propagacion" class="form-check-label">
@@ -166,71 +168,7 @@ if (isset($_COOKIE['correo'])) {
                             </div>
                         </div>
 
-                        <script>
-                            /*MIRAR SI EL FORMULARIO ESTA CUMPLIMENTO*/
-                            $(document).ready(function() {
-                                // Escuchar el evento de cambio en los campos del formulario
-                                $('#registro input').on('change', function() {
-                                    var formCompleto = true;
-
-                                    // Verificar si hay algún campo vacío
-                                    $('#registro input[required]').each(function() {
-                                        if ($(this).val() === '') {
-                                            formCompleto = false;
-                                            return false; // Salir del bucle each si hay un campo vacío
-                                        }
-                                    });
-
-                                    // Habilitar o deshabilitar el botón de registro según el estado del formulario
-                                    if (formCompleto) {
-                                        $('#boton-registro').prop('disabled', false);
-                                    } else {
-                                        $('#boton-registro').prop('disabled', true);
-                                    }
-                                });
-                            });
-
-                            /*PETICION*/
-                            $(document).ready(function() {
-                                $('#registro').submit(function(event) {
-                                    event.preventDefault(); // Evitar envío predeterminado del formulario
-
-                                    // Obtener los datos del formulario
-                                    var formData = $(this).serialize();
-
-                                    // Realizar la solicitud AJAX
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'http://localhost:8001/registro',
-                                        data: formData,
-                                        success: function(response) {
-
-                                            if (response == "null") {
-
-                                                $(document).ready(function() {
-                                                    $('.errorRegistro').before('<p id="error-msg">Datos erroneos</p>');
-                                                    $('#error-msg').css('color', 'red');
-                                                });
-                                            } else {
-
-                                                let tiempoEspera = 2000;
-                                                let urlDestino = window.location.href;
-                                                alert("Usuario registrado con exito, pulse aceptar para ser redirigido a donde se encontraba");
-
-                                                function redirigir() {
-                                                    window.location.href = urlDestino;
-                                                }
-                                                setTimeout(redirigir, tiempoEspera);
-                                            }
-                                        },
-                                        error: function(xhr, status, error) {
-                                            // Manejar errores de la solicitud
-                                            console.log(error);
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
+                        <script src="./js/registro.js"></script>
                     <?php else : ?>
 
                         <div class="nav-item dropdown pr-2">
