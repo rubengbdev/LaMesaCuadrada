@@ -10,11 +10,12 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if (isset($_COOKIE['correo'])) {
-
+    $_SESSION['token_foro'] = bin2hex(random_bytes(16));
     $_SESSION['usuario'] = $_COOKIE['correo'];
     $_SESSION['usuario_tipo'] = $_COOKIE['tipo'];
     $_SESSION['nombre'] = $_COOKIE['nombre'];
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,6 +33,11 @@ if (isset($_COOKIE['correo'])) {
 </head>
 
 <body>
+    <?php if (isset($_SESSION['usuario'])) : ?>
+        <script>
+            var tokenForo = "<?php echo $_SESSION['token_foro']; ?>";
+        </script>
+    <?php endif; ?>
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
 
         <div class="container-fluid">
@@ -265,7 +271,7 @@ if (isset($_COOKIE['correo'])) {
                                     <?php if ($_SESSION['usuario_tipo'] == "a") : ?>
                                         <a class="dropdown-item" href="mi_cuenta_admin.php">Mi cuenta personal</a>
                                         <a class="dropdown-item" href="mi_cuenta.php">Gestion de usuarios</a>
-                                    <?php else: ?>
+                                    <?php else : ?>
                                         <a class="dropdown-item" href="mi_cuenta.php">Mi cuenta</a>
                                     <?php endif; ?>
                                     <input type="submit" class="btn btn-danger btn-block" style="border: 3px solid black;" value="Cerrar Sesión">

@@ -2,10 +2,9 @@ let partidas = [];
 let partidasPorPagina = 5;
 let numeroPaginas;
 let primeraVez;
-let pagina = -1;
+var pagina = -1;
 let partidasPagina;
 
-console.log(partidas);
 // Función para obtener el valor de una cookie por su nombre
 function obtenerValorCookie(nombre) {
     var nombreCookie = nombre + "=";
@@ -33,7 +32,6 @@ function generarPartidasYBotones(primeraVez) {
             dataType: 'json',
             success: function (response) {
 
-                console.log(response);
                 partidas = response;
                 numeroPaginas = Math.ceil(response.length / partidasPorPagina);
                 partidasPagina;
@@ -58,7 +56,6 @@ function generarPartidasYBotones(primeraVez) {
         });
 
         primeraVez = false;
-        primeraVez;
     }
 }
 
@@ -118,102 +115,100 @@ function muestraPartidas(partidasMostrar) {
 function eventoBotonesPaginacion(partidasMostrar) {
 
     $(document).ready(function () {
+
         if (numeroPaginas <= 1) {
             $("#siguiente").prop("disabled", true);
             $("#final").prop("disabled", true);
             $("#inicio").prop("disabled", true);
             $("#anterior").prop("disabled", true);
         }
-    });
 
-    $(document).ready(function () {
         if (numeroPaginas > 1) {
             $("#siguiente").prop("disabled", false);
             $("#final").prop("disabled", false);
             $("#inicio").prop("disabled", true);
             $("#anterior").prop("disabled", true);
         }
-    });
 
-    $(document).on("click", ".botones", function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        boton = $(this).attr("id");
+        $(document).on("click", ".botones", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            boton = $(this).attr("id");
 
-        if (numeroPaginas > 1) {
-            switch (boton) {
-                case "inicio":
-                    pagina = 1;
-                    inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-                    fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidasMostrar.slice(inicio, fin);
-                    $("#inicio").prop("disabled", true);
-                    $("#anterior").prop("disabled", true);
-                    $("#siguiente").prop("disabled", false);
-                    $("#final").prop("disabled", false);
-                    muestraPartidas(partidasPagina);
-                    break;
-                case "anterior":
-                    pagina--;
-                    inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-                    fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidasMostrar.slice(inicio, fin);
-                    if (pagina == 1) {
+            if (numeroPaginas > 1) {
+                switch (boton) {
+                    case "inicio":
+                        pagina = 1;
+                        inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                        fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                        partidasPagina = partidasMostrar.slice(inicio, fin);
                         $("#inicio").prop("disabled", true);
                         $("#anterior").prop("disabled", true);
                         $("#siguiente").prop("disabled", false);
                         $("#final").prop("disabled", false);
-                    } else {
-                        $("#inicio").prop("disabled", false);
-                        $("#anterior").prop("disabled", false);
-                        $("#siguiente").prop("disabled", false);
-                        $("#final").prop("disabled", false);
-                    }
-                    muestraPartidas(partidasPagina);
-                    break;
-                case "siguiente":
-                    pagina++;
-                    inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-                    fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidasMostrar.slice(inicio, fin);
-                    if (pagina == numeroPaginas) {
+                        muestraPartidas(partidasPagina);
+                        break;
+                    case "anterior":
+                        pagina--;
+                        inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                        fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                        partidasPagina = partidasMostrar.slice(inicio, fin);
+                        if (pagina == 1) {
+                            $("#inicio").prop("disabled", true);
+                            $("#anterior").prop("disabled", true);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
+                        } else {
+                            $("#inicio").prop("disabled", false);
+                            $("#anterior").prop("disabled", false);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
+                        }
+                        muestraPartidas(partidasPagina);
+                        break;
+                    case "siguiente":
+                        pagina++;
+                        inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                        fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                        partidasPagina = partidasMostrar.slice(inicio, fin);
+                        if (pagina == numeroPaginas) {
+                            $("#siguiente").prop("disabled", true);
+                            $("#final").prop("disabled", true);
+                            $("#anterior").prop("disabled", false);
+                            $("#inicio").prop("disabled", false);
+                        } else {
+                            $("#inicio").prop("disabled", false);
+                            $("#anterior").prop("disabled", false);
+                            $("#siguiente").prop("disabled", false);
+                            $("#final").prop("disabled", false);
+                        }
+                        muestraPartidas(partidasPagina);
+                        break;
+                    case "final":
+                        pagina = numeroPaginas;
+                        inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                        fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                        partidasPagina = partidasMostrar.slice(inicio, fin);
                         $("#siguiente").prop("disabled", true);
                         $("#final").prop("disabled", true);
-                        $("#anterior").prop("disabled", false);
-                        $("#inicio").prop("disabled", false);
-                    } else {
                         $("#inicio").prop("disabled", false);
                         $("#anterior").prop("disabled", false);
-                        $("#siguiente").prop("disabled", false);
-                        $("#final").prop("disabled", false);
-                    }
-                    muestraPartidas(partidasPagina);
-                    break;
-                case "final":
-                    pagina = numeroPaginas;
-                    inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-                    fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidasMostrar.slice(inicio, fin);
-                    $("#siguiente").prop("disabled", true);
-                    $("#final").prop("disabled", true);
-                    $("#inicio").prop("disabled", false);
-                    $("#anterior").prop("disabled", false);
-                    muestraPartidas(partidasPagina);
-                    break;
+                        muestraPartidas(partidasPagina);
+                        break;
+                }
+            } else {
+                pagina = 1;
+                partidasPagina = partidasMostrar;
+                $("#siguiente").prop("disabled", true);
+                $("#final").prop("disabled", true);
+                $("#inicio").prop("disabled", true);
+                $("#anterior").prop("disabled", true);
+                muestraPartidas(partidasPagina);
             }
-        } else {
-            pagina = 1;
-            partidasPagina = partidasMostrar;
-            $("#siguiente").prop("disabled", true);
-            $("#final").prop("disabled", true);
-            $("#inicio").prop("disabled", true);
-            $("#anterior").prop("disabled", true);
-            muestraPartidas(partidasPagina);
-        }
 
+        });
     });
 }
-
 
 function editarPartida(registro) {
 
@@ -397,7 +392,6 @@ function eliminarPartida(registro) {
 
 }
 
-
 $(document).ready(function () {
 
     generarPartidasYBotones(primeraVez);
@@ -509,14 +503,18 @@ $('#busqueda-input').on('keyup', function () {
         }, 300);
 
     } else {
+
+        pagina = 1
         numeroPaginas = Math.ceil(partidas.length / partidasPorPagina);
+        partidasPagina = -1;
+
         if (numeroPaginas > 1) {
-            pagina = 1;
+
             let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
             let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
             partidasPagina = partidas.slice(inicio, fin);
         } else {
-            pagina = 1;
+
             partidasPagina = partidas;
         }
 
@@ -527,41 +525,44 @@ $('#busqueda-input').on('keyup', function () {
 
 
 function buscarPartidas(searchTerm) {
-    console.log(searchTerm);
-    var partidasFiltradas = partidas.filter(function(obj) {
-      return obj.nombreJuego.toLowerCase().includes(searchTerm.toLowerCase());
+
+    var partidasFiltradas = partidas.filter(function (obj) {
+        return obj.nombreJuego.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
     numeroPaginas = Math.ceil(partidasFiltradas.length / partidasPorPagina);
-        if (numeroPaginas > 1) {
-            pagina = 1;
-            let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-            let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-            partidasPagina = partidasFiltradas.slice(inicio, fin);
-        } else {
-            pagina = 1;
-            partidasPagina = partidasFiltradas;
-        }
+
+    if (numeroPaginas > 1) {
+        pagina = 1;
+        let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+        let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+        partidasPagina = partidasFiltradas.slice(inicio, fin);
+    } else {
+        pagina = 1;
+        partidasPagina = partidasFiltradas;
+    }
     muestraPartidas(partidasPagina);
     eventoBotonesPaginacion(partidasFiltradas);
-  }
+}
 
 
-//ORDENAMIENTO POR FECHA
+//ORDENA POR FECHA
 
 var ordenAscendente = true;
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     $(document).on("click", "#ordenar-ascendente", function () {
         ordenAscendente = true;
         ordenarPartidas();
     });
-    
+
     $(document).on("click", "#ordenar-descendente", function () {
         ordenAscendente = false;
         ordenarPartidas();
-    });  });
-  
+    });
+});
+
 
 function ordenarPartidas() {
     var partidasOrdenadas = partidas.slice(); // Crea una copia del arreglo original
@@ -589,50 +590,3 @@ function ordenarPartidas() {
     muestraPartidas(partidasPagina);
     eventoBotonesPaginacion(partidasOrdenadas);
 }
-
-// $(document).on("click", "#ordenar-ascendente", function () {
-//     partidas.sort(function (a, b) {
-//         return new Date(a.fecha) - new Date(b.fecha);
-//     });
-//     muestraPartidas(partidasOrdenadas);
-// });
-
-// $(document).on("click", "#ordenar-descendente", function () {
-//     partidas.sort(function (a, b) {
-//         return new Date(b.fecha) - new Date(a.fecha);
-//     });
-//     muestraPartidas(partidasOrdenadas);
-// });
-// // Agregar evento submit al formulario
-// buscador.addEventListener('submit', function (event) {
-//     event.preventDefault(); // Evitar el envío del formulario
-//     buscarPartida();
-// });
-
-
-// function buscarPartida() {
-//     // Obtener el valor del campo de búsqueda
-//     var searchTerm = searchTermInput.value.toLowerCase();
-
-//     // Filtrar las partidas que coincidan con el término de búsqueda
-//     var resultados = partidas.filter(function (partida) {
-//         return partida.nombreJuego.toLowerCase().includes(searchTerm);
-//     });
-
-//     // Mostrar los resultados
-//     console.log(resultados);
-// }
-
-// // Función de búsqueda
-// function buscarPartida() {
-//   // Obtener el valor del campo de búsqueda
-//   var searchTerm = searchTermInput.value.toLowerCase();
-
-//   // Filtrar las partidas que coincidan con el término de búsqueda
-//   var resultados = partidas.filter(function (partida) {
-//     return partida.nombreJuego.toLowerCase().includes(searchTerm);
-//   });
-
-//   // Mostrar los resultados
-//   console.log(resultados);
-// }

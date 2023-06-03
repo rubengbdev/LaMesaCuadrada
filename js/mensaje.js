@@ -224,6 +224,8 @@ $(document).ready(function () {
         let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'tiempoJuego');
         let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'vencedor');
 
+
+
         // Agregar los elementos del formulario al modal
         form.append(nombreUsuario)
         form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);

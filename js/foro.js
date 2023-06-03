@@ -191,9 +191,6 @@ function eventoBotonesPaginacion() {
     });
 }
 
-
-
-
 $(document).ready(function () {
 
     generarHilosYBotones(primeraVez);
@@ -216,6 +213,9 @@ $(document).ready(function () {
         let texto = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'texto');
         let titulo = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo');
         let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombre_usuario').val(obtenerValorCookie('nombre'));
+        let valorTokenForo = tokenForo;
+
+        let tokenForoInput = $('<input>').attr('type', 'hidden').attr('name', 'token_foro').val(valorTokenForo);
 
 
         // Agregar los elementos del formulario al modal
@@ -223,6 +223,7 @@ $(document).ready(function () {
         form.append(nombreUsuario);
         form.append($('<label>').text('Titulo: ')).append(titulo);
         form.append($('<label>').text('Texto: ')).append(texto);
+        form.append(tokenForoInput);
 
         modalBody.append(form);
 
@@ -262,6 +263,7 @@ $(document).ready(function () {
 
         confirmarButton.on('click', function () {
             let formData = $('#crear').serialize();
+            console.log(formData);
             // Realizar la petición PUT mediante AJAX
             $.ajax({
                 url: 'http://localhost:8001/hilos',
@@ -279,190 +281,3 @@ $(document).ready(function () {
         });
     })
 })
-
-
-
-// function editarHilo(registro) {
-
-//     // Obtener el tr correspondiende entero (el padre)
-
-//     // Obtener los datos de la partida
-//     let idPartida = registro.attr('id');
-//     let nombre = registro.find('.nombre_juego').html().trim();
-//     let jugadores = registro.find('.jugadores').html().trim();
-//     let ganador = registro.find('.ganador').html().trim();
-//     let puntuacion = registro.find('.puntuacion').html().trim();
-//     let fecha = registro.find('.fecha').html().trim();
-//     let duracion = registro.find('.duracion').html().trim();
-//     let logo = registro.find('.logo-imagen').attr('src');
-
-//     // Crear el modal de edición
-//     let modal = $('<div>').addClass('modal fade').attr('id', 'modalEditar');
-//     let modalDialog = $('<div>').addClass('modal-dialog');
-//     let modalContent = $('<div>').addClass('modal-content');
-//     let modalHeader = $('<div>').addClass('modal-header');
-//     let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
-//     let modalBody = $('<div>').addClass('modal-body');
-
-//     // Crear el formulario de edición
-//     let form = $('<form>').addClass('needs-validation').attr('id', 'formularioEditar').attr('novalidate', true);
-
-//     let idFormulario = $('<input>').attr('type', 'hidden').attr('name', 'idPartida').val(idPartida);
-//     let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'titulo').val(nombre);
-//     let jugadoresFormulario = $('<textarea>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'number').css('height', '300px').val(jugadores);
-//     let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(ganador);
-//     let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(puntuacion);
-//     let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'imagen').val(fecha);
-//     let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'imagen').val(duracion);
-//     let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'imagen').val(logo);
-
-
-//     // Agregar los elementos del formulario al modal
-//     form.append(idFormulario);
-//     form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
-//     form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
-//     form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
-//     form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
-//     form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
-//     form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
-//     form.append($('<label>').text('Logo: ')).append(logoFormulario);
-
-
-//     modalBody.append(form);
-
-//     // Crear los botones de cancelar y confirmar cambios
-//     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-//     let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
-
-
-//     var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
-//     buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
-
-//     // Agregar los botones al modal
-//     var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-//     modalFooter.append(buttonContainer);
-
-//     // Construir la estructura del modal
-//     modalHeader.append(modalTitle);
-//     // $modalHeader.append($modalTitle).append($modalCloseButton);
-
-//     modalContent.append(modalHeader).append(modalBody).append(modalFooter);
-//     modalDialog.append(modalContent);
-//     modal.append(modalDialog);
-
-//     // Agregar el modal al documento
-//     $('body').append(modal);
-
-//     // Mostrar el modal de edición
-//     $('#modalEditar').modal('show');
-
-//     //BOTONES DEL MODAL
-
-//     // Evento click en el botón "Cancelar"
-//     cancelarButton.on('click', function () {
-//         // Cerrar y eliminar el modal de edición
-//         $('#modalEditar').modal('hide').remove();
-//     });
-
-//     // Evento click en el botón "Confirmar Cambios"
-//     confirmarButton.on('click', function () {
-//         // Obtener los datos actualizados del formular
-
-//         // Realizar la petición PUT mediante AJAX
-//         $.ajax({
-//             url: 'http://localhost:8001/hilos',
-//             type: 'PUT',
-//             dataType: 'json',
-//             data: JSON.stringify({
-//                 id: idPartida,
-//                 numeroJugadores: jugadoresFormulario.val(),
-//                 puntuacionVencedor: puntuacionFormulario.val(),
-//                 fecha: fechaFormulario.val(),
-//                 nombreJuego: nombreJuegoFormulario.val(),
-//                 logo: logoFormulario.val(),
-//                 tiempoJuego: duracionFormulario.val(),
-//                 vencedor: ganadorFormulario.val()
-//             }),
-//             success: function (response) {
-
-//                 window.location.href = 'registro_hilos.php';
-//             },
-//             error: function (xhr, status, error) {
-
-//                 console.error(error);
-//             }
-//         });
-//     });
-
-// }
-
-// function eliminarHilo(registro) {
-
-//     let idPartida = registro.attr("id");
-
-//     // Crear el modal de edición
-//     let modal = $('<div>').addClass('modal fade').attr('id', 'modalBorrar');
-//     let modalDialog = $('<div>').addClass('modal-dialog');
-//     let modalContent = $('<div>').addClass('modal-content');
-//     let modalHeader = $('<div>').addClass('modal-header');
-//     let modalTitle = $('<h5>').addClass('modal-title').text('Borrar registro');
-//     let modalBody = $('<div>').addClass('modal-body text-center').text('¿Seguro que quiere eliminar este registro?');
-
-//     // Crear el formulario de edición
-//     var form = $('<form>').addClass('needs-validation').attr('id', 'formularioBorrar').attr('novalidate', true);
-//     var id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(id);
-
-//     form.append(id);
-//     modalBody.append(form);
-
-//     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-//     let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar borrado');
-
-//     let buttonContainer = $('<div>').addClass('d-flex justify-content-center');
-//     buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
-
-//     let modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-//     modalFooter.append(buttonContainer);
-
-//     modalHeader.append(modalTitle);
-
-//     modalContent.append(modalHeader).append(modalBody).append(modalFooter);
-//     modalDialog.append(modalContent);
-//     modal.append(modalDialog);
-
-//     // Agregar el modal al documento
-//     $('body').append(modal);
-
-//     // Mostrar el modal de edición
-//     $('#modalBorrar').modal('show');
-
-//     //BOTONES DEL MODAL
-
-//     // Evento click en el botón "Cancelar"
-//     cancelarButton.on('click', function () {
-//         // Cerrar y eliminar el modal de edición
-//         $('#modalBorrar').modal('hide').remove();
-//     });
-
-//     // Evento click en el botón "Confirmar Cambios"
-//     confirmarButton.on('click', function () {
-
-//         $.ajax({
-//             url: 'http://localhost:8001/hilos',
-//             type: 'DELETE',
-//             dataType: 'json',
-//             data: JSON.stringify({
-//                 id: idPartida
-//             }),
-//             success: function (response) {
-
-//                 window.location.href = 'registro_hilos.php';
-//             },
-//             error: function (xhr, status, error) {
-
-//                 console.error(error);
-//             }
-//         });
-//     });
-
-// }
