@@ -33,7 +33,6 @@ if (isset($_COOKIE['correo'])) {
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
-
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php"><img src="img/logo.png" alt="logo" width="50em" height="50em">
                 <b id="titulo">La Mesa Cuadrada</b></a>
@@ -75,66 +74,7 @@ if (isset($_COOKIE['correo'])) {
                                 event.stopPropagation();
                             });
                         </script>
-                        <script>
-                            $(document).ready(function() {
-                                $('#login-form').submit(function(event) {
-                                    event.preventDefault(); // Evitar envío predeterminado del formulario
-
-                                    // Obtener los datos del formulario
-                                    var formData = $(this).serialize();
-
-                                    // Realizar la solicitud AJAX
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'http://localhost:8001/login',
-                                        data: formData,
-                                        success: function(response) {
-
-                                            if (response == "null") {
-
-                                                $(document).ready(function() {
-                                                    var errorMessage = '<p id="error-msg">Datos erróneos</p>';
-                                                    var $existingErrorMsg = $('#error-msg');
-
-                                                    if ($existingErrorMsg.length) {
-                                                        // El mensaje de error ya existe, actualizar su contenido
-                                                        $existingErrorMsg.text('Datos erróneos');
-                                                    } else {
-                                                        // El mensaje de error no existe, crearlo
-                                                        $('.errorLogin').before(errorMessage);
-                                                    }
-
-                                                    $('#error-msg').css('color', 'red');
-
-                                                    // En caso de que quieras actualizar el mensaje de error en algún momento
-                                                    function actualizarMensajeError(nuevoMensaje) {
-                                                        $('#error-msg').text(nuevoMensaje);
-                                                    }
-                                                });
-
-                                            } else {
-                                                console.log(response);
-                                                let userData = JSON.parse(response); // Analizar la respuesta JSON
-
-                                                let nombre = userData.usuario_nombre;
-                                                let email = userData.usuario_email;
-                                                let tipo = userData.usuario_tipo;
-
-                                                document.cookie = "nombre=" + nombre;
-                                                document.cookie = "correo=" + email;
-                                                document.cookie = "tipo=" + tipo;
-
-                                                window.location.href = 'index.php';
-                                            }
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.log(error);
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
-
+                        <script src="./js/login.js"></script>
                         <div class="nav-item dropdown" id="movida">
                             <a href="#" role="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Registrarse</a>
                             <div class="dropdown-menu action-form rounded">
