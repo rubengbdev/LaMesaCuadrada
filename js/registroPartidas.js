@@ -260,7 +260,7 @@ function editarPartida(registro) {
 
     // Crear los botones de cancelar y confirmar cambios
     let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-    let confirmarButton = $('<button>').addClass('btn btn-primary').attr('type', 'button').text('Confirmar Cambios');
+    let confirmarButton = $('<button>').addClass('btn btn-primary confirmaEdicion').attr('type', 'button').text('Confirmar Cambios').prop("disabled", true);
 
 
     var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
@@ -320,6 +320,24 @@ function editarPartida(registro) {
                 console.error(error);
             }
         });
+    });
+
+    $(document).on("keyup", "#formularioEditar input", function() {
+        console.log("hola dentro de evento");
+      var numeroJugadores = $("input[name='numeroJugadores']").val();
+      var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
+      var fecha = $("input[name='fecha']").val();
+      var nombreJuego = $("input[name='nombreJuego']").val();
+      var logo = $("input[name='logo']").val();
+      var tiempoJuego = $("input[name='tiempoJuego']").val();
+      var vencedor = $("input[name='vencedor']").val();
+  
+      // Verificar si todos los campos están completados
+      if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
+        $(".confirmaEdicion").prop("disabled", false);
+      } else {
+        $(".confirmaEdicion").prop("disabled", true);
+      }
     });
 
 }
@@ -408,7 +426,7 @@ $(document).ready(function () {
         let modalBody = $('<div>').addClass('modal-body');
 
         // Crear el formulario de edición
-        let form = $('<form>').addClass('needs-validation').attr('id', 'crear').attr('mehotd', 'post').attr('novalidate', true);
+        let form = $('<form>').attr('id', 'crear').attr('mehotd', 'post');
 
         let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'numeroJugadores');
         let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'puntuacionVencedor');
@@ -426,14 +444,14 @@ $(document).ready(function () {
         form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
         form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
         form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
-        form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
+        form.append($('<label>').text('Duracion partida (min): ')).append(duracionFormulario);
         form.append($('<label>').text('Logo: ')).append(logoFormulario);
 
         modalBody.append(form);
 
         // Crear los botones de cancelar y confirmar cambios
         let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-        let confirmarButton = $('<input>').addClass('btn btn-primary').attr('type', 'submit').text('Confirmar Cambios');
+        let confirmarButton = $('<input>').addClass('btn btn-primary confirmar').attr('type', 'submit').text('Crear registro').prop("disabled", true);
 
 
         var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
@@ -466,6 +484,7 @@ $(document).ready(function () {
         });
 
         confirmarButton.on('click', function () {
+
             let formData = $('#crear').serialize();
             console.log(formData);
             // Realizar la petición PUT mediante AJAX
@@ -483,9 +502,29 @@ $(document).ready(function () {
                 }
             });
         });
+
+        $(document).on("keyup", "#crear input", function() {
+            console.log("hola dentro de evento");
+          var numeroJugadores = $("input[name='numeroJugadores']").val();
+          var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
+          var fecha = $("input[name='fecha']").val();
+          var nombreJuego = $("input[name='nombreJuego']").val();
+          var logo = $("input[name='logo']").val();
+          var tiempoJuego = $("input[name='tiempoJuego']").val();
+          var vencedor = $("input[name='vencedor']").val();
+      
+          // Verificar si todos los campos están completados
+          if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
+            $(".confirmar").prop("disabled", false);
+          } else {
+            $(".confirmar").prop("disabled", true);
+          }
+        });
     })
+
 })
 
+//Validacion
 
 //BUSCADOR
 
