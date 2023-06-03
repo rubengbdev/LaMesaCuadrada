@@ -69,7 +69,7 @@ if (isset($_COOKIE['correo'])) {
                                     </div>
                                     <input type="submit" class="btn btn-primary btn-block" value="Login">
                                     <div class="text-center mt-2">
-                                        <a href="#">¿Olvidaste tu contraseña?</a>
+                                        <a href="olvide_contrasena.php">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 </form>
                             </div>

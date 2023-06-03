@@ -46,7 +46,7 @@ if (isset($_COOKIE['correo'])) {
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
-                    <a href="foro.php" class="nav-item nav-link active navegacion seleccionado">Foro</a>
+                    <a href="foro.php" class="nav-item nav-link navegacion seleccionado">Foro</a>
                     <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 

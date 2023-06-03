@@ -45,7 +45,7 @@ if (isset($_COOKIE['correo'])) {
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
-                    <a href="foro.php" class="nav-item nav-link active navegacion">Foro</a>
+                    <a href="foro.php" class="nav-item nav-link navegacion">Foro</a>
                     <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
@@ -66,7 +66,7 @@ if (isset($_COOKIE['correo'])) {
                                     </div>
                                     <input type="submit" class="btn btn-primary btn-block" value="Login">
                                     <div class="text-center mt-2">
-                                        <a href="#">¿Olvidaste tu contraseña?</a>
+                                        <a href="olvide_contrasena.php">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 </form>
                             </div>

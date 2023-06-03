@@ -32,22 +32,25 @@ function generarPartidasYBotones(primeraVez) {
             dataType: 'json',
             success: function (response) {
 
-                partidas = response;
-                numeroPaginas = Math.ceil(response.length / partidasPorPagina);
-                partidasPagina;
-                if (numeroPaginas > 1) {
+                if (response.length > 0) {
+                    partidas = response;
 
-                    pagina = 1;
-                    let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
-                    let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
-                    partidasPagina = partidas.slice(inicio, fin);
-                } else {
-                    pagina = 1;
-                    partidasPagina = partidas;
+                    numeroPaginas = Math.ceil(response.length / partidasPorPagina);
+                    partidasPagina;
+                    if (numeroPaginas > 1) {
+    
+                        pagina = 1;
+                        let inicio = (pagina - 1) * partidasPorPagina; // Índice de inicio
+                        let fin = inicio + partidasPorPagina; // Índice de fin (no inclusivo)
+                        partidasPagina = partidas.slice(inicio, fin);
+                    } else {
+                        pagina = 1;
+                        partidasPagina = partidas;
+                    }
+    
+                    muestraPartidas(partidasPagina);
+                    eventoBotonesPaginacion(partidas);
                 }
-
-                muestraPartidas(partidasPagina);
-                eventoBotonesPaginacion(partidas);
             },
             error: function (xhr, status, error) {
 
