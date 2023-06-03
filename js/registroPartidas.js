@@ -322,22 +322,22 @@ function editarPartida(registro) {
         });
     });
 
-    $(document).on("keyup", "#formularioEditar input", function() {
+    $(document).on("keyup", "#formularioEditar input", function () {
         console.log("hola dentro de evento");
-      var numeroJugadores = $("input[name='numeroJugadores']").val();
-      var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
-      var fecha = $("input[name='fecha']").val();
-      var nombreJuego = $("input[name='nombreJuego']").val();
-      var logo = $("input[name='logo']").val();
-      var tiempoJuego = $("input[name='tiempoJuego']").val();
-      var vencedor = $("input[name='vencedor']").val();
-  
-      // Verificar si todos los campos están completados
-      if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
-        $(".confirmaEdicion").prop("disabled", false);
-      } else {
-        $(".confirmaEdicion").prop("disabled", true);
-      }
+        var numeroJugadores = $("input[name='numeroJugadores']").val();
+        var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
+        var fecha = $("input[name='fecha']").val();
+        var nombreJuego = $("input[name='nombreJuego']").val();
+        var logo = $("input[name='logo']").val();
+        var tiempoJuego = $("input[name='tiempoJuego']").val();
+        var vencedor = $("input[name='vencedor']").val();
+
+        // Verificar si todos los campos están completados
+        if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
+            $(".confirmaEdicion").prop("disabled", false);
+        } else {
+            $(".confirmaEdicion").prop("disabled", true);
+        }
     });
 
 }
@@ -428,14 +428,63 @@ $(document).ready(function () {
         // Crear el formulario de edición
         let form = $('<form>').attr('id', 'crear').attr('mehotd', 'post');
 
-        let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'numeroJugadores');
-        let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'puntuacionVencedor');
-        let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'fecha');
-        let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'nombreJuego');
-        let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombreUsuario').val(obtenerValorCookie('nombre'));
-        let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'logo')
-        let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'tiempoJuego');
-        let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'vencedor');
+
+        let jugadoresFormulario = $('<input>')
+            .attr('type', 'number')
+            .addClass('form-control mb-3')
+            .attr('name', 'numeroJugadores')
+            .attr('placeholder', 'Número de jugadores')
+            .prop('required', true)
+            .prop('min', 0);
+
+        let puntuacionFormulario = $('<input>')
+            .attr('type', 'number')
+            .addClass('form-control mb-3')
+            .attr('name', 'puntuacionVencedor')
+            .attr('placeholder', 'Puntuación del vencedor')
+            .prop('required', true)
+            .prop('min', 0);
+
+        let fechaFormulario = $('<input>')
+            .attr('type', 'date')
+            .addClass('form-control mb-3')
+            .attr('name', 'fecha')
+            .attr('placeholder', 'Fecha')
+            .prop('required', true);
+
+        let nombreJuegoFormulario = $('<input>')
+            .attr('type', 'text')
+            .addClass('form-control mb-3')
+            .attr('name', 'nombreJuego')
+            .attr('placeholder', 'Nombre del juego')
+            .prop('required', true);
+
+        let nombreUsuario = $('<input>')
+            .attr('type', 'hidden')
+            .addClass('form-control mb-3')
+            .attr('name', 'nombreUsuario')
+            .val(obtenerValorCookie('nombre'));
+
+        let logoFormulario = $('<input>')
+            .attr('type', 'text')
+            .addClass('form-control mb-3')
+            .attr('name', 'logo')
+            .attr('placeholder', 'URL del logo');
+
+        let duracionFormulario = $('<input>')
+            .attr('type', 'number')
+            .addClass('form-control mb-3')
+            .attr('name', 'tiempoJuego')
+            .attr('placeholder', 'Duración del juego (minutos)')
+            .prop('required', true)
+            .prop('min', 0);
+
+        let ganadorFormulario = $('<input>')
+            .attr('type', 'text')
+            .addClass('form-control mb-3')
+            .attr('name', 'vencedor')
+            .attr('placeholder', 'Nombre del vencedor')
+            .prop('required', true);
 
         // Agregar los elementos del formulario al modal
         form.append(nombreUsuario)
@@ -503,22 +552,22 @@ $(document).ready(function () {
             });
         });
 
-        $(document).on("keyup", "#crear input", function() {
+        $(document).on("keyup", "#crear input", function () {
             console.log("hola dentro de evento");
-          var numeroJugadores = $("input[name='numeroJugadores']").val();
-          var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
-          var fecha = $("input[name='fecha']").val();
-          var nombreJuego = $("input[name='nombreJuego']").val();
-          var logo = $("input[name='logo']").val();
-          var tiempoJuego = $("input[name='tiempoJuego']").val();
-          var vencedor = $("input[name='vencedor']").val();
-      
-          // Verificar si todos los campos están completados
-          if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
-            $(".confirmar").prop("disabled", false);
-          } else {
-            $(".confirmar").prop("disabled", true);
-          }
+            var numeroJugadores = $("input[name='numeroJugadores']").val();
+            var puntuacionVencedor = $("input[name='puntuacionVencedor']").val();
+            var fecha = $("input[name='fecha']").val();
+            var nombreJuego = $("input[name='nombreJuego']").val();
+            var logo = $("input[name='logo']").val();
+            var tiempoJuego = $("input[name='tiempoJuego']").val();
+            var vencedor = $("input[name='vencedor']").val();
+
+            // Verificar si todos los campos están completados
+            if (numeroJugadores !== "" && puntuacionVencedor !== "" && fecha !== "" && nombreJuego !== "" && logo !== "" && tiempoJuego !== "" && vencedor !== "") {
+                $(".confirmar").prop("disabled", false);
+            } else {
+                $(".confirmar").prop("disabled", true);
+            }
         });
     })
 
