@@ -35,7 +35,6 @@ $(document).ready(function() {
                     });
 
                 } else {
-                    console.log(response);
                     let userData = JSON.parse(response); // Analizar la respuesta JSON
 
                     let nombre = userData.usuario_nombre;
