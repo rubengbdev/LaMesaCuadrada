@@ -1,3 +1,5 @@
+/* Define fuentes personalizadas en local */
+
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
@@ -19,13 +21,13 @@
     font-style: normal;
 }
 
+/* Establece el fondo y otros estilos para el cuerpo */
+
 body {
     font-family: 'Varela Round', sans-serif;
     position: relative;
     min-height: 100vh;
     padding-bottom: 10em;
-    /* background-image: linear-gradient(109.6deg, rgb(255, 239, 186) 11.2%, rgb(255, 193, 135) 91.1%); */
-    /* background-color: #004588 */
     background-image: linear-gradient(109.6deg, rgb(0, 69, 136) 11.2%, rgb(116, 134, 153) 91.1%);
 }
 
@@ -35,12 +37,16 @@ body {
     font-size: 13px;
 }
 
+/* Estilos para la barra de navegación */
+
 .navbar {
     background: #fff;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 0;
 }
+
+/* Estilos para los elementos en la barra de navegación */
 
 .nav-link img {
     border-radius: 50%;
@@ -67,7 +73,6 @@ body {
 
 .navbar a {
     color: #888;
-    /* font-size: 15px; */
     padding-left: 0.1em;
     padding-right: 0.1em;
 }
@@ -217,6 +222,8 @@ body {
     margin-right: 20px;
 }
 
+/* Estilo footer */
+
 footer {
     position: absolute;
     bottom: 0;
@@ -233,13 +240,11 @@ footer {
 .clamp-text {
     display: -webkit-box;
     -webkit-line-clamp: 4;
-    /* Ajusta este valor al número de líneas que quieres mostrar */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: all 0.3s ease-out;
     max-height: calc(1.2em * 80);
-    /* Ajusta este valor al número de líneas que quieres mostrar */
 }
 
 .clamp-text.expanded {
@@ -247,8 +252,8 @@ footer {
     max-height: unset;
 }
 
+/* Estilos el boton de scroll */
 
-/* BOTON SCROLL*/
 #scrollBtn {
     position: fixed;
     bottom: 20px;
@@ -269,19 +274,17 @@ footer {
     color: #fff;
 }
 
+/* Estilos para la edicion de noticias */
+
 #editor {
     min-height: 15em;
 }
 
 .navbar {
-    /* background-color: #007EFC; */
-    /* background-color: rgba(0, 126, 252, 0.411); */
-    /* background-color: rgba(0, 0, 0, 0.671); */
     background-color: rgba(0, 0, 0, 0.671);
-
-    /* Ajusta el valor alpha para la opacidad deseada */
 }
 
+/* Estilos para los botones de paginacion */
 
 #paginacion-botones {
     overflow: auto;
@@ -290,21 +293,20 @@ footer {
 
 .square-textarea {
     width: 50%;
-    /* Ajusta el ancho según tus necesidades */
     height: 50%;
-    /* Ajusta la altura según tus necesidades */
 }
 
 .navegacion {
     font-family: 'Righteous Regular', sans-serif;
     font-size: 1em;
-    /* Ejemplo de tamaño de fuente inicial */
     font-weight: bold;
 }
 
 .navegacion:hover {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
+
+/* Estilos para diseño responsive en barra navegacion */
 
 @media screen and (max-width: 768px) {
     .navegacion {
@@ -352,6 +354,7 @@ footer {
     border: solid 1px;
 }
 
+/* Estilos logout en el dropmenu */
 
 #logout-form .dropdown-item {
     padding-top: 10px;
@@ -367,13 +370,14 @@ footer {
     margin-top: 15px;
 }
 
-/*BOTON CREAR NOTICIAS*/
+/* Estilo boton crear noticias */
 #crearNoticias {
     background-color: #3498db;
     color: #fff;
 }
+
 @media (max-width: 767px) {
     .nav-item.dropdown.pr-2 {
-      margin-bottom: 10px;
+        margin-bottom: 10px;
     }
-  }
+}

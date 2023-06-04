@@ -26,7 +26,7 @@ if (isset($_COOKIE['correo'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Foro - La Mesa Cuadrada</title>
+    <title>Foro - Hilo - La Mesa Cuadrada</title>
     <link rel="stylesheet" href="./../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
@@ -46,7 +46,7 @@ if (isset($_COOKIE['correo'])) {
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
-                    <a href="foro.php" class="nav-item nav-link navegacion seleccionado">Foro</a>
+                    <a href="foro.php" class="nav-item nav-link active navegacion seleccionado">Foro</a>
                     <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 
@@ -60,7 +60,7 @@ if (isset($_COOKIE['correo'])) {
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
                                     <input type="hidden" name="login">
                                     <div class="form-group errorLogin">
-                                        <input type="text" name="correo" class="form-control" placeholder="Usuario" required="required">
+                                        <input type="text" name="correo" class="form-control" placeholder="Email" required="required">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">

@@ -1,3 +1,5 @@
+/* Define fuentes personalizadas en local */
+
 @font-face {
     font-family: 'Montserrat';
     src: url('../fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
@@ -19,13 +21,13 @@
     font-style: normal;
 }
 
+/* Establece el fondo y otros estilos para el cuerpo */
+
 body {
     font-family: 'Varela Round', sans-serif;
     position: relative;
     min-height: 100vh;
     padding-bottom: 10em;
-    /* background-image: linear-gradient(109.6deg, rgb(255, 239, 186) 11.2%, rgb(255, 193, 135) 91.1%); */
-    /* background-color: #004588 */
     background-image: linear-gradient(109.6deg, rgb(0, 69, 136) 11.2%, rgb(116, 134, 153) 91.1%);
 }
 
@@ -35,12 +37,16 @@ body {
     font-size: 13px;
 }
 
+/* Estilos para la barra de navegación */
+
 .navbar {
     background: #fff;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 0;
 }
+
+/* Estilos para los elementos en la barra de navegación */
 
 .nav-link img {
     border-radius: 50%;
@@ -67,7 +73,6 @@ body {
 
 .navbar a {
     color: #888;
-    /* font-size: 15px; */
     padding-left: 0.1em;
     padding-right: 0.1em;
 }
@@ -246,13 +251,11 @@ footer {
 
 .navbar {
     background-color: rgba(0, 0, 0, 0.671);
-    /* Ajusta el valor alpha para la opacidad deseada */
 }
 
 .navegacion {
     font-family: 'Righteous Regular', sans-serif;
     font-size: 1em;
-    /* Ejemplo de tamaño de fuente inicial */
     font-weight: bold;
 }
 
@@ -260,17 +263,17 @@ footer {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
 
+/* Estilos para diseño responsive en barra navegacion */
+
 @media screen and (max-width: 768px) {
     .navegacion {
         font-size: 1.1em;
-        /* Tamaño de fuente para pantallas más pequeñas */
     }
 }
 
 @media screen and (max-width: 480px) {
     .navegacion {
         font-size: 1em;
-        /* Tamaño de fuente para pantallas aún más pequeñas */
     }
 }
 
@@ -280,6 +283,8 @@ footer {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.63);
 }
 
+/* Estilos para diseño responsive en titulo */
+
 #titulo {
     font-family: 'Righteous Regular', sans-serif;
     font-size: 1.1em;
@@ -288,14 +293,12 @@ footer {
 @media screen and (max-width: 768px) {
     #titulo {
         font-size: 1em;
-        /* Tamaño de fuente para pantallas más pequeñas */
     }
 }
 
 @media screen and (max-width: 480px) {
     #titulo {
         font-size: 0.9em;
-        /* Tamaño de fuente para pantallas aún más pequeñas */
     }
 }
 
@@ -330,7 +333,7 @@ main {
     text-decoration: none;
   }
 
-/* //Boton crear hilo */
+/* Estilo boton de crear hilo */
 
 #crearHiloGeneral {
     background-color: #D59F4F;
@@ -360,10 +363,14 @@ main {
     color: #fff;
 }
 
+/* Estilo boton de ver otros hilos */
+
 #otroHilo {
     background-color: #3498db;
     color: #fff;
 }
+
+/* Estilos extra */
 
 h2 {
     font-weight: bold;

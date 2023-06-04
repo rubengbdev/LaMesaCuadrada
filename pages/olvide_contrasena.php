@@ -22,7 +22,7 @@ if (isset($_COOKIE['correo'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Foro - La Mesa Cuadrada</title>
+    <title>Olvide la contrasena - La Mesa Cuadrada</title>
     <link rel="stylesheet" href="./../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
@@ -69,7 +69,7 @@ if (isset($_COOKIE['correo'])) {
             <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-start">
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
-                    <a href="foro.php" class="nav-item nav-link active navegacion">Foro</a>
+                    <a href="foro.php" class="nav-item nav-link navegacion">Foro</a>
                     <a href="registro_partidas.php" class="nav-item nav-link navegacion">Registro de Partidas</a>
                 </div>
 

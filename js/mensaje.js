@@ -3,9 +3,6 @@ var url = new URL(window.location.href);
 // Obtener el valor del parámetro "id" de la URL
 var id = url.searchParams.get("id");
 
-// Hacer algo con el valor del ID
-
-
 let mensajes = [];
 let mensajesPorPagina = 10;
 let numeroPaginas;
@@ -194,105 +191,10 @@ function eventoBotonesPaginacion() {
     });
 }
 
-
-
-
 $(document).ready(function () {
 
     generarMensajesYBotones(primeraVez);
 });
-
-// $(document).ready(function () {
-//     $("#crearHiloGeneral").on('click', function () {
-//         // Crear el modal de edición
-//         let modal = $('<div>').addClass('modal fade').attr('id', 'modalCrear');
-//         let modalDialog = $('<div>').addClass('modal-dialog');
-//         let modalContent = $('<div>').addClass('modal-content');
-//         let modalHeader = $('<div>').addClass('modal-header');
-//         let modalTitle = $('<h5>').addClass('modal-title').text('Editar partida');
-//         let modalBody = $('<div>').addClass('modal-body');
-
-//         // Crear el formulario de edición
-//         let form = $('<form>').addClass('needs-validation').attr('id', 'crear').attr('mehotd', 'post').attr('novalidate', true);
-
-//         let jugadoresFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'numeroJugadores');
-//         let puntuacionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'puntuacionVencedor');
-//         let fechaFormulario = $('<input>').attr('type', 'date').addClass('form-control mb-3').attr('name', 'fecha');
-//         let nombreJuegoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'nombreJuego');
-//         let nombreUsuario = $('<input>').attr('type', 'hidden').addClass('form-control mb-3').attr('name', 'nombreUsuario').val(obtenerValorCookie('nombre'));
-//         let logoFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'logo')
-//         let duracionFormulario = $('<input>').attr('type', 'number').addClass('form-control mb-3').attr('name', 'tiempoJuego');
-//         let ganadorFormulario = $('<input>').attr('type', 'text').addClass('form-control mb-3').attr('name', 'vencedor');
-
-
-
-//         // Agregar los elementos del formulario al modal
-//         form.append(nombreUsuario)
-//         form.append($('<label>').text('Nombre del Juego: ')).append(nombreJuegoFormulario);
-//         form.append($('<label>').text('Nº Jugadores: ')).append(jugadoresFormulario);
-//         form.append($('<label>').text('Ganador: ')).append(ganadorFormulario);
-//         form.append($('<label>').text('Puntuacion Ganador: ')).append(puntuacionFormulario);
-//         form.append($('<label>').text('Fecha: ')).append(fechaFormulario);
-//         form.append($('<label>').text('Duracion partida: ')).append(duracionFormulario);
-//         form.append($('<label>').text('Logo: ')).append(logoFormulario);
-
-//         modalBody.append(form);
-
-//         // Crear los botones de cancelar y confirmar cambios
-//         let cancelarButton = $('<button>').addClass('btn btn-danger close btn').attr('type', 'button').attr('data-dismiss', 'modal').text('Cancelar');
-//         let confirmarButton = $('<input>').addClass('btn btn-primary').attr('type', 'submit').text('Confirmar Cambios');
-
-
-//         var buttonContainer = $('<div>').addClass('d-flex justify-content-center');
-//         buttonContainer.append(cancelarButton).append($('<div>').addClass('mx-2')).append(confirmarButton);
-
-//         // Agregar los botones al modal
-//         var modalFooter = $('<div>').addClass('modal-footer d-flex justify-content-center');
-//         modalFooter.append(buttonContainer);
-
-//         // Construir la estructura del modal
-//         modalHeader.append(modalTitle);
-//         // $modalHeader.append($modalTitle).append($modalCloseButton);
-
-//         modalContent.append(modalHeader).append(modalBody).append(modalFooter);
-//         modalDialog.append(modalContent);
-//         modal.append(modalDialog);
-
-//         // Agregar el modal al documento
-//         $('body').append(modal);
-
-//         // Mostrar el modal de edición
-//         $('#modalCrear').modal('show');
-
-//         //BOTONES DEL MODAL
-
-//         // Evento click en el botón "Cancelar"
-//         cancelarButton.on('click', function () {
-//             // Cerrar y eliminar el modal de edición
-//             $('#modalCrear').modal('hide').remove();
-//         });
-
-//         confirmarButton.on('click', function () {
-//             let formData = $('#crear').serialize();
-//             console.log(formData);
-//             // Realizar la petición PUT mediante AJAX
-//             $.ajax({
-//                 url: 'http://localhost:8001/mensajes',
-//                 type: 'POST',
-//                 data: formData,
-//                 success: function (response) {
-
-//                     window.location.href = 'registro_mensajes.php';
-//                 },
-//                 error: function (xhr, status, error) {
-
-//                     console.error(error);
-//                 }
-//             });
-//         });
-//     })
-// })
-
 
 function eliminarHilo(id) {
 
@@ -362,7 +264,6 @@ function eliminarHilo(id) {
     });
 
 }
-
 
 $(document).ready(function() {
     $("#eliminarHilo").on("click", function() {

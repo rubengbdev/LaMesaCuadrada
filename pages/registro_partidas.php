@@ -31,7 +31,7 @@ if (isset($_COOKIE['correo'])) {
 </head>
 
 <body>
-<nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
+    <nav class="navbar navbar-dark navbar-expand-lg navbar-transparent">
         <div class="container-fluid">
             <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" alt="logo" width="50em" height="50em">
                 <b id="titulo">La Mesa Cuadrada</b></a>
@@ -42,7 +42,7 @@ if (isset($_COOKIE['correo'])) {
                 <div class="navbar-nav text-light">
                     <a href="../index.php" class="nav-item nav-link navegacion">Actualidad</a>
                     <a href="foro.php" class="nav-item nav-link navegacion">Foro</a>
-                    <a href="registro_partidas.php" class="nav-item nav-link navegacion seleccionado">Registro de Partidas</a>
+                    <a href="registro_partidas.php" class="nav-item nav-link active navegacion seleccionado">Registro de Partidas</a>
                 </div>
 
                 <div class="navbar-nav ms-auto ml-auto action-buttons">
@@ -55,7 +55,7 @@ if (isset($_COOKIE['correo'])) {
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
                                     <input type="hidden" name="login">
                                     <div class="form-group errorLogin">
-                                        <input type="text" name="correo" class="form-control" placeholder="Usuario" required="required">
+                                        <input type="text" name="correo" class="form-control" placeholder="Email" required="required">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">
@@ -181,6 +181,13 @@ if (isset($_COOKIE['correo'])) {
         </div>
     </nav>
     <main class="container-fluid text-center justify-concenter-center">
+        <?php if (!isset($_SESSION['usuario'])) : ?>
+            <div class="card bg-primary text-white text-center">
+                <div class="card-body">
+                    <h4 class="card-title">Registrate o Inicia sesión para empezar a usar tu registro de partidas</h4>
+                </div>
+            </div>
+        <?php endif; ?>
         <h1 class="text-center my-4">Registro de Partidas</h1>
         <div class="row mb-3">
             <div class="col-md-12 d-flex align-items-center justify-content-center">
@@ -192,9 +199,8 @@ if (isset($_COOKIE['correo'])) {
             </div>
         </div>
         <div class="table-responsive justify-content-center text-center">
-            <div class="d-flex justify-content-center"> <!-- Agrega la clase justify-content-center -->
-                <div class="col-12 col-md-auto"> <!-- Agrega las clases col-12 col-md-auto -->
-
+            <div class="d-flex justify-content-center">
+                <div class="col-12 col-md-auto">
                     <table class="table rounded rounded-3 table-bordered table-striped">
                         <thead>
                             <tr class="encabezado-tabla text-white">

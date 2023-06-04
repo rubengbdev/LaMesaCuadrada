@@ -57,7 +57,7 @@ if (isset($_COOKIE['correo'])) {
                                     <input type="hidden" name="token_login" value="<?= $_SESSION['token_login'] ?>">
                                     <input type="hidden" name="login">
                                     <div class="form-group errorLogin">
-                                        <input type="text" name="correo" class="form-control" placeholder="Usuario" required="required">
+                                        <input type="text" name="correo" class="form-control" placeholder="Email" required="required">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="contrasena" class="form-control" placeholder="Contraseña" required="required">
