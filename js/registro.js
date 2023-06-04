@@ -1,3 +1,6 @@
+/**
+ * Evento que valida los datos introducidos para permitir o no el envio de la peticion
+ */
 $(document).ready(function () {
     var nombreValido = false;
     var correoValido = false;
@@ -98,7 +101,9 @@ $(document).ready(function () {
     }
 });
 
-/*PETICION*/
+/**
+ * Evento que controla la peticion al back
+ */
 $(document).ready(function () {
     $('#registro').submit(function (event) {
         event.preventDefault(); // Evitar envío predeterminado del formulario

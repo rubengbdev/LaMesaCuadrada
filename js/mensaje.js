@@ -10,6 +10,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
+/**
+ * Funcion que obtiene hilos de base de datos y genera paginacion por primera vez
+ */
 function generarMensajesYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
@@ -46,6 +49,9 @@ function generarMensajesYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraMensajes(mensajes) {
     $("#general-mensajes").html('');
 
@@ -100,6 +106,9 @@ function muestraMensajes(mensajes) {
     });
 }
 
+/**
+ * Funcion encargada de hacer funcionar los botones de paginacion correctamente segun cantidad de contenido recibida
+ */
 function eventoBotonesPaginacion() {
 
     $(document).ready(function () {
@@ -191,11 +200,17 @@ function eventoBotonesPaginacion() {
     });
 }
 
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarMensajesYBotones(primeraVez);
 });
 
+/**
+ * Funcion para eliminar un hilo
+ */
 function eliminarHilo(id) {
 
     // Crear el modal de edición
@@ -265,6 +280,9 @@ function eliminarHilo(id) {
 
 }
 
+/**
+ * Eventos de eliminacion de hilos y publicacion de mensaje
+ */
 $(document).ready(function() {
     $("#eliminarHilo").on("click", function() {
 

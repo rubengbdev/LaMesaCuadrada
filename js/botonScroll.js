@@ -3,6 +3,9 @@
     scrollFunction()
 };
 
+/**
+ * Funcion para detectar la posicion del scroll
+ */
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         document.getElementById("scrollBtn").style.display = "block";

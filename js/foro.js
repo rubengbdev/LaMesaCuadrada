@@ -5,7 +5,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
-// Función para obtener el valor de una cookie por su nombre
+/**
+ * Funcion para obtener valor de una cookie
+ */
 function obtenerValorCookie(nombre) {
     var nombreCookie = nombre + "=";
     var cookies = document.cookie.split(';');
@@ -18,6 +20,9 @@ function obtenerValorCookie(nombre) {
     return "";
 }
 
+/**
+ * Funcion que obtiene hilos de base de datos y genera paginacion por primera vez
+ */
 function generarHilosYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
@@ -57,6 +62,9 @@ function generarHilosYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraHilos(hilos) {
 
     $("#general-hilos .card-body .list-group").html('');
@@ -100,6 +108,9 @@ function muestraHilos(hilos) {
     });
 }
 
+/**
+ * Funcion encargada de hacer funcionar los botones de paginacion correctamente segun cantidad de contenido recibida
+ */
 function eventoBotonesPaginacion() {
 
     $(document).ready(function () {
@@ -191,11 +202,17 @@ function eventoBotonesPaginacion() {
     });
 }
 
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarHilosYBotones(primeraVez);
 });
 
+/**
+ * Evento de crear hilo
+ */
 $(document).ready(function () {
     $("#crearHiloGeneral").on('click', function () {
         // Crear el modal de edición

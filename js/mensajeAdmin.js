@@ -3,9 +3,7 @@ var url = new URL(window.location.href);
 // Obtener el valor del parámetro "id" de la URL
 var id = url.searchParams.get("id");
 
-// Hacer algo con el valor del ID
-
-
+//Variables globales
 let mensajes = [];
 let mensajesPorPagina = 10;
 let numeroPaginas;
@@ -13,6 +11,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
+/**
+ * Funcion que obtiene hilos de base de datos y genera paginacion por primera vez
+ */
 function generarMensajesYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
@@ -49,6 +50,9 @@ function generarMensajesYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraMensajes(mensajes) {
     $("#general-mensajes").html('');
 
@@ -130,6 +134,9 @@ function muestraMensajes(mensajes) {
     });
 }
 
+/**
+ * Funcion encargada de hacer funcionar los botones de paginacion correctamente segun cantidad de contenido recibida
+ */
 function eventoBotonesPaginacion() {
 
     $(document).ready(function () {
@@ -221,12 +228,17 @@ function eventoBotonesPaginacion() {
     });
 }
 
-
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarMensajesYBotones(primeraVez);
 });
 
+/**
+ * Posible codigo muerto
+ */
 $(document).ready(function () {
     $("#crearHiloGeneral").on('click', function () {
         // Crear el modal de edición
@@ -316,6 +328,9 @@ $(document).ready(function () {
     })
 })
 
+/**
+ * Funcion de editar mensajes
+ */
 function editarMensaje(mensaje) {
 
     console.log(mensaje);
@@ -466,6 +481,9 @@ function editarMensaje(mensaje) {
 
 }
 
+/**
+ * Funcion para eliminar mensaje
+ */
 function eliminarMensaje(mensaje) {
 
     console.log(mensaje);
@@ -539,6 +557,9 @@ function eliminarMensaje(mensaje) {
     });
 }
 
+/**
+ * Funcion para eliminar hilo
+ */
 function eliminarHilo(id) {
 
     // Crear el modal de edición
@@ -608,7 +629,9 @@ function eliminarHilo(id) {
 
 }
 
-
+/**
+ * Control de eventos donde se usan las funciones anteriormente descritas
+ */
 $(document).ready(function () {
     $("#eliminarHilo").on("click", function () {
 

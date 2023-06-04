@@ -5,7 +5,9 @@ let primeraVez;
 var pagina = -1;
 let partidasPagina;
 
-// Función para obtener el valor de una cookie por su nombre
+/**
+ * Funcion para obtener valor de una cookie
+ */
 function obtenerValorCookie(nombre) {
     var nombreCookie = nombre + "=";
     var cookies = document.cookie.split(';');
@@ -18,6 +20,9 @@ function obtenerValorCookie(nombre) {
     return "";
 }
 
+/**
+ * Funcion que obtiene datos de base de datos
+ */
 function generarPartidasYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
@@ -62,6 +67,9 @@ function generarPartidasYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraPartidas(partidasMostrar) {
 
     $("#partidas-contenido").empty();
@@ -115,6 +123,9 @@ function muestraPartidas(partidasMostrar) {
     });
 }
 
+/**
+ * Funcion encargada de gestionar evento botones paginacion
+ */
 function eventoBotonesPaginacion(partidasMostrar) {
 
     $(document).ready(function () {
@@ -213,9 +224,10 @@ function eventoBotonesPaginacion(partidasMostrar) {
     });
 }
 
+/**
+ * Funcion encargada de editar partida
+ */
 function editarPartida(registro) {
-
-    // Obtener el tr correspondiende entero (el padre)
 
     // Obtener los datos de la partida
     let idPartida = registro.attr('id');
@@ -345,6 +357,9 @@ function editarPartida(registro) {
 
 }
 
+/**
+ * Funcion encargada de eliminar partida
+ */
 function eliminarPartida(registro) {
 
     let idPartida = registro.attr("id");
@@ -413,11 +428,17 @@ function eliminarPartida(registro) {
 
 }
 
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarPartidasYBotones(primeraVez);
 });
 
+/**
+ * Evento que controla la creacion de registro de partida
+ */
 $(document).ready(function () {
     $("#crearRegistro").on('click', function () {
         // Crear el modal de edición
@@ -576,14 +597,21 @@ $(document).ready(function () {
 
 })
 
-//Validacion
-
-//BUSCADOR
+/**
+ * ¡ADVERTENCIA!:
+ * 
+ * BUSCADOR Y ORDENACION: BUG en la paginacion una vez buscado o en la ordenacion una vez se deje de buscar o se pulsa en ordenar, para volver a estado original actualizar pagina para refrescar datos
+ * Error relacionado con la variable pagina y los eventos. Una vez clicado en siguiente se llama al eventoBotonesPaginacion multiples veces
+ * provocando que la variable pagina aumente de forma erronea corrompiedo el buen funcionamiento la paginación
+ */
 
 var searchTermInput = document.getElementById('campoBusqueda');
 
 var timeoutId;
 
+/**
+ * Evento que controla el buscador
+ */
 $('#busqueda-input').on('keyup', function () {
     clearTimeout(timeoutId);
     var searchTerm = $(this).val();
@@ -614,7 +642,9 @@ $('#busqueda-input').on('keyup', function () {
     }
 });
 
-
+/**
+ * Funcion de busqueda de partidas
+ */
 function buscarPartidas(searchTerm) {
 
     var partidasFiltradas = partidas.filter(function (obj) {
@@ -637,10 +667,12 @@ function buscarPartidas(searchTerm) {
 }
 
 
-//ORDENA POR FECHA
-
+//Variable para controlar cual es el orden actual
 var ordenAscendente = true;
 
+/**
+ * Evento que controla botones de ordenacion por fecha
+ */
 $(document).ready(function () {
 
     $(document).on("click", "#ordenar-ascendente", function () {
@@ -654,7 +686,9 @@ $(document).ready(function () {
     });
 });
 
-
+/**
+ * Funcion de ordenacion partidas por fecha
+ */
 function ordenarPartidas() {
     var partidasOrdenadas = partidas.slice(); // Crea una copia del arreglo original
     if (ordenAscendente) {

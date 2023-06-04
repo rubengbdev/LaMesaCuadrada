@@ -1,3 +1,7 @@
+/**
+ * Evento encargado del subit del inicio de sesion en las subpaginas
+ * Se duplica este script por BUG no localizado con la gestion de sesion de usuario
+ */
 $(document).ready(function() {
     $('#login-form').submit(function(event) {
         event.preventDefault(); // Evitar envío predeterminado del formulario

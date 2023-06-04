@@ -5,6 +5,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
+/**
+ * Funcion que obtiene datos de base de datos
+ */
 function generarNoticiasYBotones(primeraVez) {
     if (primeraVez == undefined) {
         $.ajax({
@@ -45,6 +48,9 @@ function generarNoticiasYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraNoticias(noticias) {
 
     $("#noticias-contenido").empty();
@@ -122,6 +128,9 @@ function muestraNoticias(noticias) {
     });
 }
 
+/**
+ * Funcion encargada de evento botones paginacion
+ */
 function eventoBotonesPaginacion() {
     $(document).on("click", ".botones", function (event) {
         event.preventDefault();
@@ -191,6 +200,9 @@ function eventoBotonesPaginacion() {
     });
 }
 
+/**
+ * Funcion encargada de editar noticias
+ */
 function editarNoticia(id) {
     // Obtener el card de la noticia correspondiente al ID
     var $card = $('[id="' + id + '"]').closest('.card');
@@ -287,6 +299,9 @@ function editarNoticia(id) {
 
 }
 
+/**
+ * Funcion encargada de eliminar noticias
+ */
 function eliminarNoticia(id) {
     // Obtener el card de la noticia correspondiente al ID
     var $card = $('[id="' + id + '"]').closest('.card');
@@ -365,9 +380,10 @@ function eliminarNoticia(id) {
 
 }
 
-
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarNoticiasYBotones(primeraVez);
-    // eventoBotonesPaginacion();
 });

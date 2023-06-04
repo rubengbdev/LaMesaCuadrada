@@ -5,6 +5,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
+/**
+ * Funcion que obtiene datos de base de datos
+ */
 function generarNoticiasYBotones(primeraVez) {
     if (primeraVez == undefined) {
         $.ajax({
@@ -45,6 +48,9 @@ function generarNoticiasYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraNoticias(noticias) {
 
     $("#noticias-contenido").empty();
@@ -92,6 +98,9 @@ function muestraNoticias(noticias) {
     });
 }
 
+/**
+ * Funcion encargada de evento botones paginacion
+ */
 function eventoBotonesPaginacion() {
     $(document).on("click", ".botones", function (event) {
         event.preventDefault();
@@ -160,9 +169,11 @@ function eventoBotonesPaginacion() {
         }
     });
 }
+
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarNoticiasYBotones(primeraVez);
-
-    // eventoBotonesPaginacion();
 });

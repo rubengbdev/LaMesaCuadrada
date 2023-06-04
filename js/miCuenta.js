@@ -1,3 +1,6 @@
+/**
+ * Funcion para obtener valor de una cookie
+ */
 function obtenerValorCookie(nombre) {
     var nombreCookie = nombre + "=";
     var cookies = document.cookie.split(';');
@@ -13,6 +16,9 @@ function obtenerValorCookie(nombre) {
 primeraVez = undefined;
 let usuario;
 
+/**
+ * Funcion que obtiene datos de base de datos
+ */
 function generarUsuariosYBotones(primeraVez) {
 
     let correoUsuario = obtenerValorCookie("correo");
@@ -41,6 +47,9 @@ function generarUsuariosYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraUsuarios(usuario) {
 
     var usuarioObjeto = JSON.parse(usuario);
@@ -91,6 +100,9 @@ function muestraUsuarios(usuario) {
     listaUsuarios.addClass('d-flex flex-wrap justify-cotente-center');
 }
 
+/**
+ * Funcion encargada de ocultar botones paginacion
+ */
 function eventoBotonesPaginacion() {
 
     $(document).ready(function () {
@@ -103,6 +115,9 @@ function eventoBotonesPaginacion() {
     });
 }
 
+/**
+ * Funcion encargada de gestionar el cambio de contrasena
+ */
 function cambiarContrasena() {
 
     // Obtener los datos de la partida
@@ -220,6 +235,7 @@ function cambiarContrasena() {
         }
     });
 
+    //Validaciones
     $(document).on("keyup", "#formularioEditarContra input", function () {
 
         let contrasenaNuevaValidacion = $("input[name='contrasenaNueva']").val();
@@ -239,6 +255,9 @@ function cambiarContrasena() {
 
 }
 
+/**
+ * Funcion encargada de gestionar el cambio de correo
+ */
 function cambiarCorreo() {
 
     // Obtener los datos de la partida
@@ -351,6 +370,9 @@ function cambiarCorreo() {
     });
 }
 
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarUsuariosYBotones(primeraVez);

@@ -1,3 +1,6 @@
+/**
+ * Evento que gestionar la actualizacion de contrasena
+ */
 $(document).ready(function () {
 
     $('#olvidarForm').submit(function (event) {

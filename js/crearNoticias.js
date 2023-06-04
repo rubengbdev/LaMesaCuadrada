@@ -1,8 +1,10 @@
+/**
+ * Control de evento del submit del formulario de crear noticias
+ */
 $(document).ready(function() {
 
     $('#publicar-noticias').submit(function(event) {
         event.preventDefault(); // Evitar envío predeterminado del formulario
-        // stop propagation
         event.stopPropagation();
 
         // Obtener los datos del formulario

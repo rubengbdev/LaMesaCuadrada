@@ -3,9 +3,6 @@ var url = new URL(window.location.href);
 // Obtener el valor del parámetro "id" de la URL
 var id = url.searchParams.get("id");
 
-// Hacer algo con el valor del ID
-
-
 let usuarios = [];
 let usuariosPorPagina = 5;
 let numeroPaginas;
@@ -13,6 +10,9 @@ let primeraVez;
 let paginaActual;
 let pagina = -1;
 
+/**
+ * Funcion que obtiene datos de base de datos
+ */
 function generarUsuariosYBotones(primeraVez) {
     if (primeraVez == undefined) {
 
@@ -48,23 +48,15 @@ function generarUsuariosYBotones(primeraVez) {
     }
 }
 
+/**
+ * Funcion encargada de mostrar en el front toda la información obtenida en el back
+ */
 function muestraUsuarios(usuariosDTO) {
 
     let listaUsuarios = $('#lista-usuarios'); // Contenedor de la lista de usuarios
 
     // Vaciar la lista de usuarios antes de generarla nuevamente
     listaUsuarios.empty();
-
-    // // Agregar fila de encabezados
-    // var encabezadosRow = $('<div>').addClass('row m-0');
-    // var encabezado1 = $('<div>').addClass('col p-2 border-end').text('Nombre');
-    // var encabezado2 = $('<div>').addClass('col p-2 border-end').text('Email');
-    // var encabezado3 = $('<div>').addClass('col p-2 border-end').text('FechaCreacion');
-    // var encabezado4 = $('<div>').addClass('col-1 p-2 text-end').text('Acción');
-    // encabezadosRow.append(encabezado1, encabezado2, encabezado3, encabezado4);
-    // listaUsuarios.append(encabezadosRow);
-    // encabezadosRow.addClass('d-flex flex-wrap');
-
 
     // Generar la nueva lista de usuarios y agregar los elementos correspondientes
     $.each(usuariosDTO, function (index, obj) {
@@ -129,6 +121,9 @@ function muestraUsuarios(usuariosDTO) {
     });
 }
 
+/**
+ * Funcion encargada de evento botones paginacion
+ */
 function eventoBotonesPaginacion() {
 
     $(document).ready(function () {
@@ -220,7 +215,9 @@ function eventoBotonesPaginacion() {
     });
 }
 
-
+/**
+ * Funcion encargada de eliminar usuario
+ */
 function eliminarUsuario(id) {
 
     // Crear el modal de edición
@@ -290,11 +287,10 @@ function eliminarUsuario(id) {
 
 }
 
-
-
+/**
+ * Evento que genera todo por primera vez haciendo llamadas a las funciones
+ */
 $(document).ready(function () {
 
     generarUsuariosYBotones(primeraVez);
-
-    // eventoBotonesPaginacion();
 });
