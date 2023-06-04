@@ -3,6 +3,9 @@
 require_once("../model/Mensaje.php");
 require_once("../service/service_implement/MapperServiceImpl.php");
 
+/**
+ * Clase encargada del crud de los mensajes
+ */
 class MensajeDAO {
 
     private $pdo;

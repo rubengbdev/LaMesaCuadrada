@@ -2,6 +2,9 @@
 
 require_once("../model/Hilo.php");
 
+/**
+ * Clase encargada del crud de los hilos
+ */
 class HiloDAO {
 
     private $pdo;
@@ -28,8 +31,6 @@ class HiloDAO {
 
         return $this->pdo->lastInsertId();
     }
-
-
 
     public function obtenerHiloPorId($id) {
 

@@ -2,6 +2,9 @@
 
 require_once("../model/Noticia.php");
 
+/**
+ * Clase encargada del crud de las noticias
+ */
 class NoticiaDao {
 
     private $pdo;

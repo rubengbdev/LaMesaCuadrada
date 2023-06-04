@@ -3,6 +3,9 @@
 require_once("../model/Partida.php");
 require_once("../service/service_implement/MapperServiceImpl.php");
 
+/**
+ * Clase encargada del crud de las partidas
+ */
 class PartidaDAO {
 
     private $pdo;

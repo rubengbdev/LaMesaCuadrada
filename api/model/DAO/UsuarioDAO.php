@@ -2,6 +2,9 @@
 
 require_once("../model/Usuario.php");
 
+/**
+ * Clase encargada del crud de los usuarios
+ */
 class UsuarioDAO {
 
     private $pdo;
